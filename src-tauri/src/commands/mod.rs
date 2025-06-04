@@ -1,1 +1,1 @@
-mod characters;
+pub mod characters;
