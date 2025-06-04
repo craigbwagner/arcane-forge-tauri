@@ -7,21 +7,14 @@ pub fn create() -> Result<(), String> {
 }
 
 fn arrange_ability_scores() -> [character::AbilityScore; 6] {
-    let strength = character::AbilityScore::new(String::from("Strength"), String::from("STR"));
-    let dexterity = character::AbilityScore::new(String::from("Dexterity"), String::from("DEX"));
-    let constitution =
-        character::AbilityScore::new(String::from("Constitution"), String::from("CON"));
-    let intelligence =
-        character::AbilityScore::new(String::from("Intelligence"), String::from("INT"));
-    let wisdom = character::AbilityScore::new(String::from("Wisdom"), String::from("WIS"));
-    let charisma = character::AbilityScore::new(String::from("Charisma"), String::from("CHA"));
+    const NAMES: [(&str, &str); 6] = [
+        ("Strength", "STR"),
+        ("Dexterity", "DEX"),
+        ("Constitution", "CON"),
+        ("Intelligence", "INT"),
+        ("Wisdom", "WIS"),
+        ("Charisma", "CHA"),
+    ];
 
-    [
-        strength,
-        dexterity,
-        constitution,
-        intelligence,
-        wisdom,
-        charisma,
-    ]
+    NAMES.map(|(name, abbr)| character::AbilityScore::new(name.into(), abbr.into()))
 }
