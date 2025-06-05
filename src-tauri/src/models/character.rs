@@ -26,6 +26,7 @@ pub enum Size {
 
 #[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 pub struct Character {
+    pub id: Uuid,
     pub name: String,
     pub creator: String,
     pub basic_description: BasicDescription,
