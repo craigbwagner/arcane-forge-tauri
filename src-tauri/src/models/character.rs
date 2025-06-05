@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 pub enum Alignment {
     LawfulGood,
     NeutralGood,
@@ -13,7 +13,7 @@ pub enum Alignment {
     ChaoticEvil,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 pub enum Size {
     Tiny,
     Small,
@@ -23,7 +23,7 @@ pub enum Size {
     Gargantuan,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 pub struct Character {
     pub name: String,
     pub creator: String,
@@ -38,7 +38,7 @@ pub struct Character {
     pub kill_list: Vec<String>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 pub struct BasicDescription {
     pub race: String,
     pub sex: String,
@@ -49,7 +49,7 @@ pub struct BasicDescription {
     pub alignment: Alignment,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 pub struct CombatStats {
     pub initiative_mods: u8,
     pub speed: u8,
@@ -62,7 +62,7 @@ pub struct CombatStats {
     pub hit_dice_total: u8,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 pub struct Class {
     pub name: String,
     pub subclass: String,
@@ -71,7 +71,7 @@ pub struct Class {
     pub subclass_features: Vec<Feature>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 pub struct AbilityScore {
     pub name: String,
     pub short_name: String,
@@ -90,7 +90,7 @@ impl AbilityScore {
     }
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 pub struct Skill {
     name: String,
     is_proficient: bool,
@@ -109,7 +109,7 @@ impl Skill {
     }
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 pub struct Feature {
     name: Option<String>,
     description: Option<String>,
@@ -122,7 +122,7 @@ pub struct Feature {
     is_passive: bool,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 pub struct Item {
     name: Option<String>,
     description: Option<String>,
