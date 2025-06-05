@@ -2,6 +2,16 @@ use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
 #[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
+pub enum Ability {
+    Strength,
+    Dexterity,
+    Constitution,
+    Intelligence,
+    Wisdom,
+    Charisma,
+}
+
+#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 pub enum Alignment {
     LawfulGood,
     NeutralGood,
@@ -101,24 +111,24 @@ impl Default for Character {
             combat_stats: CombatStats::default(),
             additional_features: Vec::new(),
             skills: [
-                Skill::new("Acrobatics", "Dexterity"),
-                Skill::new("Animal Handling", "Wisdom"),
-                Skill::new("Arcana", "Intelligence"),
-                Skill::new("Athletics", "Strength"),
-                Skill::new("Deception", "Charisma"),
-                Skill::new("History", "Intelligence"),
-                Skill::new("Insight", "Wisdom"),
-                Skill::new("Intimidation", "Charisma"),
-                Skill::new("Investigation", "Intelligence"),
-                Skill::new("Medicine", "Wisdom"),
-                Skill::new("Nature", "Intelligence"),
-                Skill::new("Perception", "Wisdom"),
-                Skill::new("Performance", "Charisma"),
-                Skill::new("Persuasion", "Charisma"),
-                Skill::new("Religion", "Intelligence"),
-                Skill::new("Sleight of Hand", "Dexterity"),
-                Skill::new("Stealth", "Dexterity"),
-                Skill::new("Survival", "Wisdom"),
+                Skill::new("Acrobatics", Ability::Dexterity),
+                Skill::new("Animal Handling", Ability::Wisdom),
+                Skill::new("Arcana", Ability::Intelligence),
+                Skill::new("Athletics", Ability::Strength),
+                Skill::new("Deception", Ability::Charisma),
+                Skill::new("History", Ability::Intelligence),
+                Skill::new("Insight", Ability::Wisdom),
+                Skill::new("Intimidation", Ability::Charisma),
+                Skill::new("Investigation", Ability::Intelligence),
+                Skill::new("Medicine", Ability::Wisdom),
+                Skill::new("Nature", Ability::Intelligence),
+                Skill::new("Perception", Ability::Wisdom),
+                Skill::new("Performance", Ability::Charisma),
+                Skill::new("Persuasion", Ability::Charisma),
+                Skill::new("Religion", Ability::Intelligence),
+                Skill::new("Sleight of Hand", Ability::Dexterity),
+                Skill::new("Stealth", Ability::Dexterity),
+                Skill::new("Survival", Ability::Wisdom),
             ],
             items: Vec::new(),
             weapons: Vec::new(),
@@ -232,16 +242,16 @@ pub struct Skill {
     pub name: String,
     pub is_proficient: bool,
     pub has_expertise: bool,
-    pub ability_name: String,
+    pub ability_name: Ability,
 }
 
 impl Skill {
-    pub fn new(name: &str, ability_name: &str) -> Self {
+    pub fn new(name: &str, ability: Ability) -> Self {
         Self {
             name: String::from(name),
             is_proficient: false,
             has_expertise: false,
-            ability_name: String::from(ability_name),
+            ability_name: ability,
         }
     }
 }
@@ -282,7 +292,7 @@ pub struct Item {
     pub charges: Option<u8>,
     pub value: Option<u16>,
     pub weight: Option<f32>,
-    pub rarity: Option<String>,
+    pub rarity: Option<MagicItemRarity>,
     pub item_type: Option<String>,
     pub properties: Option<Vec<String>>,
     pub attunement: Option<bool>,
@@ -314,6 +324,7 @@ impl Default for Item {
 pub struct Weapon {
     pub name: Option<String>,
     pub weight: Option<u8>,
+    pub rarity: Option<MagicItemRarity>,
     pub details: Option<String>,
     pub damage_type: DamageType,
     pub reach: Option<u8>,
@@ -331,6 +342,7 @@ impl Default for Weapon {
         Self {
             name: None,
             weight: None,
+            rarity: None,
             details: None,
             damage_type: DamageType::Slashing,
             reach: None,
