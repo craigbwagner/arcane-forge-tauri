@@ -58,6 +58,13 @@ pub enum MagicItemRarity {
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
+pub enum DamageType {
+    Bludgeoning,
+    Piercing,
+    Slashing,
+}
+
+#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 pub struct Character {
     pub id: Uuid,
     pub name: String,
@@ -70,6 +77,7 @@ pub struct Character {
     pub additional_features: Vec<Feature>,
     pub skills: [Skill; 18],
     pub items: Vec<Item>,
+    pub weapons: Vec<Weapon>,
     pub kill_list: Vec<String>,
 }
 
@@ -117,6 +125,22 @@ pub struct CombatStats {
     pub hit_dice_total: u8,
 }
 
+impl Default for CombatStats {
+    fn default() -> Self {
+        Self {
+            initiative_mods: 0,
+            speed: 30,
+            speed_mods: 0,
+            max_hp: 1,
+            current_hp: 1,
+            temp_hp: 0,
+            hit_dice_remaining: 1,
+            hit_dice_type: HitDiceType::D8,
+            hit_dice_total: 1,
+        }
+    }
+}
+
 #[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 pub struct Class {
     pub name: String,
@@ -124,6 +148,18 @@ pub struct Class {
     pub level: u8,
     pub class_features: Vec<Feature>,
     pub subclass_features: Vec<Feature>,
+}
+
+impl Default for Class {
+    fn default() -> Self {
+        Self {
+            name: String::new(),
+            subclass: String::new(),
+            level: 1,
+            class_features: Vec::new(),
+            subclass_features: Vec::new(),
+        }
+    }
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
@@ -177,6 +213,22 @@ pub struct Feature {
     pub is_passive: bool,
 }
 
+impl Default for Feature {
+    fn default() -> Self {
+        Self {
+            name: None,
+            description: None,
+            uses: None,
+            uses_reset_on: None,
+            action_type: None,
+            duration: None,
+            source: None,
+            level_acquired: None,
+            is_passive: false,
+        }
+    }
+}
+
 #[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 pub struct Item {
     pub name: Option<String>,
@@ -191,4 +243,58 @@ pub struct Item {
     pub is_magical: Option<bool>,
     pub source: Option<String>,
     pub acquired_through: Option<String>,
+}
+
+impl Default for Item {
+    fn default() -> Self {
+        Self {
+            name: None,
+            description: None,
+            charges: None,
+            value: None,
+            weight: None,
+            rarity: None,
+            item_type: None,
+            properties: None,
+            attunement: None,
+            is_magical: None,
+            source: None,
+            acquired_through: None,
+        }
+    }
+}
+
+#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
+pub struct Weapon {
+    pub name: Option<String>,
+    pub weight: Option<u8>,
+    pub details: Option<String>,
+    pub damage_type: DamageType,
+    pub reach: Option<u8>,
+    pub value: Option<u16>,
+    pub is_equipped: bool,
+    pub to_hit_override: Option<u8>,
+    pub to_hit_bonus: Option<u8>,
+    pub damage_bonus: Option<u8>,
+    pub source: Option<String>,
+    pub acquired_through: Option<String>,
+}
+
+impl Default for Weapon {
+    fn default() -> Self {
+        Self {
+            name: None,
+            weight: None,
+            details: None,
+            damage_type: DamageType::Slashing,
+            reach: None,
+            value: None,
+            is_equipped: false,
+            to_hit_override: None,
+            to_hit_bonus: None,
+            damage_bonus: None,
+            source: None,
+            acquired_through: None,
+        }
+    }
 }
