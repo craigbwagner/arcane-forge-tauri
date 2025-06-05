@@ -92,10 +92,10 @@ impl AbilityScore {
 
 #[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 pub struct Skill {
-    name: String,
-    is_proficient: bool,
-    has_expertise: bool,
-    ability_name: String,
+    pub name: String,
+    pub is_proficient: bool,
+    pub has_expertise: bool,
+    pub ability_name: String,
 }
 
 impl Skill {
@@ -111,29 +111,29 @@ impl Skill {
 
 #[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 pub struct Feature {
-    name: Option<String>,
-    description: Option<String>,
-    uses: Option<u8>,
-    uses_reset_on: Option<u8>,
-    action_type: Option<String>,
-    duration: Option<String>,
-    source: Option<String>,
-    level_acquired: Option<u8>,
-    is_passive: bool,
+    pub name: Option<String>,
+    pub description: Option<String>,
+    pub uses: Option<u8>,
+    pub uses_reset_on: Option<u8>,
+    pub action_type: Option<String>,
+    pub duration: Option<String>,
+    pub source: Option<String>,
+    pub level_acquired: Option<u8>,
+    pub is_passive: bool,
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 pub struct Item {
-    name: Option<String>,
-    description: Option<String>,
-    charges: Option<u8>,
-    value: Option<u16>,
-    weight: Option<f32>,
-    rarity: Option<String>,
-    item_type: Option<String>,
-    properties: Option<Vec<String>>,
-    attunement: Option<bool>,
-    is_magical: Option<bool>,
-    source: Option<String>,
-    acquired_through: Option<String>,
+    pub name: Option<String>,
+    pub description: Option<String>,
+    pub charges: Option<u8>,
+    pub value: Option<u16>,
+    pub weight: Option<f32>,
+    pub rarity: Option<String>,
+    pub item_type: Option<String>,
+    pub properties: Option<Vec<String>>,
+    pub attunement: Option<bool>,
+    pub is_magical: Option<bool>,
+    pub source: Option<String>,
+    pub acquired_through: Option<String>,
 }
