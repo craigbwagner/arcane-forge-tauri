@@ -9,11 +9,10 @@ pub struct Character {
     pub languages: Vec<String>,
     pub ability_scores: [AbilityScore; 6],
     pub combat_stats: CombatStats,
-    pub additional_features: Vec<AdditionalFeature>,
+    pub additional_features: Vec<Feature>,
     pub skills: [Skill; 18],
-    pub class_features: Vec<ClassFeature>,
-    pub subclass_features: Vec<SubclassFeature>,
     pub items: String,
+    pub kill_list: Vec<String>,
 }
 
 #[derive(Serialize, Deserialize)]
@@ -45,7 +44,8 @@ pub struct Class {
     pub name: String,
     pub subclass: String,
     pub level: u8,
-    pub class_features: Vec<ClassFeature>,
+    pub class_features: Vec<Feature>,
+    pub subclass_features: Vec<Feature>,
 }
 
 #[derive(Serialize, Deserialize)]
@@ -87,13 +87,30 @@ impl Skill {
 }
 
 #[derive(Serialize, Deserialize)]
-pub struct ClassFeature {}
+pub struct Feature {
+    name: Option<String>,
+    description: Option<String>,
+    uses: Option<u8>,
+    uses_reset_on: Option<u8>,
+    action_type: Option<String>,
+    duration: Option<String>,
+    source: Option<String>,
+    level_acquired: Option<u8>,
+    is_passive: bool,
+}
 
 #[derive(Serialize, Deserialize)]
-pub struct SubclassFeature {}
-
-#[derive(Serialize, Deserialize)]
-pub struct AdditionalFeature {}
-
-#[derive(Serialize, Deserialize)]
-pub struct Item {}
+pub struct Item {
+    name: Option<String>,
+    description: Option<String>,
+    charges: Option<u8>,
+    value: Option<u16>,
+    weight: Option<f32>,
+    rarity: Option<String>,
+    item_type: Option<String>,
+    properties: Option<Vec<String>>,
+    attunement: Option<bool>,
+    is_magical: Option<bool>,
+    source: Option<String>,
+    acquired_through: Option<String>,
+}
