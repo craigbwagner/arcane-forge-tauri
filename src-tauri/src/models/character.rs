@@ -57,10 +57,10 @@ pub struct AbilityScore {
 }
 
 impl AbilityScore {
-    pub fn new(name: String, short_name: String) -> Self {
+    pub fn new(name: &str, short_name: &str) -> Self {
         Self {
-            name,
-            short_name,
+            name: String::from(name),
+            short_name: String::from(short_name),
             is_proficient: false,
             score: 10,
         }
@@ -76,12 +76,12 @@ pub struct Skill {
 }
 
 impl Skill {
-    pub fn new(name: String, ability_name: String) -> Self {
+    pub fn new(name: &str, ability_name: &str) -> Self {
         Self {
-            name,
+            name: String::from(name),
             is_proficient: false,
             has_expertise: false,
-            ability_name,
+            ability_name: String::from(ability_name),
         }
     }
 }
