@@ -58,6 +58,7 @@ pub enum ActionType {
     FreeAction,
 }
 
+#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 pub enum UseReset {
     Daily,
     LongRest,
@@ -267,7 +268,7 @@ pub struct Feature {
     pub name: Option<String>,
     pub description: Option<String>,
     pub uses: Option<u8>,
-    pub uses_reset_on: Option<u8>,
+    pub uses_reset_on: Option<UseReset>,
     pub action_type: Option<ActionType>,
     pub duration: Option<String>,
     pub source: Option<String>,
