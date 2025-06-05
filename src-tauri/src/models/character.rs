@@ -24,6 +24,26 @@ pub enum Alignment {
     ChaoticEvil,
 }
 
+impl std::fmt::Display for Alignment {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "{}",
+            match self {
+                Alignment::LawfulGood => "Lawful Good",
+                Alignment::NeutralGood => "Neutral Good",
+                Alignment::ChaoticGood => "Chaotic Good",
+                Alignment::LawfulNeutral => "Lawful Neutral",
+                Alignment::TrueNeutral => "Neutral",
+                Alignment::ChaoticNeutral => "Chaotic Neutral",
+                Alignment::LawfulEvil => "Lawful Evil",
+                Alignment::NeutralEvil => "Neutral Evil",
+                Alignment::ChaoticEvil => "Chaotic Evil",
+            }
+        )
+    }
+}
+
 #[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 pub enum Size {
     Tiny,
