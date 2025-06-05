@@ -25,6 +25,14 @@ pub enum Size {
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
+pub enum Sex {
+    Male,
+    Female,
+    Other,
+    Unspecified,
+}
+
+#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 pub struct Character {
     pub id: Uuid,
     pub name: String,
@@ -43,7 +51,7 @@ pub struct Character {
 #[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 pub struct BasicDescription {
     pub race: String,
-    pub sex: String,
+    pub sex: Sex,
     pub size: Size,
     pub age: u16,
     pub height: String,
@@ -55,7 +63,7 @@ impl Default for BasicDescription {
     fn default() -> Self {
         Self {
             race: String::new(),
-            sex: "Other".to_string(),
+            sex: Sex::Unspecified,
             size: Size::Medium,
             age: 0,
             height: String::new(),
