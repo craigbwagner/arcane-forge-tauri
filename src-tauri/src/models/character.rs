@@ -34,7 +34,7 @@ pub struct Character {
     pub combat_stats: CombatStats,
     pub additional_features: Vec<Feature>,
     pub skills: [Skill; 18],
-    pub items: String,
+    pub items: Vec<Item>,
     pub kill_list: Vec<String>,
 }
 
