@@ -51,6 +51,20 @@ pub struct BasicDescription {
     pub alignment: Alignment,
 }
 
+impl Default for BasicDescription {
+    fn default() -> Self {
+        Self {
+            race: String::new(),
+            sex: "Other".to_string(),
+            size: Size::Medium,
+            age: 0,
+            height: String::new(),
+            weight: 0,
+            alignment: Alignment::TrueNeutral,
+        }
+    }
+}
+
 #[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 pub struct CombatStats {
     pub initiative_mods: u8,
