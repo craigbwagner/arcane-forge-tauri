@@ -58,6 +58,12 @@ pub enum ActionType {
     FreeAction,
 }
 
+pub enum UseReset {
+    Daily,
+    LongRest,
+    ShortRest,
+}
+
 #[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 pub enum MagicItemRarity {
     Common,
@@ -101,12 +107,12 @@ impl Default for Character {
             classes: Vec::new(),
             languages: Vec::new(),
             ability_scores: [
-                AbilityScore::new("Strength", "STR"),
-                AbilityScore::new("Dexterity", "DEX"),
-                AbilityScore::new("Constitution", "CON"),
-                AbilityScore::new("Intelligence", "INT"),
-                AbilityScore::new("Wisdom", "WIS"),
-                AbilityScore::new("Charisma", "CHA"),
+                AbilityScore::new(Ability::Strength, "STR"),
+                AbilityScore::new(Ability::Dexterity, "DEX"),
+                AbilityScore::new(Ability::Constitution, "CON"),
+                AbilityScore::new(Ability::Intelligence, "INT"),
+                AbilityScore::new(Ability::Wisdom, "WIS"),
+                AbilityScore::new(Ability::Charisma, "CHA"),
             ],
             combat_stats: CombatStats::default(),
             additional_features: Vec::new(),
@@ -227,9 +233,9 @@ pub struct AbilityScore {
 }
 
 impl AbilityScore {
-    pub fn new(name: &str, short_name: &str) -> Self {
+    pub fn new(name: Ability, short_name: &str) -> Self {
         Self {
-            name: String::from(name),
+            name: format!("{:?}", name),
             short_name: String::from(short_name),
             is_proficient: false,
             score: 10,
