@@ -33,6 +33,31 @@ pub enum Sex {
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
+pub enum HitDiceType {
+    D6,
+    D8,
+    D10,
+    D12,
+}
+
+#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
+pub enum ActionType {
+    Action,
+    BonusAction,
+    Reaction,
+    FreeAction,
+}
+
+#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
+pub enum MagicItemRarity {
+    Common,
+    Uncommon,
+    Rare,
+    VeryRare,
+    Legendary,
+}
+
+#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 pub struct Character {
     pub id: Uuid,
     pub name: String,
@@ -88,7 +113,7 @@ pub struct CombatStats {
     pub current_hp: u16,
     pub temp_hp: u8,
     pub hit_dice_remaining: u8,
-    pub hit_dice_type: String,
+    pub hit_dice_type: HitDiceType,
     pub hit_dice_total: u8,
 }
 
@@ -145,7 +170,7 @@ pub struct Feature {
     pub description: Option<String>,
     pub uses: Option<u8>,
     pub uses_reset_on: Option<u8>,
-    pub action_type: Option<String>,
+    pub action_type: Option<ActionType>,
     pub duration: Option<String>,
     pub source: Option<String>,
     pub level_acquired: Option<u8>,
