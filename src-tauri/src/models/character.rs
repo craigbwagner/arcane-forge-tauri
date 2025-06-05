@@ -65,6 +65,12 @@ impl Default for BasicDescription {
     }
 }
 
+impl Character {
+    pub fn total_level(&self) -> u8 {
+        self.classes.iter().map(|c| c.level).sum()
+    }
+}
+
 #[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 pub struct CombatStats {
     pub initiative_mods: u8,
