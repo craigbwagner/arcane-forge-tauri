@@ -121,6 +121,12 @@ pub struct Character {
     pub updated_at: DateTime<Utc>,
 }
 
+impl Character {
+    pub fn touch(&mut self) {
+        self.updated_at = Utc::now();
+    }
+}
+
 impl Default for Character {
     fn default() -> Self {
         Self {
