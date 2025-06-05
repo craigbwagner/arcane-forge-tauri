@@ -81,6 +81,52 @@ pub struct Character {
     pub kill_list: Vec<String>,
 }
 
+impl Default for Character {
+    fn default() -> Self {
+        Self {
+            id: Uuid::new_v4(),
+            name: String::new(),
+            creator: String::new(),
+            basic_description: BasicDescription::default(),
+            classes: Vec::new(),
+            languages: Vec::new(),
+            ability_scores: [
+                AbilityScore::new("Strength", "STR"),
+                AbilityScore::new("Dexterity", "DEX"),
+                AbilityScore::new("Constitution", "CON"),
+                AbilityScore::new("Intelligence", "INT"),
+                AbilityScore::new("Wisdom", "WIS"),
+                AbilityScore::new("Charisma", "CHA"),
+            ],
+            combat_stats: CombatStats::default(),
+            additional_features: Vec::new(),
+            skills: [
+                Skill::new("Acrobatics", "Dexterity"),
+                Skill::new("Animal Handling", "Wisdom"),
+                Skill::new("Arcana", "Intelligence"),
+                Skill::new("Athletics", "Strength"),
+                Skill::new("Deception", "Charisma"),
+                Skill::new("History", "Intelligence"),
+                Skill::new("Insight", "Wisdom"),
+                Skill::new("Intimidation", "Charisma"),
+                Skill::new("Investigation", "Intelligence"),
+                Skill::new("Medicine", "Wisdom"),
+                Skill::new("Nature", "Intelligence"),
+                Skill::new("Perception", "Wisdom"),
+                Skill::new("Performance", "Charisma"),
+                Skill::new("Persuasion", "Charisma"),
+                Skill::new("Religion", "Intelligence"),
+                Skill::new("Sleight of Hand", "Dexterity"),
+                Skill::new("Stealth", "Dexterity"),
+                Skill::new("Survival", "Wisdom"),
+            ],
+            items: Vec::new(),
+            weapons: Vec::new(),
+            kill_list: Vec::new(),
+        }
+    }
+}
+
 #[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 pub struct BasicDescription {
     pub race: String,
