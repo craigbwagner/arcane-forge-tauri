@@ -1,6 +1,29 @@
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize)]
+pub enum Alignment {
+    LawfulGood,
+    NeutralGood,
+    ChaoticGood,
+    LawfulNeutral,
+    TrueNeutral,
+    ChaoticNeutral,
+    LawfulEvil,
+    NeutralEvil,
+    ChaoticEvil,
+}
+
+#[derive(Serialize, Deserialize)]
+pub enum Size {
+    Tiny,
+    Small,
+    Medium,
+    Large,
+    Huge,
+    Gargantuan,
+}
+
+#[derive(Serialize, Deserialize)]
 pub struct Character {
     pub name: String,
     pub creator: String,
@@ -19,11 +42,11 @@ pub struct Character {
 pub struct BasicDescription {
     pub race: String,
     pub sex: String,
-    pub size: String,
+    pub size: Size,
     pub age: u16,
     pub height: String,
     pub weight: u16,
-    pub alignment: String,
+    pub alignment: Alignment,
 }
 
 #[derive(Serialize, Deserialize)]
