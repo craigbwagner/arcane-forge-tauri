@@ -1,1 +1,1 @@
-pub mod character_mappings;
+pub mod new_character;
