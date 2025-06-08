@@ -6,6 +6,11 @@ pub fn create_character() -> Result<character::Character, AppError> {
     Ok(new_character)
 }
 
+#[tauri::command]
+pub fn save_character(character: character::Character) -> Result<(), AppError> {
+    Ok(())
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
