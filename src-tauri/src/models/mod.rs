@@ -6,6 +6,7 @@ pub mod feature;
 pub mod item;
 pub mod joins;
 pub mod spell;
+pub mod subclass;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub enum UseReset {
