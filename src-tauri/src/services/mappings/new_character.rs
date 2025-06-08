@@ -10,14 +10,22 @@ use crate::models::character::{
 pub fn new() -> Result<Character, AppError> {
     let now = Utc::now();
 
-    let ability_scores = serde_json::to_string(&initial_ability_scores()).unwrap();
-    let skills = serde_json::to_string(&initial_skills()).unwrap();
-    let levels = serde_json::to_string(&initial_levels()).unwrap();
-    let basic_description = serde_json::to_string(&initial_basic_description()).unwrap();
-    let combat_stats = serde_json::to_string(&initial_combat_stats()).unwrap();
-    let additional_features = serde_json::to_string(&Vec::<i64>::new()).unwrap();
-    let items = serde_json::to_string(&Vec::<i64>::new()).unwrap();
-    let kill_list = serde_json::to_string(&Vec::<String>::new()).unwrap();
+    let ability_scores = serde_json::to_string(&initial_ability_scores())
+        .expect("Should have deserialized initial ability scores.");
+    let skills =
+        serde_json::to_string(&initial_skills()).expect("Should have deserialized initial skills.");
+    let levels =
+        serde_json::to_string(&initial_levels()).expect("Should have deserialized initial levels.");
+    let basic_description = serde_json::to_string(&initial_basic_description())
+        .expect("Should have deserialized initial basic description.");
+    let combat_stats = serde_json::to_string(&initial_combat_stats())
+        .expect("Should have deserialized initial combat stats.");
+    let additional_features = serde_json::to_string(&Vec::<i64>::new())
+        .expect("Should have deserialized initial features.");
+    let items =
+        serde_json::to_string(&Vec::<i64>::new()).expect("Should have deserialized initial items.");
+    let kill_list = serde_json::to_string(&Vec::<String>::new())
+        .expect("Should have deserialized initial kill list.");
 
     let new_character = Character {
         id: None,
