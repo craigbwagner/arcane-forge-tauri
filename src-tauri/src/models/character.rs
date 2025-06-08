@@ -136,4 +136,5 @@ pub struct Skill {
 pub struct LevelEntry {
     pub class: String,
     pub level: u8,
+    pub subclass: String,
 }
