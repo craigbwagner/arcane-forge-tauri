@@ -129,3 +129,9 @@ pub struct Skill {
     pub has_expertise: bool,
     pub ability_name: Ability,
 }
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct LevelEntry {
+    pub class: String,
+    pub level: u8,
+}
