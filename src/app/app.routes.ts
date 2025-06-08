@@ -6,7 +6,8 @@ import { CharactersComponent } from "./pages/characters/characters.component";
 export const routes: Routes = [
   {
     path: '',
-    component: AppComponent
+    redirectTo: 'dashboard',
+    pathMatch: 'full'
   },
   {
     path: 'dashboard',
