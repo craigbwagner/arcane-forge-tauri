@@ -33,8 +33,8 @@ pub fn new() -> Result<Character, AppError> {
         skills,
         items,
         kill_list,
-        created_at: now,
-        updated_at: now,
+        created_at: now.to_rfc3339(),
+        updated_at: now.to_rfc3339(),
     };
 
     Ok(new_character)
