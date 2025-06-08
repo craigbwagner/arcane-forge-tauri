@@ -2,7 +2,7 @@ use chrono::{DateTime, Utc};
 use rusqlite::{params, Connection, Result};
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
+#[derive(Serialize, Deserialize, Debug)]
 pub enum Ability {
     Strength,
     Dexterity,
@@ -12,7 +12,7 @@ pub enum Ability {
     Charisma,
 }
 
-#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
+#[derive(Serialize, Deserialize, Debug)]
 pub enum Alignment {
     LawfulGood,
     NeutralGood,
@@ -90,13 +90,7 @@ pub struct Character {
     pub updated_at: DateTime<Utc>,
 }
 
-impl Character {
-    pub fn touch(&mut self) {
-        self.updated_at = Utc::now();
-    }
-}
-
-#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct BasicDescription {
     pub race: String,
     pub sex: Sex,
@@ -107,21 +101,7 @@ pub struct BasicDescription {
     pub alignment: Alignment,
 }
 
-impl Default for BasicDescription {
-    fn default() -> Self {
-        Self {
-            race: String::new(),
-            sex: Sex::Unspecified,
-            size: Size::Medium,
-            age: 0,
-            height: String::new(),
-            weight: 0,
-            alignment: Alignment::TrueNeutral,
-        }
-    }
-}
-
-#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct CombatStats {
     pub initiative_mods: u8,
     pub speed: u8,
@@ -134,23 +114,7 @@ pub struct CombatStats {
     pub hit_dice_total: u8,
 }
 
-impl Default for CombatStats {
-    fn default() -> Self {
-        Self {
-            initiative_mods: 0,
-            speed: 30,
-            speed_mods: 0,
-            max_hp: 1,
-            current_hp: 1,
-            temp_hp: 0,
-            hit_dice_remaining: 1,
-            hit_dice_type: HitDiceType::D8,
-            hit_dice_total: 1,
-        }
-    }
-}
-
-#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct AbilityScore {
     pub name: String,
     pub short_name: String,
@@ -158,32 +122,10 @@ pub struct AbilityScore {
     pub score: u8,
 }
 
-impl AbilityScore {
-    pub fn new(name: Ability, short_name: &str) -> Self {
-        Self {
-            name: format!("{:?}", name),
-            short_name: String::from(short_name),
-            is_proficient: false,
-            score: 10,
-        }
-    }
-}
-
-#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Skill {
     pub name: String,
     pub is_proficient: bool,
     pub has_expertise: bool,
     pub ability_name: Ability,
-}
-
-impl Skill {
-    pub fn new(name: &str, ability: Ability) -> Self {
-        Self {
-            name: String::from(name),
-            is_proficient: false,
-            has_expertise: false,
-            ability_name: ability,
-        }
-    }
 }
