@@ -2,6 +2,8 @@ use chrono::{DateTime, Utc};
 use rusqlite::{params, Connection, Result};
 use serde::{Deserialize, Serialize};
 
+use crate::models::{class::Class, feature::Feature, item::Item};
+
 #[derive(Serialize, Deserialize, Debug)]
 pub enum Ability {
     Strength,
@@ -75,16 +77,16 @@ pub enum HitDiceType {
 pub struct Character {
     pub id: Option<i64>,
     pub name: Option<String>,
-    pub levels: String,
+    pub levels: Vec<LevelEntry>,
     pub creator: Option<String>,
-    pub basic_description: String,
-    pub classes: Vec<i64>,
+    pub basic_description: BasicDescription,
+    pub classes: Vec<Class>,
     pub languages: Vec<String>,
-    pub ability_scores: String,
-    pub combat_stats: String,
-    pub additional_features: Vec<i64>,
+    pub ability_scores: AbilityScore,
+    pub combat_stats: CombatStats,
+    pub additional_features: Vec<Feature>,
     pub skills: String,
-    pub items: Vec<i64>,
+    pub items: Vec<Item>,
     pub kill_list: Vec<String>,
     pub created_at: DateTime<Utc>,
     pub updated_at: DateTime<Utc>,
