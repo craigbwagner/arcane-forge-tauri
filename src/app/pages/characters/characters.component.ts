@@ -8,5 +8,6 @@ import { Component } from '@angular/core';
   styleUrl: './characters.component.css'
 })
 export class CharactersComponent {
-
+  createCharacter() : void {
+  }
 }
