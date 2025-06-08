@@ -72,21 +72,6 @@ pub enum HitDiceType {
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
-pub enum ActionType {
-    Action,
-    BonusAction,
-    Reaction,
-    FreeAction,
-}
-
-#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
-pub enum UseReset {
-    Daily,
-    LongRest,
-    ShortRest,
-}
-
-#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 pub enum MagicItemRarity {
     Common,
     Uncommon,
@@ -95,14 +80,7 @@ pub enum MagicItemRarity {
     Legendary,
 }
 
-#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
-pub enum DamageType {
-    Bludgeoning,
-    Piercing,
-    Slashing,
-}
-
-#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Character {
     pub id: Uuid,
     pub name: String,
