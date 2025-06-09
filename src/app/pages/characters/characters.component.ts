@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { invoke } from '@tauri-apps/api/core';
 
 @Component({
   selector: 'app-characters',
@@ -8,6 +9,7 @@ import { Component } from '@angular/core';
   styleUrl: './characters.component.css'
 })
 export class CharactersComponent {
-  createCharacter() : void {
+  async createCharacter() : Promise<void> {
+    let newCharacterId: number = await invoke('create_character');
   }
 }
