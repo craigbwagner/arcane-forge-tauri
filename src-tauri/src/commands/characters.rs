@@ -1,23 +1,14 @@
-use crate::{errors::AppError, models::character};
+use std::sync::{Arc, Mutex};
+
+use rusqlite::Connection;
+use tauri::State;
+
+use crate::errors::AppError;
+use crate::services::character_service;
 
 #[tauri::command]
-pub fn create_character() -> Result<character::Character, AppError> {
-    let new_character = character::Character::default();
-    Ok(new_character)
-}
-
-#[tauri::command]
-pub fn save_character(character: character::Character) -> Result<(), AppError> {
-    Ok(())
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_create_result_is_ok() {
-        let result = create_character();
-        assert!(result.is_ok());
-    }
+pub fn create_character(db: State<'_, Arc<Mutex<Connection>>>) -> Result<i64, AppError> {
+    let conn = db.lock().unwrap();
+    let new_character_id = character_service::create(&conn)?;
+    Ok(new_character_id)
 }
