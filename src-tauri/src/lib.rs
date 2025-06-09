@@ -15,7 +15,7 @@ mod services;
 pub fn run() -> Result<(), color_eyre::Report> {
     color_eyre::install()?;
 
-    let db = Connection::open("character.db")?;
+    let db = Connection::open("arcane-forge.db")?;
 
     db.execute(
         "CREATE TABLE IF NOT EXISTS characters (
