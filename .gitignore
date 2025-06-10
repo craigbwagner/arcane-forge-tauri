@@ -6,6 +6,9 @@
 /out-tsc
 /bazel-out
 
+# Db
+src-tauri/arcane-forge.db
+
 # Node
 /node_modules
 npm-debug.log
