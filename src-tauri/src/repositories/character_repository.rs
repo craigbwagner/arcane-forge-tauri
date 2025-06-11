@@ -1,5 +1,4 @@
 use rusqlite::{params, Connection, Result};
-use tauri::App;
 
 use crate::{errors::AppError, models::character::Character};
 
