@@ -1,45 +1,53 @@
-use chrono::Utc;
+use chrono::{DateTime, Utc};
 
 use crate::dtos::character_dtos::{
-    Ability, AbilityScore, Alignment, BasicDescription, CombatStats, Sex, Size, Skill,
+    Ability, AbilityScore, Alignment, BasicDescription, CharacterClassDetails, CharacterDetails,
+    CharacterFeatureDetails, CharacterItemDetails, CharacterSpellDetails, CombatStats,
+    FullCharacterData, Sex, Size, Skill,
 };
 use crate::errors::AppError;
 use crate::models::character::Character;
 
-pub fn new() -> Result<Character, AppError> {
+pub fn new() -> Result<FullCharacterData, AppError> {
     let now = Utc::now();
 
-    let ability_scores = serde_json::to_string(&initial_ability_scores())
-        .expect("Should have deserialized initial ability scores.");
-    let skills =
-        serde_json::to_string(&initial_skills()).expect("Should have deserialized initial skills.");
-    let basic_description = serde_json::to_string(&initial_basic_description())
-        .expect("Should have deserialized initial basic description.");
-    let combat_stats = serde_json::to_string(&initial_combat_stats())
-        .expect("Should have deserialized initial combat stats.");
-    let kill_list = serde_json::to_string(&Vec::<String>::new())
-        .expect("Should have deserialized initial kill list.");
+    let ability_scores = initial_ability_scores();
+    let skills = initial_skills();
+    let basic_description = initial_basic_description();
+    let combat_stats = initial_combat_stats();
+    let languages = Vec::<String>::new();
+    let kill_list = Vec::<String>::new();
 
-    let new_character = Character {
+    let character_details = CharacterDetails {
         id: None,
         name: String::new(),
         creator: String::new(),
         basic_description,
-        languages: String::new(),
+        languages,
         ability_scores,
         combat_stats,
         skills,
         kill_list,
-        created_at: now.to_rfc3339(),
-        updated_at: now.to_rfc3339(),
+        created_at: now,
+        updated_at: now,
+    };
+
+    let new_character = FullCharacterData {
+        character: character_details,
+        classes: Vec::<CharacterClassDetails>::new(),
+        items: Vec::<CharacterItemDetails>::new(),
+        additional_features: Vec::<CharacterFeatureDetails>::new(),
+        spells: Vec::<CharacterSpellDetails>::new(),
     };
 
     Ok(new_character)
 }
 
-// pub fn dto_to_db(dto: &CharacterDto) -> Character {
-//     let basic_description_json = serde_json::to_string(&dto.basic_description);
-// }
+pub fn dto_to_db(dto: &FullCharacterData) -> Result<(), AppError> {
+    let basic_description_json = serde_json::to_string(&dto.character.basic_description);
+    // created_at: now.to_rfc3339(),
+    // updated_at: now.to_rfc3339(),
+}
 
 fn initial_ability_scores() -> [AbilityScore; 6] {
     let strength = AbilityScore {
