@@ -6,9 +6,9 @@ use crate::dtos::character_dtos::{
 use crate::errors::AppError;
 use crate::models::character::Character;
 
-pub struct CharacterService;
+pub struct CharacterMapper;
 
-impl CharacterService {
+impl CharacterMapper {
     pub fn new() -> Result<Character, AppError> {
         let now = Utc::now();
 
