@@ -13,14 +13,13 @@ pub enum MagicItemRarity {
 pub struct Item {
     pub name: Option<String>,
     pub description: Option<String>,
-    pub charges: Option<u8>,
+    pub total_charges: Option<u8>,
     pub value: Option<u16>,
     pub weight: Option<f32>,
     pub rarity: Option<MagicItemRarity>,
-    pub item_type: Option<String>,
-    pub properties: Option<Vec<String>>,
+    pub item_type: Option<String>, //weapon, armor, consumable, etc.
     pub attunement: Option<bool>,
     pub is_magical: Option<bool>,
-    pub source: Option<String>,
+    pub properties: Option<String>, // JSON for item-specific properties
     pub acquired_through: Option<String>,
 }
