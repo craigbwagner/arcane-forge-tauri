@@ -1,11 +1,10 @@
 use chrono::Utc;
 
-use crate::dtos::character_dtos::CharacterDto;
-use crate::errors::AppError;
-use crate::models::character::{
-    Ability, AbilityScore, Alignment, BasicDescription, Character, CombatStats, HitDiceType,
-    LevelEntry, Sex, Size, Skill,
+use crate::dtos::character_dtos::{
+    Ability, AbilityScore, Alignment, BasicDescription, CombatStats, Sex, Size, Skill,
 };
+use crate::errors::AppError;
+use crate::models::character::Character;
 
 pub struct CharacterService;
 
@@ -17,32 +16,22 @@ impl CharacterService {
             .expect("Should have deserialized initial ability scores.");
         let skills = serde_json::to_string(&Self::initial_skills())
             .expect("Should have deserialized initial skills.");
-        let levels = serde_json::to_string(&Self::initial_levels())
-            .expect("Should have deserialized initial levels.");
         let basic_description = serde_json::to_string(&Self::initial_basic_description())
             .expect("Should have deserialized initial basic description.");
         let combat_stats = serde_json::to_string(&Self::initial_combat_stats())
             .expect("Should have deserialized initial combat stats.");
-        let additional_features = serde_json::to_string(&Vec::<i64>::new())
-            .expect("Should have deserialized initial features.");
-        let items = serde_json::to_string(&Vec::<i64>::new())
-            .expect("Should have deserialized initial items.");
         let kill_list = serde_json::to_string(&Vec::<String>::new())
             .expect("Should have deserialized initial kill list.");
 
         let new_character = Character {
             id: None,
             name: String::new(),
-            levels,
             creator: String::new(),
             basic_description,
-            classes: String::new(),
             languages: String::new(),
             ability_scores,
             combat_stats,
-            additional_features,
             skills,
-            items,
             kill_list,
             created_at: now.to_rfc3339(),
             updated_at: now.to_rfc3339(),
@@ -235,15 +224,6 @@ impl CharacterService {
         ]
     }
 
-    fn initial_levels() -> Vec<LevelEntry> {
-        let levels = vec![LevelEntry {
-            class: None,
-            level: 1,
-            subclass: None,
-        }];
-        levels
-    }
-
     fn initial_basic_description() -> BasicDescription {
         BasicDescription {
             race: String::new(),
@@ -265,8 +245,6 @@ impl CharacterService {
             current_hp: 0,
             temp_hp: 0,
             hit_dice_remaining: 0,
-            hit_dice_type: HitDiceType::D8,
-            hit_dice_total: 0,
         }
     }
 }
