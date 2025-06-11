@@ -105,7 +105,7 @@ pub struct FullCharacterData {
     pub character: CharacterDetails,
     pub classes: Vec<CharacterClassDetails>,
     pub items: Vec<CharacterItemDetails>,
-    pub features: Vec<CharacterFeatureDetails>,
+    pub additional_features: Vec<CharacterFeatureDetails>,
     pub spells: Vec<CharacterSpellDetails>,
     pub languages: Vec<String>,
 }
