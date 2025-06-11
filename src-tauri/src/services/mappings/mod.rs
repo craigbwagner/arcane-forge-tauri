@@ -1,1 +1,1 @@
-pub mod new_character;
+pub mod character_service;
