@@ -107,7 +107,6 @@ pub struct FullCharacterData {
     pub items: Vec<CharacterItemDetails>,
     pub additional_features: Vec<CharacterFeatureDetails>,
     pub spells: Vec<CharacterSpellDetails>,
-    pub languages: Vec<String>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
