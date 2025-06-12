@@ -15,14 +15,14 @@ pub fn create_character() -> Result<FullCharacterData, AppError> {
 
 #[tauri::command]
 async fn save_new_character(
-    character: FullCharacterData,
+    data: FullCharacterData,
     db: State<'_, Arc<Mutex<Connection>>>,
 ) -> Result<i64, AppError> {
     let conn = db
         .lock()
         .map_err(|e| AppError::DatabaseConnectionError(e.to_string()))?;
 
-    let new_character_id = character_service::save_new_character(character, &conn)?;
+    let new_character_id = character_service::save_new_character(data, &conn)?;
 
     Ok(new_character_id)
 }
