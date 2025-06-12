@@ -8,4 +8,6 @@ pub enum AppError {
     DatabaseConnectionError(String),
     #[error("Character creation failed: {0}")]
     CharacterCreationError(String),
+    #[error("Failed to save character: {0}")]
+    CharacterSaveError(String),
 }
