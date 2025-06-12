@@ -34,10 +34,10 @@ pub fn insert_character(conn: &Connection, character: Character) -> Result<i64, 
     );
 
     match rows_affected {
+        Ok(_) => Ok(conn.last_insert_rowid()),
         Err(e) => Err(AppError::CharacterCreationError(format!(
             "Failed to insert character in db: {}",
             e
         ))),
-        Ok(_) => Ok(conn.last_insert_rowid()),
     }
 }
