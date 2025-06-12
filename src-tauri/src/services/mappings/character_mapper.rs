@@ -43,10 +43,36 @@ pub fn new() -> Result<FullCharacterData, AppError> {
     Ok(new_character)
 }
 
-pub fn dto_to_db(dto: &FullCharacterData) -> Result<(), AppError> {
-    let basic_description_json = serde_json::to_string(&dto.character.basic_description);
-    // created_at: now.to_rfc3339(),
-    // updated_at: now.to_rfc3339(),
+pub fn dto_to_db(data: &FullCharacterData) -> Result<Character, AppError> {
+    let basic_decription_json = serde_json::to_string(&data.character.basic_description)
+        .map_err(|e| AppError::CharacterSaveError(e.to_string()))?;
+    let combat_stats_json = serde_json::to_string(&data.character.combat_stats)
+        .map_err(|e| AppError::CharacterSaveError(e.to_string()))?;
+    let languages_json = serde_json::to_string(&data.character.languages)
+        .map_err(|e| AppError::CharacterSaveError(e.to_string()))?;
+    let ability_scores_json = serde_json::to_string(&data.character.ability_scores)
+        .map_err(|e| AppError::CharacterSaveError(e.to_string()))?;
+    let skills_json = serde_json::to_string(&data.character.skills)
+        .map_err(|e| AppError::CharacterSaveError(e.to_string()))?;
+    let kill_list_json = serde_json::to_string(&data.character.kill_list)
+        .map_err(|e| AppError::CharacterSaveError(e.to_string()))?;
+    let now = Utc::now().to_rfc3339();
+
+    let db_character = Character {
+        id: None,
+        name: data.character.name.clone(),
+        creator: data.character.creator.clone(),
+        basic_description: basic_decription_json,
+        combat_stats: combat_stats_json,
+        languages: languages_json,
+        ability_scores: ability_scores_json,
+        skills: skills_json,
+        kill_list: kill_list_json,
+        created_at: data.character.created_at.to_rfc3339(),
+        updated_at: now,
+    };
+
+    Ok(db_character)
 }
 
 fn initial_ability_scores() -> [AbilityScore; 6] {
