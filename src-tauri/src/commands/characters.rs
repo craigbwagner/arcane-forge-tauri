@@ -1,17 +1,29 @@
 use std::sync::{Arc, Mutex};
 
 use rusqlite::Connection;
-use tauri::State;
+use tauri::{App, State};
 
 use crate::dtos::character_dtos::FullCharacterData;
 use crate::errors::AppError;
 use crate::services::character_service;
 
 #[tauri::command]
-pub fn create_character(
-    db: State<'_, Arc<Mutex<Connection>>>,
-) -> Result<FullCharacterData, AppError> {
-    let conn = db.lock().unwrap();
-    let new_character = character_service::create(&conn)?;
+pub fn create_character() -> Result<FullCharacterData, AppError> {
+    let new_character = character_service::create()?;
     Ok(new_character)
+}
+
+#[tauri::command]
+async fn save_new_character(
+    character: FullCharacterData,
+    db: State<'_, Arc<Mutex<Connection>>>,
+) -> Result<(), String> {
+    let conn = match db.lock() {
+        Ok(conn) => conn,
+        Err(e) => Err(AppError::DatabaseConnectionError(e.to_string())),
+    };
+
+    let new_character_id = character_service::save_new_character(character, conn);
+
+    Ok(())
 }
