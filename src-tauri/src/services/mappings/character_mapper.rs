@@ -1,4 +1,4 @@
-use chrono::{DateTime, Utc};
+use chrono::Utc;
 
 use crate::dtos::character_dtos::{
     Ability, AbilityScore, Alignment, BasicDescription, CharacterClassDetails, CharacterDetails,
