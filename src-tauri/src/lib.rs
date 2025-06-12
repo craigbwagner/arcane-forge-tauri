@@ -2,7 +2,7 @@ use std::sync::{Arc, Mutex};
 
 use rusqlite::Connection;
 
-use crate::commands::characters::create_character;
+use crate::commands::character_commands;
 
 mod commands;
 mod dtos;
@@ -43,7 +43,9 @@ pub fn run() -> Result<(), color_eyre::Report> {
     tauri::Builder::default()
         .manage(db)
         .plugin(tauri_plugin_opener::init())
-        .invoke_handler(tauri::generate_handler![create_character])
+        .invoke_handler(tauri::generate_handler![
+            character_commands::create_character
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 
