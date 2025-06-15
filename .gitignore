@@ -8,6 +8,7 @@
 
 # Db
 src-tauri/arcane-forge.db
+arcane_forge.db
 
 # Node
 /node_modules
