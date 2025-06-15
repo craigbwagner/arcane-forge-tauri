@@ -8,7 +8,7 @@ pub fn create() -> Result<FullCharacterData, AppError> {
     Ok(new_character)
 }
 
-pub fn save_new_character(data: FullCharacterData, conn: &Connection) -> Result<i64, AppError> {
+pub fn save_new(data: FullCharacterData, conn: &Connection) -> Result<i64, AppError> {
     let character_db = character_mapper::dto_to_db(&data);
     Ok(0)
 }
