@@ -3055,7 +3055,6 @@ dependencies = [
  "hashlink",
  "libsqlite3-sys",
  "smallvec",
- "uuid",
 ]
 
 [[package]]
