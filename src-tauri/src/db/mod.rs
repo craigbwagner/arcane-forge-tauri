@@ -10,7 +10,7 @@ pub fn initialize() -> Result<Arc<Mutex<Connection>>, AppError> {
         Err(e) => return Err(AppError::DatabaseConnectionError(e.to_string())),
     };
 
-    match conn.execute(
+    conn.execute(
         "CREATE TABLE IF NOT EXISTS characters (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT,
@@ -29,10 +29,8 @@ pub fn initialize() -> Result<Arc<Mutex<Connection>>, AppError> {
             updated_at TEXT
         )",
         [],
-    ) {
-        Err(e) => return Err(AppError::DatabaseConnectionError(e.to_string())),
-        _ => (),
-    };
+    )
+    .map_err(|e| AppError::DatabaseConnectionError(e.to_string()));
 
     Ok(Arc::new(Mutex::new(conn)))
 }
