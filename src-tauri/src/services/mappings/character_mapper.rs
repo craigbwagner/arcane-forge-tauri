@@ -43,7 +43,7 @@ pub fn new() -> Result<FullCharacterData, AppError> {
     Ok(new_character)
 }
 
-pub fn dto_to_db(data: &FullCharacterData) -> Result<Character, AppError> {
+pub fn dto_to_db(data: FullCharacterData) -> Result<Character, AppError> {
     let basic_decription_json = serde_json::to_string(&data.character.basic_description)
         .map_err(|e| AppError::CharacterSaveError(e.to_string()))?;
     let combat_stats_json = serde_json::to_string(&data.character.combat_stats)
