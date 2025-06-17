@@ -30,7 +30,7 @@ pub fn initialize() -> Result<Arc<Mutex<Connection>>, AppError> {
         )",
         [],
     )
-    .map_err(|e| AppError::DatabaseConnectionError(e.to_string()));
+    .map_err(|e| AppError::DatabaseOperationError(e.to_string()))?;
 
     Ok(Arc::new(Mutex::new(conn)))
 }
