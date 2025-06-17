@@ -1,28 +1,26 @@
-use std::sync::{Arc, Mutex};
+use tauri::State;
 
-use rusqlite::Connection;
-use tauri::{App, State};
-
+use crate::app_state::AppState;
 use crate::dtos::character_dtos::FullCharacterData;
 use crate::errors::AppError;
 use crate::services::character_service;
 
 #[tauri::command]
-pub fn create_character() -> Result<FullCharacterData, AppError> {
-    let new_character = character_service::create()?;
-    Ok(new_character)
+pub async fn get_all_characters(
+    app_state: State<'_, AppState>,
+) -> Result<Vec<FullCharacterData>, AppError> {
+    character_service::get_all(&app_state.character_repo)
 }
 
 #[tauri::command]
-async fn save_new_character(
+pub async fn create_character() -> Result<FullCharacterData, AppError> {
+    character_service::create()
+}
+
+#[tauri::command]
+async fn save_character(
     data: FullCharacterData,
-    db: State<'_, Arc<Mutex<Connection>>>,
+    app_state: State<'_, AppState>,
 ) -> Result<i64, AppError> {
-    let conn = db
-        .lock()
-        .map_err(|e| AppError::DatabaseConnectionError(e.to_string()))?;
-
-    let new_character_id = character_service::save_new_character(data, &conn)?;
-
-    Ok(new_character_id)
+    character_service::save_new(data, &app_state.character_repo)
 }
