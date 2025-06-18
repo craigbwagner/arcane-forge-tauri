@@ -6,8 +6,7 @@ use crate::services::mappings::character_mapper;
 pub fn get_all(repo: &CharacterRepository) -> Result<Vec<FullCharacterData>, AppError> {}
 
 pub fn create() -> Result<FullCharacterData, AppError> {
-    let new_character = character_mapper::new()?;
-    Ok(new_character)
+    character_mapper::new()
 }
 
 pub fn save_new(data: FullCharacterData, repo: &CharacterRepository) -> Result<i64, AppError> {
