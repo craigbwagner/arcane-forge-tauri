@@ -10,7 +10,34 @@ pub struct CharacterRepository {
 
 impl Repository<Character> for CharacterRepository {
     fn get_all(&self) -> Result<Vec<Character>, AppError> {
-        todo!()
+        self.with_connection(|conn| {
+            let mut stmt = conn
+                .prepare("SELECT * FROM characters")
+                .map_err(|e| AppError::DatabaseOperationError(e.to_string()))?;
+            let character_iter = stmt
+                .query_map([], |row| {
+                    Ok(Character {
+                        id: row.get(0)?,
+                        name: row.get(1)?,
+                        creator: row.get(2)?,
+                        basic_description: row.get(3)?,
+                        languages: row.get(4)?,
+                        ability_scores: row.get(5)?,
+                        combat_stats: row.get(6)?,
+                        skills: row.get(7)?,
+                        kill_list: row.get(8)?,
+                        created_at: row.get(9)?,
+                        updated_at: row.get(10)?,
+                    })
+                })
+                .map_err(|e| AppError::DatabaseOperationError(e.to_string()))?;
+
+            let mut characters = Vec::new();
+            for character in character_iter {
+                characters.push(character?);
+            }
+            Ok(characters)
+        })
     }
 
     fn get_by_id(&self, id: i64) -> Result<Option<Character>, AppError> {
