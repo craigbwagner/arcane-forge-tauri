@@ -15,3 +15,9 @@ pub enum AppError {
     #[error("Failed to save character: {0}")]
     CharacterSaveError(String),
 }
+
+impl From<rusqlite::Error> for AppError {
+    fn from(err: rusqlite::Error) -> Self {
+        AppError::DatabaseOperationError(err.to_string())
+    }
+}
