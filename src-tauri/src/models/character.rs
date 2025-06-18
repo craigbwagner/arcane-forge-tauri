@@ -5,7 +5,7 @@ pub struct Character {
     pub id: Option<i64>,
     pub name: String,
     pub creator: String,
-    pub basic_description: String, // BasicDescription deserialized
+    pub basic_description: String,
     pub combat_stats: String,
     pub languages: String,
     pub ability_scores: String,
