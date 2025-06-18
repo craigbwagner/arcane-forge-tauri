@@ -2,33 +2,22 @@ use std::sync::{Arc, Mutex};
 
 use rusqlite::{params, Connection, Result};
 
-use crate::{errors::AppError, models::character::Character};
+use crate::{errors::AppError, models::character::Character, traits::repository::Repository};
 
 pub struct CharacterRepository {
     db: Arc<Mutex<Connection>>,
 }
 
-impl CharacterRepository {
-    pub fn new(db: Arc<Mutex<Connection>>) -> Self {
-        Self { db }
+impl Repository<Character> for CharacterRepository {
+    fn get_all(&self) -> Result<Vec<Character>, AppError> {
+        todo!()
     }
 
-    fn with_connection<T, F>(&self, f: F) -> Result<T, AppError>
-    where
-        F: FnOnce(&Connection) -> Result<T, AppError>,
-    {
-        let conn = self
-            .db
-            .lock()
-            .map_err(|e| AppError::DatabaseConnectionError(e.to_string()))?;
-        f(&*conn)
+    fn get_by_id(&self, id: i64) -> Result<Option<Character>, AppError> {
+        todo!()
     }
 
-    // pub fn get_all(conn: &Connection) -> Result<Vec<Character>, AppError {
-
-    // }
-
-    pub fn insert_character(&self, character: Character) -> Result<i64, AppError> {
+    fn insert(&self, character: Character) -> Result<i64, AppError> {
         self.with_connection(|conn| {
             let query_result = conn.execute(
                 "INSERT INTO characters (
@@ -66,5 +55,30 @@ impl CharacterRepository {
                 ))),
             }
         })
+    }
+
+    fn update(&self, entity: Character) -> Result<(), AppError> {
+        todo!()
+    }
+
+    fn delete(&self, id: i64) -> Result<(), AppError> {
+        todo!()
+    }
+}
+
+impl CharacterRepository {
+    fn with_connection<T, F>(&self, f: F) -> Result<T, AppError>
+    where
+        F: FnOnce(&Connection) -> Result<T, AppError>,
+    {
+        let conn = self
+            .db
+            .lock()
+            .map_err(|e| AppError::DatabaseConnectionError(e.to_string()))?;
+        f(&*conn)
+    }
+
+    pub fn new(db: Arc<Mutex<Connection>>) -> Self {
+        Self { db }
     }
 }
