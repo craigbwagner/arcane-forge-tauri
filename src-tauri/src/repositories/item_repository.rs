@@ -29,3 +29,20 @@ impl Repository<Item> for ItemRepository {
         todo!()
     }
 }
+
+impl ItemRepository {
+    fn with_connection<T, F>(&self, f: F) -> Result<T, AppError>
+    where
+        F: FnOnce(&Connection) -> Result<T, AppError>,
+    {
+        let conn = self
+            .db
+            .lock()
+            .map_err(|e| AppError::DatabaseConnectionError(e.to_string()))?;
+        f(&*conn)
+    }
+
+    pub fn new(db: Arc<Mutex<Connection>>) -> Self {
+        Self { db }
+    }
+}
