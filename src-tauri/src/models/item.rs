@@ -12,6 +12,5 @@ pub struct Item {
     pub item_type: String,
     pub attunement: bool,
     pub is_magical: bool,
-    pub properties: String,
     pub acquired_through: String,
 }
