@@ -1,4 +1,4 @@
-use chrono::Utc;
+use chrono::{DateTime, Utc};
 
 use crate::dtos::character_dtos::{
     Ability, AbilityScore, Alignment, BasicDescription, CharacterClassDetails, CharacterDetails,
@@ -44,18 +44,12 @@ pub fn new() -> Result<FullCharacterData, AppError> {
 }
 
 pub fn dto_to_db(data: FullCharacterData) -> Result<Character, AppError> {
-    let basic_decription_json = serde_json::to_string(&data.character.basic_description)
-        .map_err(|e| AppError::CharacterSaveError(e.to_string()))?;
-    let combat_stats_json = serde_json::to_string(&data.character.combat_stats)
-        .map_err(|e| AppError::CharacterSaveError(e.to_string()))?;
-    let languages_json = serde_json::to_string(&data.character.languages)
-        .map_err(|e| AppError::CharacterSaveError(e.to_string()))?;
-    let ability_scores_json = serde_json::to_string(&data.character.ability_scores)
-        .map_err(|e| AppError::CharacterSaveError(e.to_string()))?;
-    let skills_json = serde_json::to_string(&data.character.skills)
-        .map_err(|e| AppError::CharacterSaveError(e.to_string()))?;
-    let kill_list_json = serde_json::to_string(&data.character.kill_list)
-        .map_err(|e| AppError::CharacterSaveError(e.to_string()))?;
+    let basic_decription_json = serde_json::to_string(&data.character.basic_description)?;
+    let combat_stats_json = serde_json::to_string(&data.character.combat_stats)?;
+    let languages_json = serde_json::to_string(&data.character.languages)?;
+    let ability_scores_json = serde_json::to_string(&data.character.ability_scores)?;
+    let skills_json = serde_json::to_string(&data.character.skills)?;
+    let kill_list_json = serde_json::to_string(&data.character.kill_list)?;
     let now = Utc::now().to_rfc3339();
 
     let db_character = Character {
@@ -73,6 +67,41 @@ pub fn dto_to_db(data: FullCharacterData) -> Result<Character, AppError> {
     };
 
     Ok(db_character)
+}
+
+// pub fn db_to_dto(data: Character) -> Result<FullCharacterData, AppError> {
+//     let basic_description: BasicDescription = serde_json::from_str(&data.basic_description)?;
+//     let combat_stats: CombatStats = serde_json::from_str(&data.combat_stats)?;
+//     let languages: Vec<String> = serde_json::from_str(&data.languages)?;
+//     let ability_scores: [AbilityScore; 6] = serde_json::from_str(&data.ability_scores)?;
+//     let skills: [Skill; 18] = serde_json::from_str(&data.skills)?;
+//     let kill_list: Vec<String> = serde_json::from_str(&data.kill_list)?;
+//     let created_at = parse_db_time(&data.created_at)?;
+//     let updated_at = parse_db_time(&data.updated_at)?;
+
+//     let character_response = FullCharacterData {
+//         character: CharacterDetails {
+//             id: data.id,
+//             name: data.name,
+//             creator: data.creator,
+//             basic_description,
+//             combat_stats,
+//             languages,
+//             ability_scores,
+//             skills,
+//             kill_list,
+//             created_at,
+//             updated_at,
+//         },
+//     };
+
+//     Ok(character_response)
+// }
+
+fn parse_db_time(date: &str) -> Result<DateTime<Utc>, AppError> {
+    DateTime::parse_from_rfc3339(&date[..])
+        .map(|datetime| datetime.to_utc())
+        .map_err(|e| AppError::SerializationError(e.to_string()))
 }
 
 fn initial_ability_scores() -> [AbilityScore; 6] {

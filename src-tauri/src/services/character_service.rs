@@ -4,9 +4,9 @@ use crate::repositories::character_repository::CharacterRepository;
 use crate::services::mappings::character_mapper;
 use crate::traits::repository::Repository;
 
-pub fn get_all(repo: &CharacterRepository) -> Result<Vec<FullCharacterData>, AppError> {
-    let characters = repo.get_all();
-}
+// pub fn get_all(repo: &CharacterRepository) -> Result<Vec<FullCharacterData>, AppError> {
+//     let characters = repo.get_all();
+// }
 
 pub fn create() -> Result<FullCharacterData, AppError> {
     character_mapper::new()
