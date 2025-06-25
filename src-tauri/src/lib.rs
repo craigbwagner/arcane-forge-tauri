@@ -1,6 +1,7 @@
 use crate::{
-    app_state::AppState, commands::character_commands,
-    repositories::character_repository::CharacterRepository,
+    app_state::AppState,
+    commands::character_commands,
+    repositories::{character_repository::CharacterRepository, item_repository::ItemRepository},
 };
 
 mod app_state;
@@ -21,6 +22,7 @@ pub fn run() -> Result<(), color_eyre::Report> {
 
     let app_state = AppState {
         character_repo: CharacterRepository::new(database.clone()),
+        item_repo: ItemRepository::new(database.clone()),
     };
 
     tauri::Builder::default()
