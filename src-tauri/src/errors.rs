@@ -12,10 +12,10 @@ pub enum AppError {
     MappingError(String),
     #[error("Data serialization failed: {0}")]
     SerializationError(String),
-    #[error("Character creation failed: {0}")]
-    CharacterCreationError(String),
-    #[error("Failed to save character: {0}")]
-    CharacterSaveError(String),
+    #[error("Entity creation failed: {0}")]
+    EntityCreationError(String),
+    #[error("Failed to save entity: {0}")]
+    EntitySaveError(String),
 }
 
 impl From<rusqlite::Error> for AppError {
