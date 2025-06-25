@@ -11,15 +11,15 @@ pub enum MagicItemRarity {
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct FullItemData {
-    pub name: Option<String>,
-    pub description: Option<String>,
-    pub total_charges: Option<u8>,
-    pub value: Option<u16>,
-    pub weight: Option<f32>,
-    pub rarity: Option<MagicItemRarity>,
-    pub item_type: Option<String>,
-    pub attunement: Option<bool>,
-    pub is_magical: Option<bool>,
-    pub properties: Option<String>,
-    pub acquired_through: Option<String>,
+    pub id: Option<i64>,
+    pub name: String,
+    pub description: String,
+    pub total_charges: u8,
+    pub value: u16,
+    pub weight: f32,
+    pub rarity: MagicItemRarity,
+    pub item_type: String,
+    pub attunement: bool,
+    pub is_magical: bool,
+    pub acquired_through: String,
 }
