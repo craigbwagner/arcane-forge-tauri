@@ -72,7 +72,7 @@ impl Repository<Character> for CharacterRepository {
             );
             match query_result {
                 Ok(_) => Ok(conn.last_insert_rowid()),
-                Err(e) => Err(AppError::CharacterCreationError(format!(
+                Err(e) => Err(AppError::EntityCreationError(format!(
                     "Failed to insert character in db: {}",
                     e
                 ))),
