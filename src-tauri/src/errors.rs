@@ -18,12 +18,6 @@ pub enum AppError {
     EntitySaveError(String),
 }
 
-impl From<rusqlite::Error> for AppError {
-    fn from(e: rusqlite::Error) -> Self {
-        AppError::DatabaseOperationError(e.to_string())
-    }
-}
-
 impl From<serde_json::Error> for AppError {
     fn from(e: serde_json::Error) -> Self {
         AppError::SerializationError(e.to_string())
