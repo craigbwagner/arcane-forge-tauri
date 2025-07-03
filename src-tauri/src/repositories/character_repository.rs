@@ -36,11 +36,11 @@ impl Repository<Character> for CharacterRepository {
         })
     }
 
-    fn get_by_id(&self, id: i64) -> Result<Option<Character>, AppError> {
+    fn get_by_id(&self, id: i32) -> Result<Option<Character>, AppError> {
         todo!()
     }
 
-    fn insert(&self, character: Character) -> Result<i64, AppError> {
+    fn insert(&self, character: Character) -> Result<i32, AppError> {
         self.with_connection(|conn| {
             let query_result = conn.execute(
                 "INSERT INTO characters (
@@ -84,7 +84,7 @@ impl Repository<Character> for CharacterRepository {
         todo!()
     }
 
-    fn delete(&self, id: i64) -> Result<(), AppError> {
+    fn delete(&self, id: i32) -> Result<(), AppError> {
         todo!()
     }
 }
