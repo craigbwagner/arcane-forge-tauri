@@ -1,11 +1,11 @@
 use std::sync::{Arc, Mutex};
 
-use rusqlite::{params, Connection, Result};
+use diesel::SqliteConnection;
 
 use crate::{errors::AppError, models::character::Character, traits::repository::Repository};
 
 pub struct CharacterRepository {
-    db: Arc<Mutex<Connection>>,
+    db: Arc<Mutex<SqliteConnection>>,
 }
 
 impl Repository<Character> for CharacterRepository {
@@ -92,7 +92,7 @@ impl Repository<Character> for CharacterRepository {
 impl CharacterRepository {
     fn with_connection<T, F>(&self, f: F) -> Result<T, AppError>
     where
-        F: FnOnce(&Connection) -> Result<T, AppError>,
+        F: FnOnce(&SqliteConnection) -> Result<T, AppError>,
     {
         let conn = self
             .db
@@ -101,7 +101,7 @@ impl CharacterRepository {
         f(&*conn)
     }
 
-    pub fn new(db: Arc<Mutex<Connection>>) -> Self {
+    pub fn new(db: Arc<Mutex<SqliteConnection>>) -> Self {
         Self { db }
     }
 }
