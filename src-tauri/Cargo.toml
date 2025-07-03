@@ -27,6 +27,7 @@ thiserror = "2.0.12"
 color-eyre = "0.6.5"
 dotenvy = "0.15.7"
 diesel = { version = "2.2.11", features = ["sqlite", "returning_clauses_for_sqlite_3_35", "chrono"] }
+diesel_migrations = "2.2"
 
 [profile.dev]
 incremental = true
