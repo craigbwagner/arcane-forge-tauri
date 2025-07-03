@@ -13,11 +13,11 @@ impl Repository<Item> for ItemRepository {
         todo!()
     }
 
-    fn get_by_id(&self, id: i64) -> std::result::Result<Option<Item>, AppError> {
+    fn get_by_id(&self, id: i32) -> std::result::Result<Option<Item>, AppError> {
         todo!()
     }
 
-    fn insert(&self, entity: Item) -> std::result::Result<i64, AppError> {
+    fn insert(&self, entity: Item) -> std::result::Result<i32, AppError> {
         todo!()
     }
 
@@ -25,7 +25,7 @@ impl Repository<Item> for ItemRepository {
         todo!()
     }
 
-    fn delete(&self, id: i64) -> std::result::Result<(), AppError> {
+    fn delete(&self, id: i32) -> std::result::Result<(), AppError> {
         todo!()
     }
 }
