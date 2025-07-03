@@ -1,36 +1,32 @@
+use diesel::prelude::*;
+use diesel::sqlite::SqliteConnection;
+use diesel_migrations::{embed_migrations, EmbeddedMigrations, MigrationHarness};
 use std::sync::{Arc, Mutex};
-
-use rusqlite::Connection;
 
 use crate::errors::AppError;
 
-pub fn initialize() -> Result<Arc<Mutex<Connection>>, AppError> {
-    let conn = match Connection::open("arcane-forge.db") {
-        Ok(conn) => conn,
-        Err(e) => return Err(AppError::DatabaseConnectionError(e.to_string())),
-    };
+pub const MIGRATIONS: EmbeddedMigrations = embed_migrations!("migrations/");
 
-    conn.execute(
-        "CREATE TABLE IF NOT EXISTS characters (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT,
-            levels TEXT,
-            creator TEXT,
-            basic_description TEXT,
-            classes TEXT,
-            languages TEXT,
-            ability_scores TEXT,
-            combat_stats TEXT,
-            additional_features TEXT,
-            skills TEXT,
-            items TEXT,
-            kill_list TEXT,
-            created_at TEXT,
-            updated_at TEXT
-        )",
-        [],
-    )
-    .map_err(|e| AppError::DatabaseOperationError(e.to_string()))?;
+pub struct Database {
+    connection: Arc<Mutex<SqliteConnection>>,
+}
 
-    Ok(Arc::new(Mutex::new(conn)))
+impl Database {
+    pub fn new() -> Result<Self, AppError> {
+        let database_url = "arcane-forge.db";
+        let mut connection = SqliteConnection::establish(database_url)
+            .map_err(|e| AppError::DatabaseConnectionError(e.to_string()))?;
+
+        connection
+            .run_pending_migrations(MIGRATIONS)
+            .map_err(|e| AppError::DatabaseConnectionError(e.to_string()))?;
+
+        Ok(Database {
+            connection: Arc::new(Mutex::new(connection)),
+        })
+    }
+
+    pub fn get_connection(&self) -> Arc<Mutex<SqliteConnection>> {
+        Arc::clone(&self.connection)
+    }
 }
