@@ -1,39 +1,14 @@
-use std::sync::{Arc, Mutex};
-
-use diesel::SqliteConnection;
-
-use crate::{errors::AppError, models::character::Character, traits::repository::Repository};
+use crate::{
+    db::Database, errors::AppError, models::character::Character, traits::repository::Repository,
+};
 
 pub struct CharacterRepository {
-    db: Arc<Mutex<SqliteConnection>>,
+    db: Database,
 }
 
 impl Repository<Character> for CharacterRepository {
     fn get_all(&self) -> Result<Vec<Character>, AppError> {
-        self.with_connection(|conn| {
-            let mut stmt = conn.prepare("SELECT * FROM characters")?;
-            let character_iter = stmt.query_map([], |row| {
-                Ok(Character {
-                    id: row.get(0)?,
-                    name: row.get(1)?,
-                    creator: row.get(2)?,
-                    basic_description: row.get(3)?,
-                    languages: row.get(4)?,
-                    ability_scores: row.get(5)?,
-                    combat_stats: row.get(6)?,
-                    skills: row.get(7)?,
-                    kill_list: row.get(8)?,
-                    created_at: row.get(9)?,
-                    updated_at: row.get(10)?,
-                })
-            })?;
-
-            let mut characters = Vec::new();
-            for character in character_iter {
-                characters.push(character?);
-            }
-            Ok(characters)
-        })
+        todo!()
     }
 
     fn get_by_id(&self, id: i32) -> Result<Option<Character>, AppError> {
@@ -41,43 +16,7 @@ impl Repository<Character> for CharacterRepository {
     }
 
     fn insert(&self, character: Character) -> Result<i32, AppError> {
-        self.with_connection(|conn| {
-            let query_result = conn.execute(
-                "INSERT INTO characters (
-                name,
-                creator,
-                basic_description,
-                languages,
-                ability_scores,
-                combat_stats,
-                skills,
-                kill_list,
-                created_at,
-                updated_at
-            ) VALUES (
-                ?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10
-            )",
-                params![
-                    character.name,
-                    character.creator,
-                    character.basic_description,
-                    character.languages,
-                    character.ability_scores,
-                    character.combat_stats,
-                    character.skills,
-                    character.kill_list,
-                    character.created_at,
-                    character.updated_at,
-                ],
-            );
-            match query_result {
-                Ok(_) => Ok(conn.last_insert_rowid()),
-                Err(e) => Err(AppError::EntityCreationError(format!(
-                    "Failed to insert character in db: {}",
-                    e
-                ))),
-            }
-        })
+        todo!()
     }
 
     fn update(&self, entity: Character) -> Result<(), AppError> {
@@ -90,18 +29,18 @@ impl Repository<Character> for CharacterRepository {
 }
 
 impl CharacterRepository {
-    fn with_connection<T, F>(&self, f: F) -> Result<T, AppError>
-    where
-        F: FnOnce(&SqliteConnection) -> Result<T, AppError>,
-    {
-        let conn = self
-            .db
-            .lock()
-            .map_err(|e| AppError::DatabaseConnectionError(e.to_string()))?;
-        f(&*conn)
-    }
+    // fn with_connection<T, F>(&self, f: F) -> Result<T, AppError>
+    // where
+    //     F: FnOnce(&SqliteConnection) -> Result<T, AppError>,
+    // {
+    //     let conn = self
+    //         .db
+    //         .lock()
+    //         .map_err(|e| AppError::DatabaseConnectionError(e.to_string()))?;
+    //     f(&*conn)
+    // }
 
-    pub fn new(db: Arc<Mutex<SqliteConnection>>) -> Self {
+    pub fn new(db: Database) -> Self {
         Self { db }
     }
 }

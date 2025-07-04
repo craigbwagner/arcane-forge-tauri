@@ -1,11 +1,7 @@
-use std::sync::{Arc, Mutex};
-
-use diesel::SqliteConnection;
-
-use crate::{errors::AppError, models::item::Item, traits::repository::Repository};
+use crate::{db::Database, errors::AppError, models::item::Item, traits::repository::Repository};
 
 pub struct ItemRepository {
-    db: Arc<Mutex<SqliteConnection>>,
+    db: Database,
 }
 
 impl Repository<Item> for ItemRepository {
@@ -31,18 +27,7 @@ impl Repository<Item> for ItemRepository {
 }
 
 impl ItemRepository {
-    fn with_connection<T, F>(&self, f: F) -> Result<T, AppError>
-    where
-        F: FnOnce(&SqliteConnection) -> Result<T, AppError>,
-    {
-        let conn = self
-            .db
-            .lock()
-            .map_err(|e| AppError::DatabaseConnectionError(e.to_string()))?;
-        f(&*conn)
-    }
-
-    pub fn new(db: Arc<Mutex<SqliteConnection>>) -> Self {
+    pub fn new(db: Database) -> Self {
         Self { db }
     }
 }
