@@ -1,6 +1,7 @@
 use diesel::prelude::*;
 use diesel::sqlite::SqliteConnection;
 use diesel_migrations::{embed_migrations, EmbeddedMigrations, MigrationHarness};
+use dotenvy::{dotenv, var};
 use std::sync::{Arc, Mutex};
 
 use crate::errors::AppError;
@@ -13,8 +14,10 @@ pub struct Database {
 
 impl Database {
     pub fn new() -> Result<Self, AppError> {
-        let database_url = "arcane-forge.db";
-        let mut connection = SqliteConnection::establish(database_url)
+        dotenv().ok();
+
+        let database_url = var("DATABASE_URL").expect("DATABASE_URL must be set.");
+        let mut connection = SqliteConnection::establish(&database_url)
             .map_err(|e| AppError::DatabaseConnectionError(e.to_string()))?;
 
         connection
