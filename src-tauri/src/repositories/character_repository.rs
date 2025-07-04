@@ -1,9 +1,11 @@
-use crate::{
-    db::Database, errors::AppError, models::character::Character, traits::repository::Repository,
-};
+use std::sync::{Arc, Mutex};
+
+use diesel::SqliteConnection;
+
+use crate::{errors::AppError, models::character::Character, traits::repository::Repository};
 
 pub struct CharacterRepository {
-    db: Database,
+    db: Arc<Mutex<SqliteConnection>>,
 }
 
 impl Repository<Character> for CharacterRepository {
@@ -40,7 +42,7 @@ impl CharacterRepository {
     //     f(&*conn)
     // }
 
-    pub fn new(db: Database) -> Self {
+    pub fn new(db: Arc<Mutex<SqliteConnection>>) -> Self {
         Self { db }
     }
 }
