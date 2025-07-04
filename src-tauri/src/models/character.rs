@@ -1,8 +1,11 @@
+use diesel::prelude::*;
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Queryable, Selectable)]
+#[diesel(table_name = crate::schema::characters)]
+#[diesel(check_for_backend(diesel::sqlite::Sqlite))]
 pub struct Character {
-    pub id: Option<i64>,
+    pub id: i32,
     pub name: String,
     pub creator: String,
     pub basic_description: String,
