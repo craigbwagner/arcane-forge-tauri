@@ -12,7 +12,7 @@ pub fn create() -> Result<FullCharacterData, AppError> {
     character_mapper::new()
 }
 
-pub fn save_new(data: FullCharacterData, repo: &CharacterRepository) -> Result<i64, AppError> {
+pub fn save_new(data: FullCharacterData, repo: &CharacterRepository) -> Result<i32, AppError> {
     let character_db_model = character_mapper::dto_to_db(data)?;
     repo.insert(character_db_model)
 }
