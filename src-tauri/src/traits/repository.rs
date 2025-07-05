@@ -4,14 +4,13 @@ use diesel::SqliteConnection;
 
 use crate::errors::AppError;
 
-pub trait Repository<T> {
-    fn get_all(&self, conn: &Arc<Mutex<SqliteConnection>>) -> Result<Vec<T>, AppError>;
-    fn get_by_id(
-        &self,
+pub trait Repository<T, U> {
+    fn get_all(conn: &Arc<Mutex<SqliteConnection>>) -> Result<Vec<T>, AppError>;
+    fn get_by_id(conn: &Arc<Mutex<SqliteConnection>>, id: i32) -> Result<Option<T>, AppError>;
+    fn insert(conn: &Arc<Mutex<SqliteConnection>>, entity: U) -> Result<i32, AppError>;
+    fn update(conn: &Arc<Mutex<SqliteConnection>>, entity: T) -> Result<(), AppError>;
+    fn delete(conn: &Arc<Mutex<SqliteConnection>>, id: i32) -> Result<(), AppError>;
+    fn get_connection(
         conn: &Arc<Mutex<SqliteConnection>>,
-        id: i32,
-    ) -> Result<Option<T>, AppError>;
-    fn insert(&self, conn: &Arc<Mutex<SqliteConnection>>, entity: T) -> Result<i32, AppError>;
-    fn update(&self, conn: &Arc<Mutex<SqliteConnection>>, entity: T) -> Result<(), AppError>;
-    fn delete(&self, conn: &Arc<Mutex<SqliteConnection>>, id: i32) -> Result<(), AppError>;
+    ) -> Result<std::sync::MutexGuard<'_, SqliteConnection>, AppError>;
 }
