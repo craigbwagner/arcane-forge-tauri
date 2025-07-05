@@ -61,40 +61,34 @@ pub fn new() -> Result<NewCharacter, AppError> {
 //     Ok(db_character)
 // }
 
-// pub fn db_to_dto(data: Character) -> Result<FullCharacterData, AppError> {
-//     let basic_description: BasicDescription = serde_json::from_str(&data.basic_description)?;
-//     let combat_stats: CombatStats = serde_json::from_str(&data.combat_stats)?;
-//     let languages: Vec<String> = serde_json::from_str(&data.languages)?;
-//     let ability_scores: [AbilityScore; 6] = serde_json::from_str(&data.ability_scores)?;
-//     let skills: [Skill; 18] = serde_json::from_str(&data.skills)?;
-//     let kill_list: Vec<String> = serde_json::from_str(&data.kill_list)?;
-//     let created_at = parse_db_time(&data.created_at)?;
-//     let updated_at = parse_db_time(&data.updated_at)?;
+pub fn db_to_dto(data: Character) -> Result<FullCharacterData, AppError> {
+    let basic_description: BasicDescription = serde_json::from_str(&data.basic_description)?;
+    let combat_stats: CombatStats = serde_json::from_str(&data.combat_stats)?;
+    let languages: Vec<String> = serde_json::from_str(&data.languages)?;
+    let ability_scores: [AbilityScore; 6] = serde_json::from_str(&data.ability_scores)?;
+    let skills: [Skill; 18] = serde_json::from_str(&data.skills)?;
+    let kill_list: Vec<String> = serde_json::from_str(&data.kill_list)?;
+    let created_at: DateTime<Utc> = serde_json::from_str(&data.created_at)?;
+    let updated_at: DateTime<Utc> = serde_json::from_str(&data.updated_at)?;
 
-//     let character_response = FullCharacterData {
-//         character: CharacterDetails {
-//             id: data.id,
-//             name: data.name,
-//             creator: data.creator,
-//             basic_description,
-//             combat_stats,
-//             languages,
-//             ability_scores,
-//             skills,
-//             kill_list,
-//             created_at,
-//             updated_at,
-//         },
-//     };
+    let character_response = FullCharacterData {
+        character: CharacterDetails {
+            id: data.id,
+            name: data.name,
+            creator: data.creator,
+            basic_description,
+            combat_stats,
+            languages,
+            ability_scores,
+            skills,
+            kill_list,
+            created_at,
+            updated_at,
+        },
+    };
 
-//     Ok(character_response)
-// }
-
-// fn parse_db_time(date: &str) -> Result<DateTime<Utc>, AppError> {
-//     DateTime::parse_from_rfc3339(&date[..])
-//         .map(|datetime| datetime.to_utc())
-//         .map_err(|e| AppError::SerializationError(e.to_string()))
-// }
+    Ok(character_response)
+}
 
 fn initial_ability_scores() -> [AbilityScore; 6] {
     let strength = AbilityScore {
