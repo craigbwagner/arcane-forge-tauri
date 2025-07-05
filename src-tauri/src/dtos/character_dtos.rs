@@ -111,7 +111,7 @@ pub struct FullCharacterData {
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct CharacterDetails {
-    pub id: Option<i64>,
+    pub id: i32,
     pub name: String,
     pub creator: String,
     pub basic_description: BasicDescription,
@@ -142,7 +142,7 @@ pub struct CharacterClassDetails {
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct CharacterInventory {
-    pub character_id: i64,
+    pub character_id: i32,
     pub items: Vec<CharacterItemDetails>,
 }
 
