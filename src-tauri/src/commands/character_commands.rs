@@ -21,6 +21,6 @@ pub async fn create_character() -> Result<FullCharacterData, AppError> {
 async fn save_character(
     data: FullCharacterData,
     app_state: State<'_, AppState>,
-) -> Result<i64, AppError> {
-    character_service::save_new(data, &app_state.character_repo)
+) -> Result<i32, AppError> {
+    character_service::save_new(data, app_state)
 }
