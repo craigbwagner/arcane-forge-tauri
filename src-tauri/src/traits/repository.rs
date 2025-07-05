@@ -12,5 +12,8 @@ pub trait Repository<T, U> {
     fn delete(conn: &Arc<Mutex<SqliteConnection>>, id: i32) -> Result<(), AppError>;
     fn get_connection(
         conn: &Arc<Mutex<SqliteConnection>>,
-    ) -> Result<std::sync::MutexGuard<'_, SqliteConnection>, AppError>;
+    ) -> Result<std::sync::MutexGuard<'_, SqliteConnection>, AppError> {
+        conn.lock()
+            .map_err(|e| AppError::DatabaseOperationError(format!("Lock error: {}", e)))
+    }
 }
