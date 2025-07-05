@@ -103,10 +103,6 @@ pub struct Skill {
 #[derive(Serialize, Deserialize, Debug)]
 pub struct FullCharacterData {
     pub character: CharacterDetails,
-    pub classes: Vec<CharacterClassDetails>,
-    pub items: Vec<CharacterItemDetails>,
-    pub additional_features: Vec<CharacterFeatureDetails>,
-    pub spells: Vec<CharacterSpellDetails>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
