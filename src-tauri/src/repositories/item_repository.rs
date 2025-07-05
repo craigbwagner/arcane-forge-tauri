@@ -8,7 +8,7 @@ pub struct ItemRepository {
     db: Arc<Mutex<SqliteConnection>>,
 }
 
-impl Repository<Item> for ItemRepository {
+impl Repository<Item, NewItem> for ItemRepository {
     fn get_all(&self) -> std::result::Result<Vec<Item>, AppError> {
         todo!()
     }
@@ -17,7 +17,7 @@ impl Repository<Item> for ItemRepository {
         todo!()
     }
 
-    fn insert(&self, entity: Item) -> std::result::Result<i32, AppError> {
+    fn insert(&self, entity: NewItem) -> std::result::Result<i32, AppError> {
         todo!()
     }
 
