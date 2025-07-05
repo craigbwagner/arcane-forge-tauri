@@ -11,7 +11,8 @@ use crate::traits::repository::Repository;
 //     let characters = repo.get_all();
 // }
 
-pub fn create() -> Result<FullCharacterData, AppError> {
-    let new_character = character_mapper::new()?;
+pub fn create(state: State<'_, AppState>) -> Result<FullCharacterData, AppError> {
+    let new_character_data = character_mapper::new()?;
+    let new_character = CharacterRepository::insert(&state.db, new_character_data)?;
     character_mapper::db_to_dto(new_character)
 }

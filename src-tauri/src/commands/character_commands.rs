@@ -13,14 +13,14 @@ use crate::services::character_service;
 // }
 
 #[tauri::command]
-pub async fn create_character() -> Result<FullCharacterData, AppError> {
-    character_service::create()
+pub async fn create_character(state: State<'_, AppState>) -> Result<FullCharacterData, AppError> {
+    character_service::create(state)
 }
 
 #[tauri::command]
 async fn save_character(
     data: FullCharacterData,
-    app_state: State<'_, AppState>,
+    state: State<'_, AppState>,
 ) -> Result<i32, AppError> {
-    character_service::save_new(data, app_state)
+    character_service::save(data, state)
 }
