@@ -1,48 +1,52 @@
 use std::sync::{Arc, Mutex};
 
-use diesel::SqliteConnection;
+use diesel::{SelectableHelper, SqliteConnection};
 
-use crate::{errors::AppError, models::character::Character, traits::repository::Repository};
+use crate::{
+    errors::AppError,
+    models::character::{Character, NewCharacter},
+    schema::characters,
+    traits::repository::Repository,
+};
 
-pub struct CharacterRepository {
-    db: Arc<Mutex<SqliteConnection>>,
-}
+pub struct CharacterRepository;
 
-impl Repository<Character> for CharacterRepository {
-    fn get_all(&self) -> Result<Vec<Character>, AppError> {
+impl Repository<Character, NewCharacter> for CharacterRepository {
+    fn get_all(conn: &Arc<Mutex<SqliteConnection>>) -> Result<Vec<Character>, AppError> {
         todo!()
     }
 
-    fn get_by_id(&self, id: i32) -> Result<Option<Character>, AppError> {
+    fn get_by_id(
+        conn: &Arc<Mutex<SqliteConnection>>,
+        id: i32,
+    ) -> Result<Option<Character>, AppError> {
         todo!()
     }
 
-    fn insert(&self, character: Character) -> Result<i32, AppError> {
+    fn insert(
+        conn: &Arc<Mutex<SqliteConnection>>,
+        character: NewCharacter,
+    ) -> Result<i32, AppError> {
+        let mut conn = Self::get_connection(conn)?;
+
+        diesel::insert_into(characters::table)
+            .values(character)
+            .returning(Character::as_returning())
+            .get_result(&mut *conn)
+    }
+
+    fn update(conn: &Arc<Mutex<SqliteConnection>>, entity: Character) -> Result<(), AppError> {
         todo!()
     }
 
-    fn update(&self, entity: Character) -> Result<(), AppError> {
+    fn delete(conn: &Arc<Mutex<SqliteConnection>>, id: i32) -> Result<(), AppError> {
         todo!()
     }
 
-    fn delete(&self, id: i32) -> Result<(), AppError> {
-        todo!()
-    }
-}
-
-impl CharacterRepository {
-    // fn with_connection<T, F>(&self, f: F) -> Result<T, AppError>
-    // where
-    //     F: FnOnce(&SqliteConnection) -> Result<T, AppError>,
-    // {
-    //     let conn = self
-    //         .db
-    //         .lock()
-    //         .map_err(|e| AppError::DatabaseConnectionError(e.to_string()))?;
-    //     f(&*conn)
-    // }
-
-    pub fn new(db: Arc<Mutex<SqliteConnection>>) -> Self {
-        Self { db }
+    fn get_connection(
+        conn: &Arc<Mutex<SqliteConnection>>,
+    ) -> Result<std::sync::MutexGuard<'_, SqliteConnection>, AppError> {
+        conn.lock()
+            .map_err(|e| AppError::DatabaseOperationError(format!("Lock error: {}", e)))
     }
 }
