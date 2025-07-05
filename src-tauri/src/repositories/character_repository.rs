@@ -47,11 +47,4 @@ impl Repository<Character, NewCharacter> for CharacterRepository {
     fn delete(conn: &Arc<Mutex<SqliteConnection>>, id: i32) -> Result<(), AppError> {
         todo!()
     }
-
-    fn get_connection(
-        conn: &Arc<Mutex<SqliteConnection>>,
-    ) -> Result<std::sync::MutexGuard<'_, SqliteConnection>, AppError> {
-        conn.lock()
-            .map_err(|e| AppError::DatabaseOperationError(format!("Lock error: {}", e)))
-    }
 }
