@@ -8,28 +8,16 @@ use crate::errors::AppError;
 
 pub const MIGRATIONS: EmbeddedMigrations = embed_migrations!("migrations/");
 
-pub struct Database {
-    connection: Arc<Mutex<SqliteConnection>>,
-}
+pub fn initialize() -> Result<Arc<Mutex<SqliteConnection>>, AppError> {
+    dotenv().ok();
 
-impl Database {
-    pub fn new() -> Result<Self, AppError> {
-        dotenv().ok();
+    let database_url = var("DATABASE_URL").unwrap_or_else(|_| "arcane-forge.db".to_string());
+    let mut connection = SqliteConnection::establish(&database_url)
+        .map_err(|e| AppError::DatabaseConnectionError(e.to_string()))?;
 
-        let database_url = var("DATABASE_URL").expect("DATABASE_URL must be set.");
-        let mut connection = SqliteConnection::establish(&database_url)
-            .map_err(|e| AppError::DatabaseConnectionError(e.to_string()))?;
+    connection
+        .run_pending_migrations(MIGRATIONS)
+        .map_err(|e| AppError::DatabaseOperationError(e.to_string()))?;
 
-        connection
-            .run_pending_migrations(MIGRATIONS)
-            .map_err(|e| AppError::DatabaseConnectionError(e.to_string()))?;
-
-        Ok(Database {
-            connection: Arc::new(Mutex::new(connection)),
-        })
-    }
-
-    pub fn get_connection(&self) -> Arc<Mutex<SqliteConnection>> {
-        Arc::clone(&self.connection)
-    }
+    Ok(Arc::new(Mutex::new(connection)))
 }
