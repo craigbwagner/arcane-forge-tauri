@@ -11,25 +11,25 @@ use crate::models::character::{Character, NewCharacter};
 pub fn new() -> Result<NewCharacter, AppError> {
     let now = Utc::now();
 
-    let ability_scores = initial_ability_scores();
-    let skills = initial_skills();
     let basic_description = serde_json::to_string(&initial_basic_description())?;
-    let combat_stats = initial_combat_stats();
-    let languages = Vec::<String>::new();
-    let kill_list = Vec::<String>::new();
+    let combat_stats = serde_json::to_string(&initial_combat_stats())?;
+    let languages = serde_json::to_string(&Vec::<String>::new())?;
+    let ability_scores = serde_json::to_string(&initial_ability_scores())?;
+    let skills = serde_json::to_string(&initial_skills())?;
+    let kill_list = serde_json::to_string(&Vec::<String>::new())?;
 
     let new_character = NewCharacter {
         name: String::new(),
         creator: String::new(),
         basic_description,
-        levels: todo!(),
-        combat_stats: todo!(),
-        languages: todo!(),
-        ability_scores: todo!(),
-        skills: todo!(),
-        kill_list: todo!(),
-        created_at: todo!(),
-        updated_at: todo!(),
+        levels: String::new(),
+        combat_stats,
+        languages,
+        ability_scores,
+        skills,
+        kill_list,
+        created_at: now.to_string(),
+        updated_at: now.to_string(),
     };
 
     Ok(new_character)
