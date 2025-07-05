@@ -1,3 +1,6 @@
+use tauri::State;
+
+use crate::app_state::AppState;
 use crate::dtos::character_dtos::FullCharacterData;
 use crate::errors::AppError;
 use crate::repositories::character_repository::CharacterRepository;
@@ -9,10 +12,6 @@ use crate::traits::repository::Repository;
 // }
 
 pub fn create() -> Result<FullCharacterData, AppError> {
-    character_mapper::new()
-}
-
-pub fn save_new(data: FullCharacterData, repo: &CharacterRepository) -> Result<i32, AppError> {
-    let character_db_model = character_mapper::dto_to_db(data)?;
-    repo.insert(character_db_model)
+    let new_character = character_mapper::new()?;
+    character_mapper::db_to_dto(new_character)
 }
