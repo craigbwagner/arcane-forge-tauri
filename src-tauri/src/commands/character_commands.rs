@@ -18,9 +18,9 @@ pub async fn create_character(state: State<'_, AppState>) -> Result<FullCharacte
 }
 
 #[tauri::command]
-async fn save_character(
+async fn update_character(
     data: FullCharacterData,
     state: State<'_, AppState>,
-) -> Result<i32, AppError> {
-    character_service::save(data, state)
+) -> Result<FullCharacterData, AppError> {
+    character_service::update(data, state)
 }
