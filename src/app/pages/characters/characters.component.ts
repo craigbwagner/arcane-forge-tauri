@@ -1,20 +1,46 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
+import { CommonModule } from "@angular/common";
 import { invoke } from "@tauri-apps/api/core";
 import { FullCharacterData } from "../../types/character/FullCharacterData";
+import { CharacterService } from "../../services/character.service";
 
 @Component({
   selector: "app-characters",
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: "./characters.component.html",
   styleUrl: "./characters.component.css",
 })
-export class CharactersComponent {
-  async fetchCharacters(): Promise<FullCharacterData> {
-    return await invoke("get_all_characters");
+export class CharactersComponent implements OnInit {
+  characters: FullCharacterData[] = [];
+  loading = false;
+  error: string | null = null;
+
+  constructor(private characterService: CharacterService) {}
+
+  async ngOnInit() {
+    await this.loadCharacters();
   }
 
-  async createCharacter(): Promise<FullCharacterData> {
-    return await invoke("create_character");
+  async loadCharacters() {
+    this.loading = true;
+    this.error = null;
+
+    try {
+      this.characters = await this.characterService.getAll();
+    } catch (e) {
+      this.error = "Failed to load characters.";
+      console.error(this.error);
+    } finally {
+      this.loading = false;
+    }
+  }
+
+  async refreshCharacters() {
+    await this.loadCharacters();
+  }
+
+  async createCharacter() {
+    await this.characterService.create();
   }
 }
