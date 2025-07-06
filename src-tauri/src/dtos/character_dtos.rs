@@ -2,7 +2,8 @@ use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 use ts_rs::TS;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, TS)]
+#[ts(export)]
 pub enum Ability {
     Strength,
     Dexterity,
@@ -12,7 +13,8 @@ pub enum Ability {
     Charisma,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, TS)]
+#[ts(export)]
 pub enum Alignment {
     LawfulGood,
     NeutralGood,
@@ -45,7 +47,8 @@ impl std::fmt::Display for Alignment {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
+#[derive(Serialize, Deserialize, Debug, PartialEq, Clone, TS)]
+#[ts(export)]
 pub enum Size {
     Tiny,
     Small,
@@ -55,7 +58,8 @@ pub enum Size {
     Gargantuan,
 }
 
-#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
+#[derive(Serialize, Deserialize, Debug, PartialEq, Clone, TS)]
+#[ts(export)]
 pub enum Sex {
     Male,
     Female,
