@@ -9,7 +9,8 @@ import { Service } from "../types/Service";
 export class CharacterService implements Service {
   public async getAll(): Promise<FullCharacterData[]> {
     try {
-      return await invoke<FullCharacterData[]>("get_all_characters");
+      let characters = await invoke<FullCharacterData[]>("get_all_characters");
+      return characters;
     } catch (e) {
       console.error("Failed to fetch characters:", e);
       throw e;
@@ -17,6 +18,12 @@ export class CharacterService implements Service {
   }
 
   public async create(): Promise<FullCharacterData> {
-    throw new Error("Method not implemented.");
+    try {
+      let newCharacter = await invoke<FullCharacterData>("create_character");
+      return newCharacter;
+    } catch (e) {
+      console.error("Failed to create new character:", e);
+      throw e;
+    }
   }
 }
