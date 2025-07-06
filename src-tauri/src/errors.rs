@@ -10,14 +10,16 @@ pub enum AppError {
     DatabaseOperationError(String),
     #[error("Mapping operation failed: {0}")]
     MappingError(String),
-    #[error("Character creation failed: {0}")]
-    CharacterCreationError(String),
-    #[error("Failed to save character: {0}")]
-    CharacterSaveError(String),
+    #[error("Data serialization failed: {0}")]
+    SerializationError(String),
+    #[error("Entity creation failed: {0}")]
+    EntityCreationError(String),
+    #[error("Failed to save entity: {0}")]
+    EntitySaveError(String),
 }
 
-impl From<rusqlite::Error> for AppError {
-    fn from(err: rusqlite::Error) -> Self {
-        AppError::DatabaseOperationError(err.to_string())
+impl From<serde_json::Error> for AppError {
+    fn from(e: serde_json::Error) -> Self {
+        AppError::SerializationError(e.to_string())
     }
 }

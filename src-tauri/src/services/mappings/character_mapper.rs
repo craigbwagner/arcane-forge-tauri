@@ -1,4 +1,4 @@
-use chrono::Utc;
+use chrono::{DateTime, Utc};
 
 use crate::dtos::character_dtos::{
     Ability, AbilityScore, Alignment, BasicDescription, CharacterClassDetails, CharacterDetails,
@@ -6,73 +6,88 @@ use crate::dtos::character_dtos::{
     FullCharacterData, Sex, Size, Skill,
 };
 use crate::errors::AppError;
-use crate::models::character::Character;
+use crate::models::character::{Character, NewCharacter};
 
-pub fn new() -> Result<FullCharacterData, AppError> {
+pub fn new() -> Result<NewCharacter, AppError> {
     let now = Utc::now();
 
-    let ability_scores = initial_ability_scores();
-    let skills = initial_skills();
-    let basic_description = initial_basic_description();
-    let combat_stats = initial_combat_stats();
-    let languages = Vec::<String>::new();
-    let kill_list = Vec::<String>::new();
+    let basic_description = serde_json::to_string(&initial_basic_description())?;
+    let combat_stats = serde_json::to_string(&initial_combat_stats())?;
+    let languages = serde_json::to_string(&Vec::<String>::new())?;
+    let ability_scores = serde_json::to_string(&initial_ability_scores())?;
+    let skills = serde_json::to_string(&initial_skills())?;
+    let kill_list = serde_json::to_string(&Vec::<String>::new())?;
 
-    let character_details = CharacterDetails {
-        id: None,
+    let new_character = NewCharacter {
         name: String::new(),
         creator: String::new(),
         basic_description,
+        levels: String::new(),
+        combat_stats,
         languages,
         ability_scores,
-        combat_stats,
         skills,
         kill_list,
-        created_at: now,
-        updated_at: now,
-    };
-
-    let new_character = FullCharacterData {
-        character: character_details,
-        classes: Vec::<CharacterClassDetails>::new(),
-        items: Vec::<CharacterItemDetails>::new(),
-        additional_features: Vec::<CharacterFeatureDetails>::new(),
-        spells: Vec::<CharacterSpellDetails>::new(),
+        created_at: now.to_string(),
+        updated_at: now.to_string(),
     };
 
     Ok(new_character)
 }
 
-pub fn dto_to_db(data: FullCharacterData) -> Result<Character, AppError> {
-    let basic_decription_json = serde_json::to_string(&data.character.basic_description)
-        .map_err(|e| AppError::CharacterSaveError(e.to_string()))?;
-    let combat_stats_json = serde_json::to_string(&data.character.combat_stats)
-        .map_err(|e| AppError::CharacterSaveError(e.to_string()))?;
-    let languages_json = serde_json::to_string(&data.character.languages)
-        .map_err(|e| AppError::CharacterSaveError(e.to_string()))?;
-    let ability_scores_json = serde_json::to_string(&data.character.ability_scores)
-        .map_err(|e| AppError::CharacterSaveError(e.to_string()))?;
-    let skills_json = serde_json::to_string(&data.character.skills)
-        .map_err(|e| AppError::CharacterSaveError(e.to_string()))?;
-    let kill_list_json = serde_json::to_string(&data.character.kill_list)
-        .map_err(|e| AppError::CharacterSaveError(e.to_string()))?;
-    let now = Utc::now().to_rfc3339();
+// pub fn dto_to_db(data: FullCharacterData) -> Result<Character, AppError> {
+//     let basic_decription_json = serde_json::to_string(&data.character.basic_description)?;
+//     let combat_stats_json = serde_json::to_string(&data.character.combat_stats)?;
+//     let languages_json = serde_json::to_string(&data.character.languages)?;
+//     let ability_scores_json = serde_json::to_string(&data.character.ability_scores)?;
+//     let skills_json = serde_json::to_string(&data.character.skills)?;
+//     let kill_list_json = serde_json::to_string(&data.character.kill_list)?;
+//     let now = Utc::now().to_rfc3339();
 
-    let db_character = Character {
-        id: None,
-        name: data.character.name.clone(),
-        creator: data.character.creator.clone(),
-        basic_description: basic_decription_json,
-        combat_stats: combat_stats_json,
-        languages: languages_json,
-        ability_scores: ability_scores_json,
-        skills: skills_json,
-        kill_list: kill_list_json,
-        created_at: data.character.created_at.to_rfc3339(),
-        updated_at: now,
+//     let db_character = Character {
+//         id: None,
+//         name: data.character.name.clone(),
+//         creator: data.character.creator.clone(),
+//         basic_description: basic_decription_json,
+//         combat_stats: combat_stats_json,
+//         languages: languages_json,
+//         ability_scores: ability_scores_json,
+//         skills: skills_json,
+//         kill_list: kill_list_json,
+//         created_at: data.character.created_at.to_rfc3339(),
+//         updated_at: now,
+//     };
+
+//     Ok(db_character)
+// }
+
+pub fn db_to_dto(data: &Character) -> Result<FullCharacterData, AppError> {
+    let basic_description: BasicDescription = serde_json::from_str(&data.basic_description)?;
+    let combat_stats: CombatStats = serde_json::from_str(&data.combat_stats)?;
+    let languages: Vec<String> = serde_json::from_str(&data.languages)?;
+    let ability_scores: [AbilityScore; 6] = serde_json::from_str(&data.ability_scores)?;
+    let skills: [Skill; 18] = serde_json::from_str(&data.skills)?;
+    let kill_list: Vec<String> = serde_json::from_str(&data.kill_list)?;
+    let created_at: DateTime<Utc> = serde_json::from_str(&data.created_at)?;
+    let updated_at: DateTime<Utc> = serde_json::from_str(&data.updated_at)?;
+
+    let character_response = FullCharacterData {
+        character: CharacterDetails {
+            id: data.id,
+            name: data.name.clone(),
+            creator: data.creator.clone(),
+            basic_description,
+            combat_stats,
+            languages,
+            ability_scores,
+            skills,
+            kill_list,
+            created_at,
+            updated_at,
+        },
     };
 
-    Ok(db_character)
+    Ok(character_response)
 }
 
 fn initial_ability_scores() -> [AbilityScore; 6] {

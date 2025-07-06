@@ -1,7 +1,4 @@
-use crate::{
-    app_state::AppState, commands::character_commands,
-    repositories::character_repository::CharacterRepository,
-};
+use crate::{app_state::AppState, commands::character_commands};
 
 mod app_state;
 mod commands;
@@ -10,6 +7,7 @@ mod dtos;
 mod errors;
 mod models;
 mod repositories;
+mod schema;
 mod services;
 mod traits;
 
@@ -19,15 +17,14 @@ pub fn run() -> Result<(), color_eyre::Report> {
 
     let database = db::initialize()?;
 
-    let app_state = AppState {
-        character_repo: CharacterRepository::new(database.clone()),
-    };
+    let state = AppState { db: database };
 
     tauri::Builder::default()
-        .manage(app_state)
+        .manage(state)
         .plugin(tauri_plugin_opener::init())
         .invoke_handler(tauri::generate_handler![
-            character_commands::create_character
+            character_commands::create_character,
+            character_commands::get_all_characters
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

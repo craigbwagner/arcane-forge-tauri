@@ -1,5 +1,7 @@
-use crate::repositories::character_repository::CharacterRepository;
+use std::sync::{Arc, Mutex};
+
+use diesel::SqliteConnection;
 
 pub struct AppState {
-    pub character_repo: CharacterRepository,
+    pub db: Arc<Mutex<SqliteConnection>>,
 }
