@@ -61,7 +61,7 @@ pub fn new() -> Result<NewCharacter, AppError> {
 //     Ok(db_character)
 // }
 
-pub fn db_to_dto(data: Character) -> Result<FullCharacterData, AppError> {
+pub fn db_to_dto(data: &Character) -> Result<FullCharacterData, AppError> {
     let basic_description: BasicDescription = serde_json::from_str(&data.basic_description)?;
     let combat_stats: CombatStats = serde_json::from_str(&data.combat_stats)?;
     let languages: Vec<String> = serde_json::from_str(&data.languages)?;
@@ -74,8 +74,8 @@ pub fn db_to_dto(data: Character) -> Result<FullCharacterData, AppError> {
     let character_response = FullCharacterData {
         character: CharacterDetails {
             id: data.id,
-            name: data.name,
-            creator: data.creator,
+            name: data.name.clone(),
+            creator: data.creator.clone(),
             basic_description,
             combat_stats,
             languages,
