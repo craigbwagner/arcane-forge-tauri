@@ -1,6 +1,6 @@
 use std::sync::{Arc, Mutex};
 
-use diesel::{RunQueryDsl, SelectableHelper, SqliteConnection};
+use diesel::{QueryDsl, RunQueryDsl, SelectableHelper, SqliteConnection};
 
 use crate::{
     errors::AppError,
@@ -13,7 +13,12 @@ pub struct CharacterRepository;
 
 impl Repository<Character, NewCharacter> for CharacterRepository {
     fn get_all(conn: &Arc<Mutex<SqliteConnection>>) -> Result<Vec<Character>, AppError> {
-        todo!()
+        let mut conn = Self::get_connection(conn)?;
+
+        characters::table
+            .select(Character::as_select())
+            .load(&mut *conn)
+            .map_err(|e| AppError::DatabaseOperationError(e.to_string()))
     }
 
     fn get_by_id(
