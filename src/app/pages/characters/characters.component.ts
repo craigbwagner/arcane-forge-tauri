@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { invoke } from "@tauri-apps/api/core";
 import { FullCharacterData } from "../../types/character/FullCharacterData";
 import { CharacterService } from "../../services/character.service";
 
