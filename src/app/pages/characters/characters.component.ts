@@ -1,6 +1,6 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, inject, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { RouterModule } from "@angular/router";
+import { Router, RouterModule } from "@angular/router";
 import { FullCharacterData } from "../../types/character/FullCharacterData";
 import { CharacterService } from "../../services/character.service";
 
@@ -12,6 +12,7 @@ import { CharacterService } from "../../services/character.service";
   styleUrl: "./characters.component.css",
 })
 export class CharactersComponent implements OnInit {
+  private router = inject(Router);
   characters: FullCharacterData[] = [];
   loading = false;
   error: string | null = null;
@@ -41,6 +42,7 @@ export class CharactersComponent implements OnInit {
   }
 
   async createCharacter() {
-    await this.characterService.create();
+    let newCharacter = await this.characterService.create();
+    this.router.navigate(['/character', newCharacter.character.id])
   }
 }
