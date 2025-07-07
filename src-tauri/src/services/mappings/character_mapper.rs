@@ -19,7 +19,7 @@ pub fn new() -> Result<NewCharacter, AppError> {
     let kill_list = serde_json::to_string(&Vec::<String>::new())?;
 
     let new_character = NewCharacter {
-        name: String::new(),
+        name: "New Character".to_string(),
         creator: String::new(),
         basic_description,
         levels: String::new(),
@@ -69,10 +69,8 @@ pub fn db_to_dto(data: &Character) -> Result<FullCharacterData, AppError> {
     let skills: [Skill; 18] = serde_json::from_str(&data.skills)?;
     let kill_list: Vec<String> = serde_json::from_str(&data.kill_list)?;
 
-    let created_at = DateTime::parse_from_rfc3339(&data.created_at)?
-            .with_timezone(&Utc);
-    let updated_at = DateTime::parse_from_rfc3339(&data.updated_at)?
-            .with_timezone(&Utc);
+    let created_at = DateTime::parse_from_rfc3339(&data.created_at)?.with_timezone(&Utc);
+    let updated_at = DateTime::parse_from_rfc3339(&data.updated_at)?.with_timezone(&Utc);
 
     let character_response = FullCharacterData {
         character: CharacterDetails {
