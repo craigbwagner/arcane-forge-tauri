@@ -17,8 +17,7 @@
 
     <div *ngIf="!loading && !error" class="characters-grid">
       <div *ngFor="let character of characters" class="character-card">
-        <h3>{{ character.character.name }}</h3>
-        <p>Creator: {{ character.character.creator }}</p>
+        <h3><a [routerLink]="['/character', character.character.id]" class="router-link">{{ character.character.name }}</a></h3>
         <p>ID: {{ character.character.id }}</p>
       </div>
     </div>
