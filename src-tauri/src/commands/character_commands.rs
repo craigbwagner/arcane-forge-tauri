@@ -1,4 +1,4 @@
-use tauri::{App, State};
+use tauri::State;
 
 use crate::app_state::AppState;
 use crate::dtos::character_dtos::FullCharacterData;
