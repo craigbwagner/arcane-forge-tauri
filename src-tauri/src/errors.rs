@@ -16,10 +16,18 @@ pub enum AppError {
     EntityCreationError(String),
     #[error("Failed to save entity: {0}")]
     EntitySaveError(String),
+    #[error("Date parsing error: {0}")]
+    DateParseError(String),
 }
 
 impl From<serde_json::Error> for AppError {
     fn from(e: serde_json::Error) -> Self {
         AppError::SerializationError(e.to_string())
+    }
+}
+
+impl From<chrono::ParseError> for AppError {
+    fn from(e: chrono::ParseError) -> Self {
+        AppError::DateParseError(e.to_string())
     }
 }

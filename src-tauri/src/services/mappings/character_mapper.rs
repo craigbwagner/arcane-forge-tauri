@@ -9,7 +9,7 @@ use crate::errors::AppError;
 use crate::models::character::{Character, NewCharacter};
 
 pub fn new() -> Result<NewCharacter, AppError> {
-    let now = Utc::now();
+    let now = Utc::now().to_rfc3339();
 
     let basic_description = serde_json::to_string(&initial_basic_description())?;
     let combat_stats = serde_json::to_string(&initial_combat_stats())?;
@@ -19,7 +19,7 @@ pub fn new() -> Result<NewCharacter, AppError> {
     let kill_list = serde_json::to_string(&Vec::<String>::new())?;
 
     let new_character = NewCharacter {
-        name: String::new(),
+        name: "New Character".to_string(),
         creator: String::new(),
         basic_description,
         levels: String::new(),
@@ -28,8 +28,8 @@ pub fn new() -> Result<NewCharacter, AppError> {
         ability_scores,
         skills,
         kill_list,
-        created_at: now.to_string(),
-        updated_at: now.to_string(),
+        created_at: now.clone(),
+        updated_at: now.clone(),
     };
 
     Ok(new_character)
@@ -68,8 +68,9 @@ pub fn db_to_dto(data: &Character) -> Result<FullCharacterData, AppError> {
     let ability_scores: [AbilityScore; 6] = serde_json::from_str(&data.ability_scores)?;
     let skills: [Skill; 18] = serde_json::from_str(&data.skills)?;
     let kill_list: Vec<String> = serde_json::from_str(&data.kill_list)?;
-    let created_at: DateTime<Utc> = serde_json::from_str(&data.created_at)?;
-    let updated_at: DateTime<Utc> = serde_json::from_str(&data.updated_at)?;
+
+    let created_at = DateTime::parse_from_rfc3339(&data.created_at)?.with_timezone(&Utc);
+    let updated_at = DateTime::parse_from_rfc3339(&data.updated_at)?.with_timezone(&Utc);
 
     let character_response = FullCharacterData {
         character: CharacterDetails {

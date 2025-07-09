@@ -1,4 +1,29 @@
 <div class="heading-container">
-  <h1>Your Characters</h1>
   <button (click)="createCharacter()">New Character</button>
+  <div class="characters-container">
+    <h2>Characters</h2>
+
+    <button (click)="refreshCharacters()" [disabled]="loading">
+      Refresh
+    </button>
+
+    <div *ngIf="loading" class="loading">
+      Loading characters...
+    </div>
+
+    <div *ngIf="error" class="error">
+      {{ error }}
+    </div>
+
+    <div *ngIf="!loading && !error" class="characters-grid">
+      <div *ngFor="let character of characters" class="character-card">
+        <h3><a [routerLink]="['/character', character.character.id]" class="router-link">{{ character.character.name }}</a></h3>
+        <p>ID: {{ character.character.id }}</p>
+      </div>
+    </div>
+
+    <div *ngIf="!loading && !error && characters.length === 0" class="no-characters">
+      No characters found.
+    </div>
+  </div>
 </div>

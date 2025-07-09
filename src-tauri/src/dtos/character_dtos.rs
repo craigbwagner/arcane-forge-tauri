@@ -1,7 +1,9 @@
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
+use ts_rs::TS;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, TS)]
+#[ts(export, export_to = "../../src/app/types/character/")]
 pub enum Ability {
     Strength,
     Dexterity,
@@ -11,7 +13,8 @@ pub enum Ability {
     Charisma,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, TS)]
+#[ts(export, export_to = "../../src/app/types/character/")]
 pub enum Alignment {
     LawfulGood,
     NeutralGood,
@@ -44,7 +47,8 @@ impl std::fmt::Display for Alignment {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
+#[derive(Serialize, Deserialize, Debug, PartialEq, Clone, TS)]
+#[ts(export, export_to = "../../src/app/types/character/")]
 pub enum Size {
     Tiny,
     Small,
@@ -54,7 +58,8 @@ pub enum Size {
     Gargantuan,
 }
 
-#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
+#[derive(Serialize, Deserialize, Debug, PartialEq, Clone, TS)]
+#[ts(export, export_to = "../../src/app/types/character/")]
 pub enum Sex {
     Male,
     Female,
@@ -62,7 +67,8 @@ pub enum Sex {
     Unspecified,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, TS)]
+#[ts(export, export_to = "../../src/app/types/character/")]
 pub struct BasicDescription {
     pub race: String,
     pub sex: Sex,
@@ -73,7 +79,8 @@ pub struct BasicDescription {
     pub alignment: Alignment,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, TS)]
+#[ts(export, export_to = "../../src/app/types/character/")]
 pub struct CombatStats {
     pub initiative_mods: u8,
     pub speed: u8,
@@ -84,7 +91,8 @@ pub struct CombatStats {
     pub hit_dice_remaining: u8,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, TS)]
+#[ts(export, export_to = "../../src/app/types/character/")]
 pub struct AbilityScore {
     pub name: String,
     pub short_name: String,
@@ -92,7 +100,8 @@ pub struct AbilityScore {
     pub score: u8,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, TS)]
+#[ts(export, export_to = "../../src/app/types/character/")]
 pub struct Skill {
     pub name: String,
     pub is_proficient: bool,
@@ -100,12 +109,14 @@ pub struct Skill {
     pub ability_name: Ability,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, TS)]
+#[ts(export, export_to = "../../src/app/types/character/")]
 pub struct FullCharacterData {
     pub character: CharacterDetails,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, TS)]
+#[ts(export, export_to = "../../src/app/types/character/")]
 pub struct CharacterDetails {
     pub id: i32,
     pub name: String,
@@ -116,7 +127,9 @@ pub struct CharacterDetails {
     pub ability_scores: [AbilityScore; 6],
     pub skills: [Skill; 18],
     pub kill_list: Vec<String>,
+    #[ts(type = "string")]
     pub created_at: DateTime<Utc>,
+    #[ts(type = "string")]
     pub updated_at: DateTime<Utc>,
 }
 
@@ -176,4 +189,15 @@ pub struct CharacterSpellDetails {
     pub range: String,
     pub duration: String,
     pub description: String,
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn export_bindings() {
+        FullCharacterData::export().unwrap();
+        CharacterDetails::export().unwrap();
+    }
 }
