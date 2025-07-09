@@ -2,6 +2,7 @@ import { Routes } from "@angular/router";
 import { AppComponent } from "./app.component";
 import { DashboardComponent } from "./pages/dashboard/dashboard.component";
 import { CharactersComponent } from "./pages/characters/characters.component";
+import { CharacterSheetComponent } from "./character-sheet/character-sheet.component";
 
 export const routes: Routes = [
   {
@@ -16,5 +17,9 @@ export const routes: Routes = [
   {
     path: 'characters',
     component: CharactersComponent
+  },
+  {
+    path: 'character/:id',
+    component: CharacterSheetComponent
   }
 ];
