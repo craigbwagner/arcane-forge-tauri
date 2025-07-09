@@ -4,4 +4,42 @@ import type { BasicDescription } from "./BasicDescription";
 import type { CombatStats } from "./CombatStats";
 import type { Skill } from "./Skill";
 
-export type CharacterDetails = { id: number, name: string, creator: string, basic_description: BasicDescription, combat_stats: CombatStats, languages: Array<string>, ability_scores: [AbilityScore, AbilityScore, AbilityScore, AbilityScore, AbilityScore, AbilityScore], skills: [Skill, Skill, Skill, Skill, Skill, Skill, Skill, Skill, Skill, Skill, Skill, Skill, Skill, Skill, Skill, Skill, Skill, Skill], kill_list: Array<string>, created_at: string, updated_at: string, };
+export type CharacterDetails = {
+	id: number;
+	name: string;
+	creator: string;
+	basic_description: BasicDescription;
+	combat_stats: CombatStats;
+	languages: Array<string>;
+	ability_scores: [
+		AbilityScore,
+		AbilityScore,
+		AbilityScore,
+		AbilityScore,
+		AbilityScore,
+		AbilityScore
+	];
+	skills: [
+		Skill,
+		Skill,
+		Skill,
+		Skill,
+		Skill,
+		Skill,
+		Skill,
+		Skill,
+		Skill,
+		Skill,
+		Skill,
+		Skill,
+		Skill,
+		Skill,
+		Skill,
+		Skill,
+		Skill,
+		Skill
+	];
+	kill_list: Array<string>;
+	created_at: string;
+	updated_at: string;
+};
