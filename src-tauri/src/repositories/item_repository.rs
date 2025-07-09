@@ -20,7 +20,7 @@ impl Repository<Item, NewItem> for ItemRepository {
     fn get_by_id(
         conn: &Arc<Mutex<SqliteConnection>>,
         id: i32,
-    ) -> std::result::Result<Option<Item>, AppError> {
+    ) -> std::result::Result<Item, AppError> {
         todo!()
     }
 
