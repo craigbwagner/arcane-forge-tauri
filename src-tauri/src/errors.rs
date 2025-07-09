@@ -12,6 +12,8 @@ pub enum AppError {
     MappingError(String),
     #[error("Data serialization failed: {0}")]
     SerializationError(String),
+    #[error("Entity not found: {0}")]
+    EntityNotFoundError(String),
     #[error("Entity creation failed: {0}")]
     EntityCreationError(String),
     #[error("Failed to save entity: {0}")]
