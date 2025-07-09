@@ -1,0 +1,65 @@
+<div class="character-sheet">
+      <div class="character-header">
+        <h2 class="character-name">{{ character.name }}</h2>
+        <div class="character-basic-info">
+          <span class="info-item">{{ character.race }} {{ character.class }}</span>
+          <span class="info-item">Level {{ character.level }}</span>
+          <span class="info-item">{{ character.background }}</span>
+          <span class="info-item">{{ character.alignment }}</span>
+        </div>
+      </div>
+
+      <div class="character-stats">
+        <div class="stat-group">
+          <div class="stat-card">
+            <h4>Hit Points</h4>
+            <div class="stat-value">{{ character.hitPoints.current }} / {{ character.hitPoints.maximum }}</div>
+          </div>
+          <div class="stat-card">
+            <h4>Armor Class</h4>
+            <div class="stat-value">{{ character.armorClass }}</div>
+          </div>
+          <div class="stat-card">
+            <h4>Speed</h4>
+            <div class="stat-value">{{ character.speed }} ft</div>
+          </div>
+          <div class="stat-card">
+            <h4>Proficiency Bonus</h4>
+            <div class="stat-value">+{{ character.proficiencyBonus }}</div>
+          </div>
+        </div>
+
+        <div class="abilities-section">
+          <h3>Ability Scores</h3>
+          <div class="abilities-grid">
+            <div class="ability-score" *ngFor="let ability of getAbilities()">
+              <div class="ability-name">{{ ability.name }}</div>
+              <div class="ability-value">{{ ability.score }}</div>
+              <div class="ability-modifier">{{ getModifier(ability.score) }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="proficiencies-section">
+          <div class="proficiency-group">
+            <h4>Saving Throws</h4>
+            <div class="proficiency-list">
+              <span *ngFor="let save of character.savingThrows; let last = last"
+                    class="proficiency-item">
+                {{ save }}<span *ngIf="!last">, </span>
+              </span>
+            </div>
+          </div>
+
+          <div class="proficiency-group">
+            <h4>Skills</h4>
+            <div class="proficiency-list">
+              <span *ngFor="let skill of character.skills; let last = last"
+                    class="proficiency-item">
+                {{ skill }}<span *ngIf="!last">, </span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
