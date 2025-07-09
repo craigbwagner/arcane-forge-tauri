@@ -21,10 +21,7 @@ impl Repository<Character, NewCharacter> for CharacterRepository {
             .map_err(|e| AppError::DatabaseOperationError(e.to_string()))
     }
 
-    fn get_by_id(
-        conn: &Arc<Mutex<SqliteConnection>>,
-        id: i32,
-    ) -> Result<Option<Character>, AppError> {
+    fn get_by_id(conn: &Arc<Mutex<SqliteConnection>>, id: i32) -> Result<Character, AppError> {
         todo!()
     }
 
