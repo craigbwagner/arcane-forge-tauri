@@ -15,6 +15,11 @@ pub fn get_all(state: State<'_, AppState>) -> Result<Vec<FullCharacterData>, App
         .collect()
 }
 
+pub fn get_by_id(state: State<'_, AppState>, id: i32) -> Result<FullCharacterData, AppError> {
+    let character = CharacterRepository::get_by_id(&state.db, id)?;
+    character_mapper::db_to_dto(&character)
+}
+
 pub fn create(state: State<'_, AppState>) -> Result<FullCharacterData, AppError> {
     let new_character_data = character_mapper::new()?;
     let new_character = CharacterRepository::insert(&state.db, new_character_data)?;
