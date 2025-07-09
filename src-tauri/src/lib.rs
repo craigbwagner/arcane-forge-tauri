@@ -23,8 +23,9 @@ pub fn run() -> Result<(), color_eyre::Report> {
         .manage(state)
         .plugin(tauri_plugin_opener::init())
         .invoke_handler(tauri::generate_handler![
+            character_commands::get_all_characters,
+            character_commands::get_character_by_id,
             character_commands::create_character,
-            character_commands::get_all_characters
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
