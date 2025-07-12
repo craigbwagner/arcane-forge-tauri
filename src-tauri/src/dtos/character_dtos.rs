@@ -112,12 +112,6 @@ pub struct Skill {
 #[derive(Serialize, Deserialize, Debug, TS)]
 #[ts(export, export_to = "../../src/app/types/character/")]
 pub struct FullCharacterData {
-    pub character: CharacterDetails,
-}
-
-#[derive(Serialize, Deserialize, Debug, TS)]
-#[ts(export, export_to = "../../src/app/types/character/")]
-pub struct CharacterDetails {
     pub id: i32,
     pub name: String,
     pub creator: String,
@@ -198,6 +192,5 @@ mod tests {
     #[test]
     fn export_bindings() {
         FullCharacterData::export().unwrap();
-        CharacterDetails::export().unwrap();
     }
 }
