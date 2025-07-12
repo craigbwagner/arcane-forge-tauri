@@ -1,65 +1,48 @@
-<div class="character-sheet">
-      <div class="character-header">
-        <h2 class="character-name">{{ character.name }}</h2>
-        <div class="character-basic-info">
-          <span class="info-item">{{ character.race }} {{ character.class }}</span>
-          <span class="info-item">Level {{ character.level }}</span>
-          <span class="info-item">{{ character.background }}</span>
-          <span class="info-item">{{ character.alignment }}</span>
-        </div>
-      </div>
+<div class="character-container">
+  <!-- Loading State -->
+  <div *ngIf="loading()">
+    <p>Loading character details...</p>
+  </div>
 
-      <div class="character-stats">
-        <div class="stat-group">
-          <div class="stat-card">
-            <h4>Hit Points</h4>
-            <div class="stat-value">{{ character.hitPoints.current }} / {{ character.hitPoints.maximum }}</div>
-          </div>
-          <div class="stat-card">
-            <h4>Armor Class</h4>
-            <div class="stat-value">{{ character.armorClass }}</div>
-          </div>
-          <div class="stat-card">
-            <h4>Speed</h4>
-            <div class="stat-value">{{ character.speed }} ft</div>
-          </div>
-          <div class="stat-card">
-            <h4>Proficiency Bonus</h4>
-            <div class="stat-value">+{{ character.proficiencyBonus }}</div>
-          </div>
-        </div>
+  <!-- Error State -->
+  <div *ngIf="error() && !loading()" class="error-message">
+    <p>{{ error() }}</p>
+  </div>
 
-        <div class="abilities-section">
-          <h3>Ability Scores</h3>
-          <div class="abilities-grid">
-            <div class="ability-score" *ngFor="let ability of getAbilities()">
-              <div class="ability-name">{{ ability.name }}</div>
-              <div class="ability-value">{{ ability.score }}</div>
-              <div class="ability-modifier">{{ getModifier(ability.score) }}</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="proficiencies-section">
-          <div class="proficiency-group">
-            <h4>Saving Throws</h4>
-            <div class="proficiency-list">
-              <span *ngFor="let save of character.savingThrows; let last = last"
-                    class="proficiency-item">
-                {{ save }}<span *ngIf="!last">, </span>
-              </span>
-            </div>
-          </div>
-
-          <div class="proficiency-group">
-            <h4>Skills</h4>
-            <div class="proficiency-list">
-              <span *ngFor="let skill of character.skills; let last = last"
-                    class="proficiency-item">
-                {{ skill }}<span *ngIf="!last">, </span>
-              </span>
-            </div>
-          </div>
-        </div>
+  <!-- Success State with template variable -->
+  <div *ngIf="character() as char" class="character-details">
+    <div class="character-header">
+      <h1>{{ char.name }}</h1>
+      <div class="character-basics">
+        <span>{{ char.basicDescription.race }}</span>
       </div>
     </div>
+
+    <div class="character-stats">
+      <div class="stat-group">
+        <h3>Basic Stats</h3>
+        <p>HP: {{ char.combatStats.currentHp }}/{{ char.combatStats.maxHp }}</p>
+        <p>Speed: {{ char.combatStats.speed }} ft</p>
+      </div>
+
+      <div class="abilities">
+        <h3>Abilities</h3>
+        <div class="ability-grid" *ngFor="let ability of char.abilityScores; let last = last">
+          <div class="ability">
+            <span>{{ ability.shortName }}</span>
+            <span>{{ ability.score }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skills -->
+      <div class="skills-section">
+        <h3>Skills</h3>
+        <ul>
+          <li *ngFor="let skill of char.skills">{{ skill }}</li>
+        </ul>
+
+      </div>
+    </div>
+  </div>
+</div>
