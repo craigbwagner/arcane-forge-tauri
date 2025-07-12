@@ -1,28 +1,47 @@
-import { Component } from '@angular/core';
-import { FullCharacterData } from '../../types/character/FullCharacterData';
+import { Component, effect, inject, OnInit, signal } from "@angular/core";
+import { FullCharacterData } from "../../types/character/FullCharacterData";
+import { CommonModule } from "@angular/common";
+import { ActivatedRoute, Router, RouterModule } from "@angular/router";
+import { CharacterService } from "../../services/character.service";
+import { toSignal } from "@angular/core/rxjs-interop";
 
 @Component({
-  selector: 'app-character-details-display',
-  standalone: true,
-  imports: [],
-  templateUrl: './character-details-display.component.html',
-  styleUrl: './character-details-display.component.css'
+	selector: "app-character-details-display",
+	standalone: true,
+	imports: [CommonModule, RouterModule],
+	templateUrl: "./character-details-display.component.html",
+	styleUrl: "./character-details-display.component.css",
 })
-export class CharacterDetailsDisplayComponent {
+export class CharacterDetailsDisplayComponent implements OnInit {
+	private router = inject(Router);
+	private activatedRoute = inject(ActivatedRoute);
+	private characterService = inject(CharacterService);
+	private routeParams = toSignal(this.activatedRoute.paramMap);
 
-  // getAbilities(): Array<{name: string, score: number}> {
-  //   return [
-  //     { name: 'STR', score: this.character.abilities.strength },
-  //     { name: 'DEX', score: this.character.abilities.dexterity },
-  //     { name: 'CON', score: this.character.abilities.constitution },
-  //     { name: 'INT', score: this.character.abilities.intelligence },
-  //     { name: 'WIS', score: this.character.abilities.wisdom },
-  //     { name: 'CHA', score: this.character.abilities.charisma }
-  //   ];
-  // }
+	character = signal<FullCharacterData | undefined>(undefined);
+	loading = signal(false);
+	error = signal<string | null>(null);
 
-  getModifier(score: number): string {
-    const modifier = Math.floor((score - 10) / 2);
-    return modifier >= 0 ? `+${modifier}` : `${modifier}`;
-  }
+	ngOnInit() {
+		const params = this.routeParams();
+		const id = params?.get("id");
+		if (id) {
+			this.loadCharacter(+id);
+		}
+	}
+
+	async loadCharacter(id: number) {
+		this.loading.set(true);
+		this.error.set(null);
+
+		try {
+			const character = await this.characterService.getById(id);
+			this.character.set(character);
+		} catch (e) {
+			this.error.set("Failed to load character.");
+			console.error(e);
+		} finally {
+			this.loading.set(false);
+		}
+	}
 }
