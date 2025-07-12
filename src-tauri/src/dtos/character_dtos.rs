@@ -48,7 +48,6 @@ impl std::fmt::Display for Alignment {
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq, Clone, TS)]
-#[serde(rename_all = "camelCase")]
 #[ts(export, export_to = "../../src/app/types/character/")]
 pub enum Size {
     Tiny,
@@ -60,7 +59,6 @@ pub enum Size {
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq, Clone, TS)]
-#[serde(rename_all = "camelCase")]
 #[ts(export, export_to = "../../src/app/types/character/")]
 pub enum Sex {
     Male,

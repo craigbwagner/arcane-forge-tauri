@@ -2,7 +2,7 @@
 
 export type AbilityScore = {
 	name: string;
-	short_name: string;
-	is_proficient: boolean;
+	shortName: string;
+	isProficient: boolean;
 	score: number;
 };
