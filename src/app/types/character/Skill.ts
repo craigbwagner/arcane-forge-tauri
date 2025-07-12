@@ -3,7 +3,7 @@ import type { Ability } from "./Ability";
 
 export type Skill = {
 	name: string;
-	is_proficient: boolean;
-	has_expertise: boolean;
-	ability_name: Ability;
+	isProficient: boolean;
+	hasExpertise: boolean;
+	abilityName: Ability;
 };
