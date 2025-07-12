@@ -1,7 +1,7 @@
 use chrono::{DateTime, Utc};
 
 use crate::dtos::character_dtos::{
-    Ability, AbilityScore, Alignment, BasicDescription, CharacterClassDetails, CharacterDetails,
+    Ability, AbilityScore, Alignment, BasicDescription, CharacterClassDetails,
     CharacterFeatureDetails, CharacterItemDetails, CharacterSpellDetails, CombatStats,
     FullCharacterData, Sex, Size, Skill,
 };
@@ -73,19 +73,17 @@ pub fn db_to_dto(data: &Character) -> Result<FullCharacterData, AppError> {
     let updated_at = DateTime::parse_from_rfc3339(&data.updated_at)?.with_timezone(&Utc);
 
     let character_response = FullCharacterData {
-        character: CharacterDetails {
-            id: data.id,
-            name: data.name.clone(),
-            creator: data.creator.clone(),
-            basic_description,
-            combat_stats,
-            languages,
-            ability_scores,
-            skills,
-            kill_list,
-            created_at,
-            updated_at,
-        },
+        id: data.id,
+        name: data.name.clone(),
+        creator: data.creator.clone(),
+        basic_description,
+        combat_stats,
+        languages,
+        ability_scores,
+        skills,
+        kill_list,
+        created_at,
+        updated_at,
     };
 
     Ok(character_response)
