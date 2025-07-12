@@ -48,6 +48,7 @@ impl std::fmt::Display for Alignment {
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq, Clone, TS)]
+#[serde(rename_all = "camelCase")]
 #[ts(export, export_to = "../../src/app/types/character/")]
 pub enum Size {
     Tiny,
@@ -59,6 +60,7 @@ pub enum Size {
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq, Clone, TS)]
+#[serde(rename_all = "camelCase")]
 #[ts(export, export_to = "../../src/app/types/character/")]
 pub enum Sex {
     Male,
@@ -68,6 +70,7 @@ pub enum Sex {
 }
 
 #[derive(Serialize, Deserialize, Debug, TS)]
+#[serde(rename_all = "camelCase")]
 #[ts(export, export_to = "../../src/app/types/character/")]
 pub struct BasicDescription {
     pub race: String,
@@ -80,6 +83,7 @@ pub struct BasicDescription {
 }
 
 #[derive(Serialize, Deserialize, Debug, TS)]
+#[serde(rename_all = "camelCase")]
 #[ts(export, export_to = "../../src/app/types/character/")]
 pub struct CombatStats {
     pub initiative_mods: u8,
@@ -92,6 +96,7 @@ pub struct CombatStats {
 }
 
 #[derive(Serialize, Deserialize, Debug, TS)]
+#[serde(rename_all = "camelCase")]
 #[ts(export, export_to = "../../src/app/types/character/")]
 pub struct AbilityScore {
     pub name: String,
@@ -101,6 +106,7 @@ pub struct AbilityScore {
 }
 
 #[derive(Serialize, Deserialize, Debug, TS)]
+#[serde(rename_all = "camelCase")]
 #[ts(export, export_to = "../../src/app/types/character/")]
 pub struct Skill {
     pub name: String,
@@ -110,6 +116,7 @@ pub struct Skill {
 }
 
 #[derive(Serialize, Deserialize, Debug, TS)]
+#[serde(rename_all = "camelCase")]
 #[ts(export, export_to = "../../src/app/types/character/")]
 pub struct FullCharacterData {
     pub id: i32,
@@ -136,6 +143,7 @@ pub enum HitDiceType {
 }
 
 #[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct CharacterClassDetails {
     pub class_name: String,
     pub level: u8,
@@ -144,12 +152,14 @@ pub struct CharacterClassDetails {
 }
 
 #[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct CharacterInventory {
     pub character_id: i32,
     pub items: Vec<CharacterItemDetails>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct CharacterItemDetails {
     pub item_name: String,
     pub description: String,
@@ -163,6 +173,7 @@ pub struct CharacterItemDetails {
 }
 
 #[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct CharacterFeatureDetails {
     pub feature_name: String,
     pub description: String,
@@ -172,6 +183,7 @@ pub struct CharacterFeatureDetails {
 }
 
 #[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct CharacterSpellDetails {
     pub spell_name: String,
     pub level: i32,
