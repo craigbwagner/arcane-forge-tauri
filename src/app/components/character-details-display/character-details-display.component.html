@@ -27,8 +27,8 @@
 
       <div class="abilities">
         <h3>Abilities</h3>
-        <div class="ability-grid" *ngFor="let ability of char.abilityScores; let last = last">
-          <div class="ability">
+        <div class="ability-grid">
+          <div class="ability" *ngFor="let ability of char.abilityScores; let last = last">
             <span>{{ ability.shortName }}</span>
             <span>{{ ability.score }}</span>
           </div>
