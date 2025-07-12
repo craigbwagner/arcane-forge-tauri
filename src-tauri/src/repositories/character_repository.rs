@@ -22,7 +22,13 @@ impl Repository<Character, NewCharacter> for CharacterRepository {
     }
 
     fn get_by_id(conn: &Arc<Mutex<SqliteConnection>>, id: i32) -> Result<Character, AppError> {
-        todo!()
+        let mut conn = Self::get_connection(conn)?;
+
+        characters::table.find(id).first(&mut *conn).map_err(|_| {
+            AppError::DatabaseOperationError(
+                "Could not find character with the provided ID in database.".to_string(),
+            )
+        })
     }
 
     fn insert(
@@ -35,7 +41,7 @@ impl Repository<Character, NewCharacter> for CharacterRepository {
             .values(character)
             .returning(Character::as_returning())
             .get_result(&mut *conn)
-            .map_err(|e| {
+            .map_err(|_| {
                 AppError::DatabaseOperationError(
                     "Could not insert new character into database.".to_string(),
                 )
