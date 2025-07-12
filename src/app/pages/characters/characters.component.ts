@@ -43,6 +43,6 @@ export class CharactersComponent implements OnInit {
 
   async createCharacter() {
     let newCharacter = await this.characterService.create();
-    this.router.navigate(['/character', newCharacter.character.id])
+    this.router.navigate(["/character", newCharacter.id]);
   }
 }
