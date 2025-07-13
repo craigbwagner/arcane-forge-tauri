@@ -3,6 +3,26 @@ use serde::{Deserialize, Serialize};
 use ts_rs::TS;
 
 #[derive(Serialize, Deserialize, Debug, TS)]
+#[serde(rename_all = "camelCase")]
+#[ts(export, export_to = "../../src/app/types/character/")]
+pub struct FullCharacterData {
+    pub id: i32,
+    pub name: String,
+    pub creator: String,
+    pub proficiency_bonus: u8,
+    pub basic_description: BasicDescription,
+    pub combat_stats: CombatStats,
+    pub languages: Vec<String>,
+    pub ability_scores: [AbilityScore; 6],
+    pub skills: [Skill; 18],
+    pub kill_list: Vec<String>,
+    #[ts(type = "string")]
+    pub created_at: DateTime<Utc>,
+    #[ts(type = "string")]
+    pub updated_at: DateTime<Utc>,
+}
+
+#[derive(Serialize, Deserialize, Debug, TS)]
 #[ts(export, export_to = "../../src/app/types/character/")]
 pub enum Ability {
     Strength,
@@ -115,26 +135,6 @@ pub struct Skill {
     pub has_expertise: bool,
     pub ability_name: Ability,
     pub additional_mods: u8,
-}
-
-#[derive(Serialize, Deserialize, Debug, TS)]
-#[serde(rename_all = "camelCase")]
-#[ts(export, export_to = "../../src/app/types/character/")]
-pub struct FullCharacterData {
-    pub id: i32,
-    pub name: String,
-    pub creator: String,
-    pub proficiency_bonus: u8,
-    pub basic_description: BasicDescription,
-    pub combat_stats: CombatStats,
-    pub languages: Vec<String>,
-    pub ability_scores: [AbilityScore; 6],
-    pub skills: [Skill; 18],
-    pub kill_list: Vec<String>,
-    #[ts(type = "string")]
-    pub created_at: DateTime<Utc>,
-    #[ts(type = "string")]
-    pub updated_at: DateTime<Utc>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
