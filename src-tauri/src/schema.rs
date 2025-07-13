@@ -6,7 +6,6 @@ diesel::table! {
         name -> Text,
         creator -> Text,
         basic_description -> Text,
-        levels -> Text,
         combat_stats -> Text,
         languages -> Text,
         ability_scores -> Text,
