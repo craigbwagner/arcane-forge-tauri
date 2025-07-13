@@ -101,6 +101,8 @@ pub struct AbilityScore {
     pub short_name: String,
     pub is_proficient: bool,
     pub score: u8,
+    pub base_modifier: u8,
+    pub additional_mods: u8,
 }
 
 #[derive(Serialize, Deserialize, Debug, TS)]
