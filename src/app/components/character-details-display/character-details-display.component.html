@@ -39,7 +39,10 @@
       <div class="skills-section">
         <h3>Skills</h3>
         <ul>
-          <li *ngFor="let skill of char.skills">{{ skill }}</li>
+          <li class="skill-row" *ngFor="let skill of char.skills">
+            <span>{{skill.name}}</span>
+            <span>{{skill.abilityName}}</span>
+          </li>
         </ul>
 
       </div>
