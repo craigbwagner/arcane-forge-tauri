@@ -84,6 +84,7 @@ pub struct BasicDescription {
 #[serde(rename_all = "camelCase")]
 #[ts(export, export_to = "../../src/app/types/character/")]
 pub struct CombatStats {
+    pub initiative: u8,
     pub initiative_mods: u8,
     pub speed: u8,
     pub speed_mods: u8,
