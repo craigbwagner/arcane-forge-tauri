@@ -5,11 +5,12 @@ import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { CharacterService } from '../../services/character.service';
 import { FullCharacterData } from '../../types/character/FullCharacterData';
 import { CommonModule } from '@angular/common';
+import { SkillsDisplayComponent } from "../../components/skills-display/skills-display.component";
 
 @Component({
   selector: 'app-character-sheet',
   standalone: true,
-  imports: [CharacterDetailsDisplayComponent, RouterModule, CommonModule],
+  imports: [CharacterDetailsDisplayComponent, RouterModule, CommonModule, SkillsDisplayComponent],
   templateUrl: './character-sheet.component.html',
   styleUrl: './character-sheet.component.css'
 })
