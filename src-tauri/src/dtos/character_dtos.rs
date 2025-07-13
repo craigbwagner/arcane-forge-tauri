@@ -124,6 +124,7 @@ pub struct FullCharacterData {
     pub id: i32,
     pub name: String,
     pub creator: String,
+    pub proficiency_bonus: u8,
     pub basic_description: BasicDescription,
     pub combat_stats: CombatStats,
     pub languages: Vec<String>,
