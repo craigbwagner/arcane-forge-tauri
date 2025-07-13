@@ -1,5 +1,5 @@
 <div class="character-container">
-  <div *ngIf="character() as char" class="character-details">
+  <div *ngIf="character as char" class="character-details">
     <div class="character-header">
       <h1>{{ char.name }}</h1>
       <div class="character-basics">
@@ -24,17 +24,6 @@
         </div>
       </div>
 
-      <!-- Skills -->
-      <div class="skills-section">
-        <h3>Skills</h3>
-        <ul>
-          <li class="skill-row" *ngFor="let skill of char.skills">
-            <span>{{skill.name}}</span>
-            <span>{{skill.abilityName}}</span>
-          </li>
-        </ul>
-
-      </div>
     </div>
   </div>
 </div>

@@ -10,5 +10,5 @@ import { CommonModule } from "@angular/common";
 	styleUrl: "./character-details-display.component.css",
 })
 export class CharacterDetailsDisplayComponent{
-  @Input() character!: WritableSignal<FullCharacterData | undefined>;
+  @Input() character!: FullCharacterData;
 }
