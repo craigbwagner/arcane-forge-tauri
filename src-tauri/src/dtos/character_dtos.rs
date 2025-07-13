@@ -113,6 +113,7 @@ pub struct Skill {
     pub is_proficient: bool,
     pub has_expertise: bool,
     pub ability_name: Ability,
+    pub additional_mods: u8,
 }
 
 #[derive(Serialize, Deserialize, Debug, TS)]
