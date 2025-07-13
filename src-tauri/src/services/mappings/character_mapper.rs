@@ -22,7 +22,6 @@ pub fn new() -> Result<NewCharacter, AppError> {
         name: "New Character".to_string(),
         creator: String::new(),
         basic_description,
-        levels: String::new(),
         combat_stats,
         languages,
         ability_scores,
