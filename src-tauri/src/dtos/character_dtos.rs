@@ -9,6 +9,7 @@ pub struct FullCharacterData {
     pub id: i32,
     pub name: String,
     pub creator: String,
+    #[serde(skip_deserializing)]
     pub proficiency_bonus: u8,
     pub basic_description: BasicDescription,
     pub combat_stats: CombatStats,
@@ -104,6 +105,7 @@ pub struct BasicDescription {
 #[serde(rename_all = "camelCase")]
 #[ts(export, export_to = "../../src/app/types/character/")]
 pub struct CombatStats {
+    #[serde(skip_deserializing)]
     pub initiative: u8,
     pub initiative_mods: u8,
     pub speed: u8,
@@ -121,8 +123,11 @@ pub struct AbilityScore {
     pub short_name: String,
     pub is_proficient: bool,
     pub score: u8,
-    pub base_modifier: u8,
     pub additional_mods: u8,
+    #[serde(skip_deserializing)]
+    pub base_modifier: u8,
+    #[serde(skip_deserializing)]
+    pub total_mod: u8,
 }
 
 #[derive(Serialize, Deserialize, Debug, TS)]
@@ -134,6 +139,8 @@ pub struct Skill {
     pub has_expertise: bool,
     pub ability_name: Ability,
     pub additional_mods: u8,
+    #[serde(skip_deserializing)]
+    pub total_mod: u8,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
