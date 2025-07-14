@@ -1,4 +1,4 @@
-import { Component, Input, WritableSignal } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FullCharacterData } from '../../types/character/FullCharacterData';
 import { CommonModule } from '@angular/common';
 
