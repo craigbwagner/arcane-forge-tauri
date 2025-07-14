@@ -8,6 +8,7 @@ export type FullCharacterData = {
 	id: number;
 	name: string;
 	creator: string;
+	proficiencyBonus: number;
 	basicDescription: BasicDescription;
 	combatStats: CombatStats;
 	languages: Array<string>;
