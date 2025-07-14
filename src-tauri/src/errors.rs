@@ -20,6 +20,8 @@ pub enum AppError {
     EntitySaveError(String),
     #[error("Date parsing error: {0}")]
     DateParseError(String),
+    #[error("Validation error: {0}")]
+    ValidationError(String),
 }
 
 impl From<serde_json::Error> for AppError {
