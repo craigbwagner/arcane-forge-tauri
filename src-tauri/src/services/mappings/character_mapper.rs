@@ -135,7 +135,7 @@ fn initial_ability_scores() -> [AbilityScore; 6] {
         total_mod: 0,
     };
     let charisma = AbilityScore {
-        name: "Charism".into(),
+        name: "Charisma".into(),
         short_name: "CHA".into(),
         is_proficient: false,
         score: 10,
