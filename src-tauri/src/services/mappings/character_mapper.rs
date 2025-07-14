@@ -97,6 +97,7 @@ fn initial_ability_scores() -> [AbilityScore; 6] {
         score: 10,
         base_modifier: 0,
         additional_mods: 0,
+        total_mod: 0,
     };
     let dexterity = AbilityScore {
         name: "Dexterity".into(),
@@ -105,6 +106,7 @@ fn initial_ability_scores() -> [AbilityScore; 6] {
         score: 10,
         base_modifier: 0,
         additional_mods: 0,
+        total_mod: 0,
     };
     let constitution = AbilityScore {
         name: "Constitution".into(),
@@ -113,6 +115,7 @@ fn initial_ability_scores() -> [AbilityScore; 6] {
         score: 10,
         base_modifier: 0,
         additional_mods: 0,
+        total_mod: 0,
     };
     let intelligence = AbilityScore {
         name: "Intelligence".into(),
@@ -121,6 +124,7 @@ fn initial_ability_scores() -> [AbilityScore; 6] {
         score: 10,
         base_modifier: 0,
         additional_mods: 0,
+        total_mod: 0,
     };
     let wisdom = AbilityScore {
         name: "Wisdom".into(),
@@ -129,6 +133,7 @@ fn initial_ability_scores() -> [AbilityScore; 6] {
         score: 10,
         base_modifier: 0,
         additional_mods: 0,
+        total_mod: 0,
     };
     let charisma = AbilityScore {
         name: "Charism".into(),
@@ -137,6 +142,7 @@ fn initial_ability_scores() -> [AbilityScore; 6] {
         score: 10,
         base_modifier: 0,
         additional_mods: 0,
+        total_mod: 0,
     };
 
     [
@@ -156,6 +162,7 @@ fn initial_skills() -> [Skill; 18] {
         is_proficient: false,
         has_expertise: false,
         additional_mods: 0,
+        total_mod: 0,
     };
     let animal_handling = Skill {
         name: "Animal Handling".into(),
@@ -163,6 +170,7 @@ fn initial_skills() -> [Skill; 18] {
         is_proficient: false,
         has_expertise: false,
         additional_mods: 0,
+        total_mod: 0,
     };
     let arcana = Skill {
         name: "Arcana".into(),
@@ -170,6 +178,7 @@ fn initial_skills() -> [Skill; 18] {
         is_proficient: false,
         has_expertise: false,
         additional_mods: 0,
+        total_mod: 0,
     };
     let athletics = Skill {
         name: "Athletics".into(),
@@ -177,6 +186,7 @@ fn initial_skills() -> [Skill; 18] {
         is_proficient: false,
         has_expertise: false,
         additional_mods: 0,
+        total_mod: 0,
     };
     let deception = Skill {
         name: "Deception".into(),
@@ -184,6 +194,7 @@ fn initial_skills() -> [Skill; 18] {
         is_proficient: false,
         has_expertise: false,
         additional_mods: 0,
+        total_mod: 0,
     };
     let history = Skill {
         name: "History".into(),
@@ -191,6 +202,7 @@ fn initial_skills() -> [Skill; 18] {
         is_proficient: false,
         has_expertise: false,
         additional_mods: 0,
+        total_mod: 0,
     };
     let insight = Skill {
         name: "Insight".into(),
@@ -198,6 +210,7 @@ fn initial_skills() -> [Skill; 18] {
         is_proficient: false,
         has_expertise: false,
         additional_mods: 0,
+        total_mod: 0,
     };
     let intimidation = Skill {
         name: "Intimidation".into(),
@@ -205,6 +218,7 @@ fn initial_skills() -> [Skill; 18] {
         is_proficient: false,
         has_expertise: false,
         additional_mods: 0,
+        total_mod: 0,
     };
     let investigation = Skill {
         name: "Investigation".into(),
@@ -212,6 +226,7 @@ fn initial_skills() -> [Skill; 18] {
         is_proficient: false,
         has_expertise: false,
         additional_mods: 0,
+        total_mod: 0,
     };
     let medicine = Skill {
         name: "Medicine".into(),
@@ -219,6 +234,7 @@ fn initial_skills() -> [Skill; 18] {
         is_proficient: false,
         has_expertise: false,
         additional_mods: 0,
+        total_mod: 0,
     };
     let nature = Skill {
         name: "Nature".into(),
@@ -226,6 +242,7 @@ fn initial_skills() -> [Skill; 18] {
         is_proficient: false,
         has_expertise: false,
         additional_mods: 0,
+        total_mod: 0,
     };
     let perception = Skill {
         name: "Perception".into(),
@@ -233,6 +250,7 @@ fn initial_skills() -> [Skill; 18] {
         is_proficient: false,
         has_expertise: false,
         additional_mods: 0,
+        total_mod: 0,
     };
     let performance = Skill {
         name: "Performance".into(),
@@ -240,6 +258,7 @@ fn initial_skills() -> [Skill; 18] {
         is_proficient: false,
         has_expertise: false,
         additional_mods: 0,
+        total_mod: 0,
     };
     let persuasion = Skill {
         name: "Persuasion".into(),
@@ -247,6 +266,7 @@ fn initial_skills() -> [Skill; 18] {
         is_proficient: false,
         has_expertise: false,
         additional_mods: 0,
+        total_mod: 0,
     };
     let religion = Skill {
         name: "Religion".into(),
@@ -254,6 +274,7 @@ fn initial_skills() -> [Skill; 18] {
         is_proficient: false,
         has_expertise: false,
         additional_mods: 0,
+        total_mod: 0,
     };
     let sleight_of_hand = Skill {
         name: "Sleight of Hand".into(),
@@ -261,6 +282,7 @@ fn initial_skills() -> [Skill; 18] {
         is_proficient: false,
         has_expertise: false,
         additional_mods: 0,
+        total_mod: 0,
     };
     let stealth = Skill {
         name: "Stealth".into(),
@@ -268,6 +290,7 @@ fn initial_skills() -> [Skill; 18] {
         is_proficient: false,
         has_expertise: false,
         additional_mods: 0,
+        total_mod: 0,
     };
     let survival = Skill {
         name: "Survival".into(),
@@ -275,6 +298,7 @@ fn initial_skills() -> [Skill; 18] {
         is_proficient: false,
         has_expertise: false,
         additional_mods: 0,
+        total_mod: 0,
     };
 
     [
@@ -316,7 +340,6 @@ fn initial_combat_stats() -> CombatStats {
         initiative: 0,
         initiative_mods: 0,
         speed: 30,
-        speed_mods: 0,
         max_hp: 0,
         current_hp: 0,
         temp_hp: 0,
