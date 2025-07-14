@@ -5,4 +5,7 @@ export type AbilityScore = {
 	shortName: string;
 	isProficient: boolean;
 	score: number;
+	additionalMods: number;
+	baseModifier: number;
+	totalMod: number;
 };
