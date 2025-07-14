@@ -107,7 +107,6 @@ pub struct CombatStats {
     pub initiative: u8,
     pub initiative_mods: u8,
     pub speed: u8,
-    pub speed_mods: u8,
     pub max_hp: u16,
     pub current_hp: u16,
     pub temp_hp: u8,
