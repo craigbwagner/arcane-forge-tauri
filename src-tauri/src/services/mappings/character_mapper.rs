@@ -1,9 +1,8 @@
 use chrono::{DateTime, Utc};
 
 use crate::dtos::character_dtos::{
-    Ability, AbilityScore, Alignment, BasicDescription, CharacterClassDetails,
-    CharacterFeatureDetails, CharacterItemDetails, CharacterSpellDetails, CombatStats,
-    FullCharacterData, Sex, Size, Skill,
+    Ability, AbilityScore, Alignment, BasicDescription, CombatStats, FullCharacterData, Sex, Size,
+    Skill,
 };
 use crate::errors::AppError;
 use crate::models::character::{Character, NewCharacter};
