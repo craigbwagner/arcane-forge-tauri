@@ -195,8 +195,19 @@ pub struct Skill {
 }
 
 impl Skill {
-    pub fn calculate_total_modifier(&mut self, ability_modifier: u8, proficiency_bonus: u8) {
-        let mut total = ability_modifier + self.additional_mods;
+    pub fn calculate_total_modifier(
+        &mut self,
+        abilities: &[AbilityScore; 6],
+        proficiency_bonus: u8,
+    ) {
+        let mut total = match self.ability_name {
+            Ability::Strength => abilities[0].total_mod,
+            Ability::Dexterity => abilities[1].total_mod,
+            Ability::Constitution => abilities[2].total_mod,
+            Ability::Intelligence => abilities[3].total_mod,
+            Ability::Wisdom => abilities[4].total_mod,
+            Ability::Charisma => abilities[5].total_mod,
+        };
 
         if self.is_proficient {
             total += proficiency_bonus;
@@ -204,6 +215,8 @@ impl Skill {
                 total += proficiency_bonus;
             }
         }
+
+        total += self.additional_mods;
 
         self.total_mod = total;
     }
