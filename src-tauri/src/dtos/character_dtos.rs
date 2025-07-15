@@ -23,7 +23,7 @@ pub struct FullCharacterData {
     pub updated_at: DateTime<Utc>,
 }
 
-#[derive(Serialize, Deserialize, Debug, TS)]
+#[derive(Serialize, Deserialize, Debug, PartialEq, TS)]
 #[ts(export, export_to = "../../src/app/types/character/")]
 pub enum Ability {
     Strength,
@@ -282,8 +282,8 @@ pub struct CharacterSpellDetails {
 mod tests {
     use super::*;
 
-    #[test]
     #[ignore]
+    #[test]
     fn export_bindings() {
         FullCharacterData::export().unwrap();
     }
