@@ -194,6 +194,21 @@ pub struct Skill {
     pub total_mod: u8,
 }
 
+impl Skill {
+    pub fn calculate_total_modifier(&mut self, ability_modifier: u8, proficiency_bonus: u8) {
+        let mut total = ability_modifier + self.additional_mods;
+
+        if self.is_proficient {
+            total += proficiency_bonus;
+            if self.has_expertise {
+                total += proficiency_bonus;
+            }
+        }
+
+        self.total_mod = total;
+    }
+}
+
 #[derive(Serialize, Deserialize, Debug)]
 pub enum HitDiceType {
     D6,
