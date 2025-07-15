@@ -8,4 +8,6 @@ export type AbilityScore = {
 	additionalMods: number;
 	baseModifier: number;
 	totalMod: number;
+	save: number;
+	additionalSaveMods: number;
 };
