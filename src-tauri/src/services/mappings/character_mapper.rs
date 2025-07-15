@@ -10,8 +10,8 @@ use crate::models::character::{Character, NewCharacter};
 pub fn new() -> Result<NewCharacter, AppError> {
     let now = Utc::now().to_rfc3339();
 
-    let basic_description = serde_json::to_string(&initial_basic_description())?;
-    let combat_stats = serde_json::to_string(&initial_combat_stats())?;
+    let basic_description = serde_json::to_string(&BasicDescription::default())?;
+    let combat_stats = serde_json::to_string(&CombatStats::default())?;
     let languages = serde_json::to_string(&Vec::<String>::new())?;
     let ability_scores = serde_json::to_string(&initial_ability_scores())?;
     let skills = serde_json::to_string(&initial_skills())?;
@@ -63,9 +63,18 @@ pub fn db_to_dto(data: &Character) -> Result<FullCharacterData, AppError> {
     let basic_description: BasicDescription = serde_json::from_str(&data.basic_description)?;
     let combat_stats: CombatStats = serde_json::from_str(&data.combat_stats)?;
     let languages: Vec<String> = serde_json::from_str(&data.languages)?;
-    let ability_scores: [AbilityScore; 6] = serde_json::from_str(&data.ability_scores)?;
-    let skills: [Skill; 18] = serde_json::from_str(&data.skills)?;
+    let mut ability_scores: [AbilityScore; 6] = serde_json::from_str(&data.ability_scores)?;
+    let mut skills: [Skill; 18] = serde_json::from_str(&data.skills)?;
     let kill_list: Vec<String> = serde_json::from_str(&data.kill_list)?;
+    let proficiency_bonus = 2;
+
+    ability_scores.iter_mut().for_each(|ability| {
+        ability.update_calculated_fields(proficiency_bonus);
+    });
+
+    skills.iter_mut().for_each(|skill| {
+        skill.update_total_modifier(&ability_scores, proficiency_bonus);
+    });
 
     let created_at = DateTime::parse_from_rfc3339(&data.created_at)?.with_timezone(&Utc);
     let updated_at = DateTime::parse_from_rfc3339(&data.updated_at)?.with_timezone(&Utc);
@@ -74,7 +83,7 @@ pub fn db_to_dto(data: &Character) -> Result<FullCharacterData, AppError> {
         id: data.id,
         name: data.name.clone(),
         creator: data.creator.clone(),
-        proficiency_bonus: 2,
+        proficiency_bonus,
         basic_description,
         combat_stats,
         languages,
@@ -97,6 +106,8 @@ fn initial_ability_scores() -> [AbilityScore; 6] {
         base_modifier: 0,
         additional_mods: 0,
         total_mod: 0,
+        additional_save_mods: 0,
+        save: 0,
     };
     let dexterity = AbilityScore {
         name: "Dexterity".into(),
@@ -106,6 +117,8 @@ fn initial_ability_scores() -> [AbilityScore; 6] {
         base_modifier: 0,
         additional_mods: 0,
         total_mod: 0,
+        additional_save_mods: 0,
+        save: 0,
     };
     let constitution = AbilityScore {
         name: "Constitution".into(),
@@ -115,6 +128,8 @@ fn initial_ability_scores() -> [AbilityScore; 6] {
         base_modifier: 0,
         additional_mods: 0,
         total_mod: 0,
+        additional_save_mods: 0,
+        save: 0,
     };
     let intelligence = AbilityScore {
         name: "Intelligence".into(),
@@ -124,6 +139,8 @@ fn initial_ability_scores() -> [AbilityScore; 6] {
         base_modifier: 0,
         additional_mods: 0,
         total_mod: 0,
+        additional_save_mods: 0,
+        save: 0,
     };
     let wisdom = AbilityScore {
         name: "Wisdom".into(),
@@ -133,6 +150,8 @@ fn initial_ability_scores() -> [AbilityScore; 6] {
         base_modifier: 0,
         additional_mods: 0,
         total_mod: 0,
+        additional_save_mods: 0,
+        save: 0,
     };
     let charisma = AbilityScore {
         name: "Charisma".into(),
@@ -142,6 +161,8 @@ fn initial_ability_scores() -> [AbilityScore; 6] {
         base_modifier: 0,
         additional_mods: 0,
         total_mod: 0,
+        additional_save_mods: 0,
+        save: 0,
     };
 
     [
@@ -320,28 +341,4 @@ fn initial_skills() -> [Skill; 18] {
         stealth,
         survival,
     ]
-}
-
-fn initial_basic_description() -> BasicDescription {
-    BasicDescription {
-        race: String::new(),
-        sex: Sex::Unspecified,
-        size: Size::Medium,
-        age: 0,
-        height: String::new(),
-        weight: 0,
-        alignment: Alignment::TrueNeutral,
-    }
-}
-
-fn initial_combat_stats() -> CombatStats {
-    CombatStats {
-        initiative: 0,
-        initiative_mods: 0,
-        speed: 30,
-        max_hp: 0,
-        current_hp: 0,
-        temp_hp: 0,
-        hit_dice_remaining: 0,
-    }
 }
