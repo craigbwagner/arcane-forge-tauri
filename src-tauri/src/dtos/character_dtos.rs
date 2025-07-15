@@ -163,20 +163,16 @@ pub struct AbilityScore {
 }
 
 impl AbilityScore {
-    pub fn calculate_modifier(score: u8, additional_mod: u8) -> u8 {
-        ((score as i8 - 10) / 2).max(0) as u8 + additional_mod
+    pub fn calculate_modifier(score: u8) -> u8 {
+        ((score as i8 - 10) / 2).max(0) as u8
     }
 
-    pub fn calculate_save(
-        modifier: u8,
-        additional_save_mods: u8,
-        is_proficient: bool,
-        proficiency_bonus: u8,
-    ) -> u8 {
-        if is_proficient {
-            modifier + additional_save_mods + proficiency_bonus
+    pub fn update_calculated_fields(&mut self, proficiency_bonus: u8) {
+        self.total_mod = Self::calculate_modifier(self.score) + self.additional_mods;
+        self.save = if self.is_proficient {
+            self.total_mod + self.additional_save_mods + proficiency_bonus
         } else {
-            modifier + additional_save_mods
+            self.total_mod + self.additional_save_mods
         }
     }
 }
