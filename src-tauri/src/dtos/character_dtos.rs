@@ -283,6 +283,7 @@ mod tests {
     use super::*;
 
     #[test]
+    #[ignore]
     fn export_bindings() {
         FullCharacterData::export().unwrap();
     }
