@@ -101,6 +101,20 @@ pub struct BasicDescription {
     pub alignment: Alignment,
 }
 
+impl Default for BasicDescription {
+    fn default() -> Self {
+        Self {
+            race: "Human".to_string(),
+            sex: Sex::Unspecified,
+            size: Size::Medium,
+            age: 25,
+            height: "5'8\"".to_string(),
+            weight: 160,
+            alignment: Alignment::TrueNeutral,
+        }
+    }
+}
+
 #[derive(Serialize, Deserialize, Debug, TS)]
 #[serde(rename_all = "camelCase")]
 #[ts(export, export_to = "../../src/app/types/character/")]
@@ -113,6 +127,20 @@ pub struct CombatStats {
     pub current_hp: u16,
     pub temp_hp: u8,
     pub hit_dice_remaining: u8,
+}
+
+impl Default for CombatStats {
+    fn default() -> Self {
+        Self {
+            initiative: 0,
+            initiative_mods: 0,
+            speed: 30,
+            max_hp: 8,
+            current_hp: 8,
+            temp_hp: 0,
+            hit_dice_remaining: 1,
+        }
+    }
 }
 
 #[derive(Serialize, Deserialize, Debug, TS)]
