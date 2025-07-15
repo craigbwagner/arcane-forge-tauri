@@ -156,6 +156,29 @@ pub struct AbilityScore {
     pub base_modifier: u8,
     #[serde(skip_deserializing)]
     pub total_mod: u8,
+    #[serde(skip_deserializing)]
+    pub save: u8,
+    #[serde(skip_deserializing)]
+    pub additional_save_mods: u8,
+}
+
+impl AbilityScore {
+    pub fn calculate_modifier(score: u8, additional_mod: u8) -> u8 {
+        ((score as i8 - 10) / 2).max(0) as u8 + additional_mod
+    }
+
+    pub fn calculate_save(
+        modifier: u8,
+        additional_save_mods: u8,
+        is_proficient: bool,
+        proficiency_bonus: u8,
+    ) -> u8 {
+        if is_proficient {
+            modifier + additional_save_mods + proficiency_bonus
+        } else {
+            modifier + additional_save_mods
+        }
+    }
 }
 
 #[derive(Serialize, Deserialize, Debug, TS)]
