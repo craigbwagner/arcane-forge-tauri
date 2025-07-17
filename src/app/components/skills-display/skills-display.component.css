@@ -1,0 +1,9 @@
+.skills-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.skill-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
