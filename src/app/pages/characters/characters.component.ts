@@ -5,11 +5,10 @@ import { FullCharacterData } from "../../types/character/FullCharacterData";
 import { CharacterService } from "../../services/character.service";
 
 @Component({
-  selector: "app-characters",
-  standalone: true,
-  imports: [CommonModule, RouterModule],
-  templateUrl: "./characters.component.html",
-  styleUrl: "./characters.component.css",
+    selector: "app-characters",
+    imports: [CommonModule, RouterModule],
+    templateUrl: "./characters.component.html",
+    styleUrl: "./characters.component.css"
 })
 export class CharactersComponent implements OnInit {
   private router = inject(Router);

@@ -8,11 +8,10 @@ import { CommonModule } from '@angular/common';
 import { SkillsDisplayComponent } from "../../components/skills-display/skills-display.component";
 
 @Component({
-  selector: 'app-character-sheet',
-  standalone: true,
-  imports: [CharacterDetailsDisplayComponent, RouterModule, CommonModule, SkillsDisplayComponent],
-  templateUrl: './character-sheet.component.html',
-  styleUrl: './character-sheet.component.css'
+    selector: 'app-character-sheet',
+    imports: [CharacterDetailsDisplayComponent, RouterModule, CommonModule, SkillsDisplayComponent],
+    templateUrl: './character-sheet.component.html',
+    styleUrl: './character-sheet.component.css'
 })
 export class CharacterSheetComponent {
   private router = inject(Router);
