@@ -1,7 +1,10 @@
-<h3>Skills</h3>
-<ul>
-  <li class="skill-row" *ngFor="let skill of character.skills">
-    <span>{{skill.name}}</span>
-    <span>{{skill.abilityName}}</span>
-  </li>
-</ul>
+<section class="skills-section">
+    <h3>Skills</h3>
+    <ul>
+        <li class="skill-row" *ngFor="let skill of character.skills">
+            <span>{{skill.name}}</span>
+            <span>{{skill.abilityName}}</span>
+            <span>{{skill.totalMod}}</span>
+        </li>
+    </ul>
+</section>
