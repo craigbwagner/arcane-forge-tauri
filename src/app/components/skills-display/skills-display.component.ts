@@ -1,10 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { FullCharacterData } from '../../types/character/FullCharacterData';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
     selector: 'app-skills-display',
-    imports: [CommonModule],
+    imports: [],
     templateUrl: './skills-display.component.html',
     styleUrl: './skills-display.component.css'
 })

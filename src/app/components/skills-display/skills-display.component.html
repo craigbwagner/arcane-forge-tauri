@@ -1,11 +1,13 @@
 <section class="skills-section">
-    <h3>Skills</h3>
-    <ul>
-        <li class="skill-row" *ngFor="let skill of character.skills">
-            <span>{{skill.name}}</span>
-            <span>{{skill.abilityName}}</span>
-            <span>{{skill.isProficient}}</span>
-            <span>{{skill.totalMod}}</span>
-        </li>
-    </ul>
+  <h3>Skills</h3>
+  <ul>
+    @for (skill of character.skills; track skill) {
+      <li class="skill-row">
+        <span>{{skill.name}}</span>
+        <span>{{skill.abilityName}}</span>
+        <span>{{skill.isProficient}}</span>
+        <span>{{skill.totalMod}}</span>
+      </li>
+    }
+  </ul>
 </section>

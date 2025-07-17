@@ -7,23 +7,33 @@
       Refresh
     </button>
 
-    <div *ngIf="loading" class="loading">
-      Loading characters...
-    </div>
-
-    <div *ngIf="error" class="error">
-      {{ error }}
-    </div>
-
-    <div *ngIf="!loading && !error" class="characters-grid">
-      <div *ngFor="let character of characters" class="character-card">
-        <h3><a [routerLink]="['/character', character.id]" class="router-link">{{ character.name }}</a></h3>
-        <p>ID: {{ character.id }}</p>
+    @if (loading) {
+      <div class="loading">
+        Loading characters...
       </div>
-    </div>
+    }
 
-    <div *ngIf="!loading && !error && characters.length === 0" class="no-characters">
-      No characters found.
-    </div>
+    @if (error) {
+      <div class="error">
+        {{ error }}
+      </div>
+    }
+
+    @if (!loading && !error) {
+      <div class="characters-grid">
+        @for (character of characters; track character) {
+          <div class="character-card">
+            <h3><a [routerLink]="['/character', character.id]" class="router-link">{{ character.name }}</a></h3>
+            <p>ID: {{ character.id }}</p>
+          </div>
+        }
+      </div>
+    }
+
+    @if (!loading && !error && characters.length === 0) {
+      <div class="no-characters">
+        No characters found.
+      </div>
+    }
   </div>
 </div>

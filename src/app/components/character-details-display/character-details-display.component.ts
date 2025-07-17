@@ -1,10 +1,10 @@
 import { FullCharacterData } from "./../../types/character/FullCharacterData";
 import { Component, Input, WritableSignal } from "@angular/core";
-import { CommonModule } from "@angular/common";
+
 
 @Component({
     selector: "app-character-details-display",
-    imports: [CommonModule],
+    imports: [],
     templateUrl: "./character-details-display.component.html",
     styleUrl: "./character-details-display.component.css"
 })

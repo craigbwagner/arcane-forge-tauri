@@ -1,12 +1,12 @@
 import { Component, inject, OnInit } from "@angular/core";
-import { CommonModule } from "@angular/common";
+
 import { Router, RouterModule } from "@angular/router";
 import { FullCharacterData } from "../../types/character/FullCharacterData";
 import { CharacterService } from "../../services/character.service";
 
 @Component({
     selector: "app-characters",
-    imports: [CommonModule, RouterModule],
+    imports: [RouterModule],
     templateUrl: "./characters.component.html",
     styleUrl: "./characters.component.css"
 })

@@ -1,12 +1,16 @@
 <!-- Loading State -->
-  <div *ngIf="loading()">
+@if (loading()) {
+  <div>
     <p>Loading character details...</p>
   </div>
+}
 
-  <!-- Error State -->
-  <div *ngIf="error() && !loading()" class="error-message">
+<!-- Error State -->
+@if (error() && !loading()) {
+  <div class="error-message">
     <p>{{ error() }}</p>
   </div>
+}
 
 <app-character-details-display [character]="character()!"/>
 <app-skills-display [character]="character()!"/>

@@ -1,29 +1,30 @@
 <div class="character-container">
-  <div *ngIf="character as char" class="character-details">
-    <div class="character-header">
-      <h1>{{ char.name }}</h1>
-      <div class="character-basics">
-        <span>{{ char.basicDescription.race }}</span>
+  @if (character; as char) {
+    <div class="character-details">
+      <div class="character-header">
+        <h1>{{ char.name }}</h1>
+        <div class="character-basics">
+          <span>{{ char.basicDescription.race }}</span>
+        </div>
       </div>
-    </div>
-
-    <div class="character-stats">
-      <div class="stat-group">
-        <h3>Basic Stats</h3>
-        <p>HP: {{ char.combatStats.currentHp }}/{{ char.combatStats.maxHp }}</p>
-        <p>Speed: {{ char.combatStats.speed }} ft</p>
-      </div>
-
-      <div class="abilities">
-        <h3>Abilities</h3>
-        <div class="ability-grid">
-          <div class="ability" *ngFor="let ability of char.abilityScores; let last = last">
-            <span>{{ ability.shortName }}</span>
-            <span>{{ ability.score }}</span>
+      <div class="character-stats">
+        <div class="stat-group">
+          <h3>Basic Stats</h3>
+          <p>HP: {{ char.combatStats.currentHp }}/{{ char.combatStats.maxHp }}</p>
+          <p>Speed: {{ char.combatStats.speed }} ft</p>
+        </div>
+        <div class="abilities">
+          <h3>Abilities</h3>
+          <div class="ability-grid">
+            @for (ability of char.abilityScores; track ability; let last = $last) {
+              <div class="ability">
+                <span>{{ ability.shortName }}</span>
+                <span>{{ ability.score }}</span>
+              </div>
+            }
           </div>
         </div>
       </div>
-
     </div>
-  </div>
+  }
 </div>
