@@ -1,14 +1,15 @@
 import { Component, inject, OnInit } from "@angular/core";
-
 import { Router, RouterModule } from "@angular/router";
 import { FullCharacterData } from "../../types/character/FullCharacterData";
 import { CharacterService } from "../../services/character.service";
 
+import { ButtonModule } from "primeng/button";
+
 @Component({
-    selector: "app-characters",
-    imports: [RouterModule],
-    templateUrl: "./characters.component.html",
-    styleUrl: "./characters.component.css"
+  selector: "app-characters",
+  imports: [RouterModule, ButtonModule],
+  templateUrl: "./characters.component.html",
+  styleUrl: "./characters.component.css",
 })
 export class CharactersComponent implements OnInit {
   private router = inject(Router);
