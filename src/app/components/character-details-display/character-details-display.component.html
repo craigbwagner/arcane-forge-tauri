@@ -1,33 +1,9 @@
 @if (character; as char) {
-<p-card header="{{ char.name }}" class="character-details">
+<p-card class="character-details">
 	<div class="character-header">
 		<h1>{{ char.name }}</h1>
 		<div class="character-basics">
 			<span>{{ char.basicDescription.race }}</span>
-		</div>
-	</div>
-	<div class="character-stats">
-		<div class="stat-group">
-			<h3>Basic Stats</h3>
-			<p>
-				HP: {{ char.combatStats.currentHp }}/{{
-					char.combatStats.maxHp
-				}}
-			</p>
-			<p>Speed: {{ char.combatStats.speed }} ft</p>
-		</div>
-		<div class="abilities">
-			<h3>Abilities</h3>
-			<div class="ability-grid">
-				@for (ability of char.abilityScores; track ability; let last =
-				$last) {
-				<div class="ability">
-					<span>{{ ability.shortName }}</span>
-					<span>{{ ability.score }}</span>
-					<span>{{ ability.totalMod }}</span>
-				</div>
-				}
-			</div>
 		</div>
 	</div>
 </p-card>
