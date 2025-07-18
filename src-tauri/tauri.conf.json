@@ -4,10 +4,10 @@
   "version": "0.1.0",
   "identifier": "com.arcane-forge.app",
   "build": {
-    "beforeDevCommand": "",
-    "devUrl": "http://localhost:1420",
-    "beforeBuildCommand": "pnpm build",
-    "frontendDist": "../dist/arcane-forge/browser",
+    "beforeDevCommand": "pnpm run dev",
+    "devUrl": "http://localhost:5173",
+    "beforeBuildCommand": "pnpm run build",
+    "frontendDist": "../dist",
     "removeUnusedCommands": true
   },
   "app": {

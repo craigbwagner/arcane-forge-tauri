@@ -4,7 +4,7 @@ use ts_rs::TS;
 
 #[derive(Serialize, Deserialize, Debug, TS)]
 #[serde(rename_all = "camelCase")]
-#[ts(export, export_to = "../../src/app/types/character/")]
+#[ts(export, export_to = "../../src/types/character/")]
 pub struct FullCharacterData {
     pub id: i32,
     pub name: String,
@@ -24,7 +24,7 @@ pub struct FullCharacterData {
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq, TS)]
-#[ts(export, export_to = "../../src/app/types/character/")]
+#[ts(export, export_to = "../../src/types/character/")]
 pub enum Ability {
     Strength,
     Dexterity,
@@ -35,7 +35,7 @@ pub enum Ability {
 }
 
 #[derive(Serialize, Deserialize, Debug, TS)]
-#[ts(export, export_to = "../../src/app/types/character/")]
+#[ts(export, export_to = "../../src/types/character/")]
 pub enum Alignment {
     LawfulGood,
     NeutralGood,
@@ -69,7 +69,7 @@ impl std::fmt::Display for Alignment {
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq, Clone, TS)]
-#[ts(export, export_to = "../../src/app/types/character/")]
+#[ts(export, export_to = "../../src/types/character/")]
 pub enum Size {
     Tiny,
     Small,
@@ -80,7 +80,7 @@ pub enum Size {
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq, Clone, TS)]
-#[ts(export, export_to = "../../src/app/types/character/")]
+#[ts(export, export_to = "../../src/types/character/")]
 pub enum Sex {
     Male,
     Female,
@@ -90,7 +90,7 @@ pub enum Sex {
 
 #[derive(Serialize, Deserialize, Debug, TS)]
 #[serde(rename_all = "camelCase")]
-#[ts(export, export_to = "../../src/app/types/character/")]
+#[ts(export, export_to = "../../src/types/character/")]
 pub struct BasicDescription {
     pub race: String,
     pub sex: Sex,
@@ -117,7 +117,7 @@ impl Default for BasicDescription {
 
 #[derive(Serialize, Deserialize, Debug, TS)]
 #[serde(rename_all = "camelCase")]
-#[ts(export, export_to = "../../src/app/types/character/")]
+#[ts(export, export_to = "../../src/types/character/")]
 pub struct CombatStats {
     #[serde(skip_deserializing)]
     pub initiative: u8,
@@ -145,7 +145,7 @@ impl Default for CombatStats {
 
 #[derive(Serialize, Deserialize, Debug, TS)]
 #[serde(rename_all = "camelCase")]
-#[ts(export, export_to = "../../src/app/types/character/")]
+#[ts(export, export_to = "../../src/types/character/")]
 pub struct AbilityScore {
     pub name: String,
     pub short_name: String,
@@ -179,7 +179,7 @@ impl AbilityScore {
 
 #[derive(Serialize, Deserialize, Debug, TS)]
 #[serde(rename_all = "camelCase")]
-#[ts(export, export_to = "../../src/app/types/character/")]
+#[ts(export, export_to = "../../src/types/character/")]
 pub struct Skill {
     pub name: String,
     pub is_proficient: bool,
