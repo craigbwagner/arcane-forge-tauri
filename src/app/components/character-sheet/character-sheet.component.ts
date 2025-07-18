@@ -1,20 +1,25 @@
 import { Component, inject, signal } from '@angular/core';
-import { CharacterDetailsDisplayComponent } from '../../components/character-details-display/character-details-display.component';
+import { CharacterDetailsDisplayComponent } from '../character-details-display/character-details-display.component';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { CharacterService } from '../../services/character.service';
 import { FullCharacterData } from '../../types/character/FullCharacterData';
 
-import { SkillsDisplayComponent } from "../../components/skills-display/skills-display.component";
+import { SkillsDisplayComponent } from "../skills-display/skills-display.component";
 
 @Component({
-    selector: 'app-character-sheet',
-    imports: [CharacterDetailsDisplayComponent, RouterModule, SkillsDisplayComponent],
-    templateUrl: './character-sheet.component.html',
-    styleUrl: './character-sheet.component.css'
+	selector: "app-character-sheet",
+	imports: [
+		CharacterDetailsDisplayComponent,
+		RouterModule,
+		SkillsDisplayComponent,
+	],
+	templateUrl: "./character-sheet.component.html",
+	styleUrl: "./character-sheet.component.css",
+	standalone: true,
 })
 export class CharacterSheetComponent {
-  private router = inject(Router);
+	private router = inject(Router);
 	private activatedRoute = inject(ActivatedRoute);
 	private characterService = inject(CharacterService);
 	private routeParams = toSignal(this.activatedRoute.paramMap);
