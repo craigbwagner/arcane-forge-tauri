@@ -4,4 +4,43 @@ import type { BasicDescription } from "./BasicDescription";
 import type { CombatStats } from "./CombatStats";
 import type { Skill } from "./Skill";
 
-export type FullCharacterData = { id: number, name: string, creator: string, proficiencyBonus: number, basicDescription: BasicDescription, combatStats: CombatStats, languages: Array<string>, abilityScores: [AbilityScore, AbilityScore, AbilityScore, AbilityScore, AbilityScore, AbilityScore], skills: [Skill, Skill, Skill, Skill, Skill, Skill, Skill, Skill, Skill, Skill, Skill, Skill, Skill, Skill, Skill, Skill, Skill, Skill], killList: Array<string>, createdAt: string, updatedAt: string, };
+export type FullCharacterData = {
+	id: number;
+	name: string;
+	creator: string;
+	proficiencyBonus: number;
+	basicDescription: BasicDescription;
+	combatStats: CombatStats;
+	languages: Array<string>;
+	abilityScores: [
+		AbilityScore,
+		AbilityScore,
+		AbilityScore,
+		AbilityScore,
+		AbilityScore,
+		AbilityScore
+	];
+	skills: [
+		Skill,
+		Skill,
+		Skill,
+		Skill,
+		Skill,
+		Skill,
+		Skill,
+		Skill,
+		Skill,
+		Skill,
+		Skill,
+		Skill,
+		Skill,
+		Skill,
+		Skill,
+		Skill,
+		Skill,
+		Skill
+	];
+	killList: Array<string>;
+	createdAt: string;
+	updatedAt: string;
+};

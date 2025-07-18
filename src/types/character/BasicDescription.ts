@@ -3,4 +3,12 @@ import type { Alignment } from "./Alignment";
 import type { Sex } from "./Sex";
 import type { Size } from "./Size";
 
-export type BasicDescription = { race: string, sex: Sex, size: Size, age: number, height: string, weight: number, alignment: Alignment, };
+export type BasicDescription = {
+	race: string;
+	sex: Sex;
+	size: Size;
+	age: number;
+	height: string;
+	weight: number;
+	alignment: Alignment;
+};
