@@ -13,10 +13,10 @@ export default function CharactersList() {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <>
+    <div className="grid grid-cols-3 gap-3">
         {characters.map((character) => (
           <CharacterSummaryCard key={character.id} character={character} />
         ))}
-    </>
+    </div>
   );
 }
