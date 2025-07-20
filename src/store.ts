@@ -4,30 +4,41 @@ import characterService from "./services/character-service";
 import { getErrorMessage } from "./utils";
 
 interface CharacterState {
-  currentCharacter: FullCharacterData | null;
-  characters: FullCharacterData[];
-  loading: boolean;
-  error: string | null;
+	currentCharacter: FullCharacterData | null;
+	characters: FullCharacterData[];
+	loading: boolean;
+	error: string | null;
 
-  getCharacters(): Promise<void>;
+	getCharacters(): Promise<void>;
+	getCurrentCharacter(id: number): Promise<void>;
 }
 
 const useCharacterStore = create<CharacterState>((set) => ({
-  currentCharacter: null,
-  characters: [],
-  loading: false,
-  error: null,
+	currentCharacter: null,
+	characters: [],
+	loading: false,
+	error: null,
 
-  getCharacters: async () => {
-    set({loading: true, error: null});
-    try {
-      const characters = await characterService.getAll();
-      set(() => ({ characters }));
-      set({loading: false});
-    } catch (error) {
-      set({error: getErrorMessage(error), loading: false});
-    }
-  },
-}))
+	getCharacters: async () => {
+		set({ loading: true, error: null });
+		try {
+			const characters = await characterService.getAll();
+			set(() => ({ characters }));
+			set({ loading: false });
+		} catch (error) {
+			set({ error: getErrorMessage(error), loading: false });
+		}
+	},
+	getCurrentCharacter: async (id) => {
+		set({ loading: true, error: null });
+		try {
+			const currentCharacter = await characterService.getById(id);
+			set(() => ({ currentCharacter }));
+			set({ loading: false });
+		} catch (error) {
+			set({ error: getErrorMessage(error), loading: false });
+		}
+	},
+}));
 
 export default useCharacterStore;
