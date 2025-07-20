@@ -1,5 +1,6 @@
 import { invoke } from "@tauri-apps/api/core";
 import { FullCharacterData } from "../types/character/FullCharacterData";
+import DataService from "../types/interfaces/DataService";
 
 const characterService = {
 	async getAll(): Promise<FullCharacterData[]> {
@@ -7,13 +8,25 @@ const characterService = {
 			let characters = await invoke<Array<FullCharacterData>>(
 				"get_all_characters"
 			);
-      console.log(characters);
 			return characters;
-		} catch (e) {
-			console.error(e);
-			throw e;
+		} catch (error) {
+			console.error(error);
+			throw error;
 		}
 	},
-};
+
+	async getById(id: number): Promise<FullCharacterData> {
+		try {
+			let currentCharacter = await invoke<FullCharacterData>(
+				"get_character_by_id",
+				{ id }
+			);
+			return currentCharacter;
+		} catch (error) {
+			console.error(error);
+			throw error;
+		}
+	},
+} satisfies DataService<FullCharacterData>;
 
 export default characterService;
