@@ -1,13 +1,11 @@
 import { Card } from "@chakra-ui/react";
 import { AbilityScore } from "../../types/character/AbilityScore";
 
-interface CharacterAbilityScoreProps {
+export interface AbilityScoreProps {
 	abilityScores: AbilityScore[];
 }
 
-export default function CharacterAbilityScores(
-	props: CharacterAbilityScoreProps
-) {
+export default function CharacterAbilityScores(props: AbilityScoreProps) {
 	const { abilityScores } = props;
 
 	return (
