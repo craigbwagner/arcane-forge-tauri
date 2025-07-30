@@ -1,7 +1,7 @@
-import { FullCharacterData } from "./types/character/FullCharacterData";
+import { FullCharacterData } from "../types/character/FullCharacterData";
 import { create } from "zustand";
-import characterService from "./services/character-service";
-import { getErrorMessage } from "./utils";
+import characterService from "../services/character-service";
+import { getErrorMessage } from "../utils";
 
 interface CharacterState {
 	currentCharacter: FullCharacterData | null;
