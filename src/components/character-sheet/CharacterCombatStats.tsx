@@ -1,16 +1,18 @@
 import { Card } from "@chakra-ui/react";
 import { CombatStats } from "../../types/character/CombatStats";
 
-export default function CharacterCombatStats({
-	combatStats,
-}: {
+interface CombatStatProps {
 	combatStats: CombatStats;
-}) {
+}
+
+export default function CharacterCombatStats(props: CombatStatProps) {
+	const { combatStats } = props;
+
 	return (
 		<div className='grid grid-cols-2'>
 			<Card.Root>
 				<Card.Body>
-					<div className="grid grid-cols-2">
+					<div className='grid grid-cols-2'>
 						<p>
 							Initiative: {combatStats.initiative + combatStats.initiativeMods}
 						</p>
