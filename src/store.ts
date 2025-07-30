@@ -11,6 +11,7 @@ interface CharacterState {
 
 	getCharacters(): Promise<void>;
 	getCurrentCharacter(id: number): Promise<void>;
+	createCharacter(): Promise<FullCharacterData | undefined>;
 }
 
 const useCharacterStore = create<CharacterState>((set) => ({
@@ -37,6 +38,16 @@ const useCharacterStore = create<CharacterState>((set) => ({
 			set({ loading: false });
 		} catch (error) {
 			set({ error: getErrorMessage(error), loading: false });
+		}
+	},
+	createCharacter: async (): Promise<FullCharacterData> => {
+		set({ error: null });
+
+		try {
+			return await characterService.create();
+		} catch (error) {
+			set({ error: getErrorMessage(error) });
+			throw error;
 		}
 	},
 }));
