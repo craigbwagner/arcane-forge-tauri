@@ -1,22 +1,38 @@
 import { useEffect } from "react";
 import CharacterSummaryCard from "../components/CharacterSummaryCard";
-import useCharacterStore from "../store"
+import useCharacterStore from "../stores/characterStore";
+import { Button } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 export default function CharactersList() {
-  let { characters, getCharacters, loading, error } = useCharacterStore();
+	let { characters, getCharacters, createCharacter, loading, error } =
+		useCharacterStore();
+	const navigate = useNavigate();
 
-  useEffect(() => {
-    getCharacters();
-  }, [])
+	useEffect(() => {
+		getCharacters();
+	}, []);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+	async function handleCreateCharacterButtonClicked(): Promise<void> {
+		const newCharacter = await createCharacter();
+		if (newCharacter == undefined) return;
 
-  return (
-    <div className="grid grid-cols-3 gap-3">
-        {characters.map((character) => (
-          <CharacterSummaryCard key={character.id} character={character} />
-        ))}
-    </div>
-  );
+		navigate(`/character/${newCharacter.id}`);
+	}
+
+	if (loading) return <div>Loading...</div>;
+	if (error) return <div>Error: {error}</div>;
+
+	return (
+		<>
+			<Button onClick={handleCreateCharacterButtonClicked}>
+				New Character
+			</Button>
+			<div className='grid grid-cols-3 gap-3'>
+				{characters.map((character) => (
+					<CharacterSummaryCard key={character.id} character={character} />
+				))}
+			</div>
+		</>
+	);
 }
