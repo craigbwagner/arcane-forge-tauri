@@ -1,5 +1,5 @@
 import { invoke } from "@tauri-apps/api/core";
-import { FullCharacterData } from "../types/character/FullCharacterData";
+import { FullCharacterData } from "./../types/character/FullCharacterData";
 import DataService from "../types/interfaces/DataService";
 
 const characterService = {
@@ -22,6 +22,15 @@ const characterService = {
 				{ id }
 			);
 			return currentCharacter;
+		} catch (error) {
+			console.error(error);
+			throw error;
+		}
+	},
+	async create(): Promise<FullCharacterData> {
+		try {
+			let newCharacter = await invoke<FullCharacterData>("create_character");
+			return newCharacter;
 		} catch (error) {
 			console.error(error);
 			throw error;
