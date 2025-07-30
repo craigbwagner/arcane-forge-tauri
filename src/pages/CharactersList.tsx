@@ -25,9 +25,11 @@ export default function CharactersList() {
 
 	return (
 		<>
-			<Button onClick={handleCreateCharacterButtonClicked}>
-				New Character
-			</Button>
+			<div className='flex w-full justify-end'>
+				<Button onClick={handleCreateCharacterButtonClicked}>
+					New Character
+				</Button>
+			</div>
 			<div className='grid grid-cols-3 gap-3'>
 				{characters.map((character) => (
 					<CharacterSummaryCard key={character.id} character={character} />
