@@ -4,6 +4,7 @@ import CharacterBasicDescription from "../components/character-sheet/CharacterBa
 import useCharacterStore from "../stores/characterStore";
 import CharacterCombatStats from "../components/character-sheet/CharacterCombatStats";
 import CharacterAbilityScores from "../components/character-sheet/CharacterAbilityScores";
+import CharacterSaves from "../components/character-sheet/CharacterSaves";
 
 export default function CharacterSheet() {
 	let { currentCharacter, getCurrentCharacter, loading, error } =
@@ -29,6 +30,10 @@ export default function CharacterSheet() {
 					abilityScores={currentCharacter.abilityScores}
 				/>
 				<CharacterCombatStats combatStats={currentCharacter.combatStats} />
+			</div>
+			<div className='grid grid-cols-2'>
+				<div></div>
+				<CharacterSaves abilityScores={currentCharacter.abilityScores} />
 			</div>
 		</main>
 	);
