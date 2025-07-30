@@ -1,13 +1,15 @@
 import { BasicDescription } from "../../types/character/BasicDescription";
 import { Card } from "@chakra-ui/react";
 
-export default function CharacterBasicDescription({
-	basicDescription,
-	name,
-}: {
+interface BasicDescriptionProps {
 	basicDescription: BasicDescription;
 	name: string;
-}) {
+}
+
+export default function CharacterBasicDescription(
+	props: BasicDescriptionProps
+) {
+	const { basicDescription, name } = props;
 	return (
 		<section>
 			<Card.Root>
