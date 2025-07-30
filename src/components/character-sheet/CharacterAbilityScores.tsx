@@ -10,6 +10,7 @@ export default function CharacterAbilityScores(props: AbilityScoreProps) {
 
 	return (
 		<Card.Root>
+			<Card.Title>Ability Scores</Card.Title>
 			<Card.Body>
 				<div className='grid grid-cols-3'>
 					{abilityScores.map((ability) => (
