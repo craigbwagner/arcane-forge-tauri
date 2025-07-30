@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import CharacterBasicDescription from "../components/character-sheet/CharacterBasicDescription";
 import useCharacterStore from "../stores/characterStore";
 import CharacterCombatStats from "../components/character-sheet/CharacterCombatStats";
+import CharacterAbilityScores from "../components/character-sheet/CharacterAbilityScores";
 
 export default function CharacterSheet() {
 	let { currentCharacter, getCurrentCharacter, loading, error } =
@@ -23,7 +24,12 @@ export default function CharacterSheet() {
 				basicDescription={currentCharacter.basicDescription}
 				name={currentCharacter.name}
 			/>
-			<CharacterCombatStats combatStats={currentCharacter.combatStats} />
+			<div className='grid grid-cols-2'>
+				<CharacterAbilityScores
+					abilityScores={currentCharacter.abilityScores}
+				/>
+				<CharacterCombatStats combatStats={currentCharacter.combatStats} />
+			</div>
 		</main>
 	);
 }
