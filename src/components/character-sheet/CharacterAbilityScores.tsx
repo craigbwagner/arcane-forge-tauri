@@ -9,6 +9,7 @@ export default function CharacterAbilityScores(
 	props: CharacterAbilityScoreProps
 ) {
 	const { abilityScores } = props;
+
 	return (
 		<Card.Root>
 			<Card.Body>
