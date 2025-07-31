@@ -3,10 +3,11 @@ import { CombatStats } from "../../types/character/CombatStats";
 
 interface CombatStatProps {
 	combatStats: CombatStats;
+	proficiencyBonus: number;
 }
 
 export default function CharacterCombatStats(props: CombatStatProps) {
-	const { combatStats } = props;
+	const { combatStats, proficiencyBonus } = props;
 
 	return (
 		<div className='grid grid-cols-2'>
@@ -17,6 +18,7 @@ export default function CharacterCombatStats(props: CombatStatProps) {
 							Initiative: {combatStats.initiative + combatStats.initiativeMods}
 						</p>
 						<p>Speed: {combatStats.speed}</p>
+						<p>Proficiency Bonus: {proficiencyBonus}</p>
 					</div>
 				</Card.Body>
 			</Card.Root>

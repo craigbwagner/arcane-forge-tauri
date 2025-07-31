@@ -40,7 +40,10 @@ export default function CharacterSheet() {
 				<CharacterAbilityScores
 					abilityScores={currentCharacter.abilityScores}
 				/>
-				<CharacterCombatStats combatStats={currentCharacter.combatStats} />
+				<CharacterCombatStats
+					combatStats={currentCharacter.combatStats}
+					proficiencyBonus={currentCharacter.proficiencyBonus}
+				/>
 			</div>
 			<div className='grid grid-cols-2'>
 				<CharacterSaves abilityScores={currentCharacter.abilityScores} />
