@@ -16,15 +16,17 @@ export default function CharacterBasicDescription(
 				<Card.Header className='text-center'>
 					<h1>{name}</h1>
 				</Card.Header>
-				<Card.Description className='grid grid-cols-3'>
-					<p>{basicDescription.race}</p>
-					<p>{basicDescription.sex}</p>
-					<p>{basicDescription.alignment}</p>
-					<p>{basicDescription.size}</p>
-					<p>{basicDescription.age}</p>
-					<p>{basicDescription.height}</p>
-					<p>{basicDescription.weight}</p>
-				</Card.Description>
+				<Card.Body>
+					<div className='grid grid-cols-3'>
+						<p>{basicDescription.race}</p>
+						<p>{basicDescription.sex}</p>
+						<p>{basicDescription.alignment}</p>
+						<p>{basicDescription.size}</p>
+						<p>{basicDescription.age}</p>
+						<p>{basicDescription.height}</p>
+						<p>{basicDescription.weight}</p>
+					</div>
+				</Card.Body>
 			</Card.Root>
 		</section>
 	);
