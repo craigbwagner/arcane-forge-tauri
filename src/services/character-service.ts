@@ -36,6 +36,15 @@ const characterService = {
 			throw error;
 		}
 	},
+	async delete(id: number): Promise<boolean> {
+		try {
+			let result = await invoke<boolean>("delete_character");
+			return result;
+		} catch (error) {
+			console.error(error);
+			throw error;
+		}
+	},
 } satisfies DataService<FullCharacterData>;
 
 export default characterService;
