@@ -13,9 +13,9 @@ export default function CharacterBasicDescription(
 	return (
 		<section>
 			<Card.Root>
-				<Card.Title className='text-center'>
+				<Card.Header className='text-center'>
 					<h1>{name}</h1>
-				</Card.Title>
+				</Card.Header>
 				<Card.Description className='grid grid-cols-3'>
 					<p>{basicDescription.race}</p>
 					<p>{basicDescription.sex}</p>
