@@ -30,7 +30,7 @@ const useCharacterStore = create<CharacterState>((set) => ({
 			set({ error: getErrorMessage(error), loading: false });
 		}
 	},
-	getCurrentCharacter: async (id) => {
+	getCurrentCharacter: async (id: number) => {
 		set({ loading: true, error: null });
 		try {
 			const currentCharacter = await characterService.getById(id);
@@ -45,6 +45,16 @@ const useCharacterStore = create<CharacterState>((set) => ({
 
 		try {
 			return await characterService.create();
+		} catch (error) {
+			set({ error: getErrorMessage(error) });
+			throw error;
+		}
+	},
+	deleteCharacter: async (id: number): Promise<boolean> => {
+		set({ error: null });
+
+		try {
+			return await characterService.delete(id);
 		} catch (error) {
 			set({ error: getErrorMessage(error) });
 			throw error;
