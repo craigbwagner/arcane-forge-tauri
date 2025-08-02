@@ -32,3 +32,10 @@ pub fn update(
 ) -> Result<FullCharacterData, AppError> {
     todo!()
 }
+
+pub fn delete(state: State<'_, AppState>, id: i32) -> Result<bool, AppError> {
+    match CharacterRepository::delete(&state.db, id) {
+        Ok(_) => Ok(true),
+        Err(e) => Err(e),
+    }
+}
