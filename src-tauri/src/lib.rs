@@ -26,6 +26,7 @@ pub fn run() -> Result<(), color_eyre::Report> {
             character_commands::get_all_characters,
             character_commands::get_character_by_id,
             character_commands::create_character,
+            character_commands::delete_character
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
