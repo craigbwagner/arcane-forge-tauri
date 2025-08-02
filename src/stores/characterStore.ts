@@ -12,6 +12,7 @@ interface CharacterState {
 	getCharacters(): Promise<void>;
 	getCurrentCharacter(id: number): Promise<void>;
 	createCharacter(): Promise<FullCharacterData | undefined>;
+	deleteCharacter(id: number): Promise<boolean>;
 }
 
 const useCharacterStore = create<CharacterState>((set) => ({
