@@ -9,8 +9,13 @@ import CharacterSkills from "../components/character-sheet/CharacterSkills";
 import { Button } from "@chakra-ui/react";
 
 export default function CharacterSheet() {
-	let { currentCharacter, getCurrentCharacter, loading, error } =
-		useCharacterStore();
+	let {
+		currentCharacter,
+		getCurrentCharacter,
+		deleteCharacter,
+		loading,
+		error,
+	} = useCharacterStore();
 	let { id } = useParams();
 	let navigate = useNavigate();
 
@@ -27,9 +32,19 @@ export default function CharacterSheet() {
 		navigate(`/character/edit/${currentCharacter.id}`);
 	}
 
+	async function handleDeleteCharacterButton() {
+		if (currentCharacter === null) return;
+		let result = await deleteCharacter(currentCharacter.id);
+
+		if (result === true) {
+			navigate("/characters-list");
+		}
+	}
+
 	return (
 		<main>
 			<div className='flex w-full justify-end'>
+				<Button onClick={handleDeleteCharacterButton}>Delete Character</Button>
 				<Button onClick={handleEditCharacterButton}>Edit Character</Button>
 			</div>
 			<CharacterBasicDescription
