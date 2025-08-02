@@ -21,14 +21,20 @@ impl Repository<Character, NewCharacter> for CharacterRepository {
             .map_err(|e| AppError::DatabaseOperationError(e.to_string()))
     }
 
-    fn get_by_id(conn: &Arc<Mutex<SqliteConnection>>, id: i32) -> Result<Character, AppError> {
+    fn get_by_id(
+        conn: &Arc<Mutex<SqliteConnection>>,
+        character_id: i32,
+    ) -> Result<Character, AppError> {
         let mut conn = Self::get_connection(conn)?;
 
-        characters::table.find(id).first(&mut *conn).map_err(|_| {
-            AppError::DatabaseOperationError(
-                "Could not find character with the provided ID in database.".to_string(),
-            )
-        })
+        characters::table
+            .find(character_id)
+            .first(&mut *conn)
+            .map_err(|_| {
+                AppError::DatabaseOperationError(
+                    "Could not find character with the provided ID in database.".to_string(),
+                )
+            })
     }
 
     fn insert(
@@ -52,7 +58,17 @@ impl Repository<Character, NewCharacter> for CharacterRepository {
         todo!()
     }
 
-    fn delete(conn: &Arc<Mutex<SqliteConnection>>, id: i32) -> Result<(), AppError> {
-        todo!()
+    fn delete(conn: &Arc<Mutex<SqliteConnection>>, entry_id: i32) -> Result<(), AppError> {
+        let mut conn = Self::get_connection(conn)?;
+
+        diesel::delete(characters::table.filter(characters::id.eq(entry_id)))
+            .execute(&mut *conn)
+            .map_err(|_| {
+                AppError::DatabaseOperationError(
+                    "Could not find and delete character in database.".to_string(),
+                )
+            })?;
+
+        Ok(())
     }
 }
