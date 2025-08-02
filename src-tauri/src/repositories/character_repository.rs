@@ -1,6 +1,6 @@
 use std::sync::{Arc, Mutex};
 
-use diesel::{QueryDsl, RunQueryDsl, SelectableHelper, SqliteConnection};
+use diesel::{ExpressionMethods, QueryDsl, RunQueryDsl, SelectableHelper, SqliteConnection};
 
 use crate::{
     errors::AppError,
