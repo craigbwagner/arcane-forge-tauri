@@ -38,7 +38,7 @@ const characterService = {
 	},
 	async delete(id: number): Promise<boolean> {
 		try {
-			let result = await invoke<boolean>("delete_character");
+			let result = await invoke<boolean>("delete_character", { id });
 			return result;
 		} catch (error) {
 			console.error(error);
