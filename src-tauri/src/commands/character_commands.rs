@@ -26,9 +26,14 @@ pub async fn create_character(state: State<'_, AppState>) -> Result<FullCharacte
 }
 
 #[tauri::command]
-async fn update_character(
+pub async fn update_character(
     data: FullCharacterData,
     state: State<'_, AppState>,
 ) -> Result<FullCharacterData, AppError> {
     character_service::update(data, state)
+}
+
+#[tauri::command]
+pub async fn delete_character(state: State<'_, AppState>, id: i32) -> Result<bool, AppError> {
+    character_service::delete(state, id)
 }
