@@ -3,7 +3,6 @@ import { AbilityScoreProps } from "./CharacterAbilityScores";
 
 export default function CharacterSaves(props: AbilityScoreProps) {
   const { abilityScores } = props;
-  console.log(abilityScores)
 
   return (
 		<Card.Root>
