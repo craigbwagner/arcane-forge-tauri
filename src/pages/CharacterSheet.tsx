@@ -12,6 +12,7 @@ export default function CharacterSheet() {
 	let {
 		currentCharacter,
 		getCurrentCharacter,
+		clearCurrentCharacter,
 		deleteCharacter,
 		loading,
 		error,
@@ -28,8 +29,8 @@ export default function CharacterSheet() {
 	if (currentCharacter === null) return <div>Could not find character.</div>;
 
 	function handleEditCharacterButton() {
-		if (currentCharacter === null) return;
-		navigate(`/character/edit/${currentCharacter.id}`);
+		clearCurrentCharacter();
+		navigate(`/character/edit/${id}`);
 	}
 
 	async function handleDeleteCharacterButton() {
@@ -37,6 +38,7 @@ export default function CharacterSheet() {
 		let result = await deleteCharacter(currentCharacter.id);
 
 		if (result === true) {
+			clearCurrentCharacter();
 			navigate("/characters-list");
 		}
 	}

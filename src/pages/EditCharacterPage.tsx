@@ -19,8 +19,13 @@ import {
 import CharacterBasicDescriptionForm from "../components/character-edit-page/CharacterBasicDescriptionForm";
 
 export default function EditCharacterPage() {
-	let { currentCharacter, getCurrentCharacter, loading, error } =
-		useCharacterStore();
+	let {
+		currentCharacter,
+		getCurrentCharacter,
+		clearCurrentCharacter,
+		loading,
+		error,
+	} = useCharacterStore();
 	let navigate = useNavigate();
 	let { id } = useParams();
 
@@ -46,6 +51,7 @@ export default function EditCharacterPage() {
 	}
 
 	function handleReturnToCharacterButton() {
+		clearCurrentCharacter();
 		navigate(`/character/${id}`);
 	}
 
