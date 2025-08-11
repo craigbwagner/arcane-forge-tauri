@@ -11,11 +11,12 @@ interface CharacterState {
 
 	getCharacters(): Promise<void>;
 	getCurrentCharacter(id: number): Promise<void>;
+	clearCurrentCharacter(): void;
 	createCharacter(): Promise<FullCharacterData | undefined>;
 	deleteCharacter(id: number): Promise<boolean>;
 }
 
-const useCharacterStore = create<CharacterState>((set) => ({
+const useCharacterStore = create<CharacterState>((set, get) => ({
 	currentCharacter: null,
 	characters: [],
 	loading: false,
@@ -40,6 +41,9 @@ const useCharacterStore = create<CharacterState>((set) => ({
 		} catch (error) {
 			set({ error: getErrorMessage(error), loading: false });
 		}
+	},
+	clearCurrentCharacter: () => {
+		set(() => ({ currentCharacter: null }));
 	},
 	createCharacter: async (): Promise<FullCharacterData> => {
 		set({ error: null });
