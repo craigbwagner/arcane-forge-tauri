@@ -5,8 +5,9 @@ use diesel::SqliteConnection;
 use crate::{
     errors::AppError,
     models::item::{Item, NewItem},
-    traits::repository::Repository,
 };
+
+use super::Repository;
 
 pub struct ItemRepository {
     db: Arc<Mutex<SqliteConnection>>,

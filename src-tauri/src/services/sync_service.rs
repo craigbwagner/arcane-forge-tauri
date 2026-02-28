@@ -8,7 +8,7 @@ use crate::errors::AppError;
 use crate::models::character::NewCharacter;
 use crate::repositories::character_repository::CharacterRepository;
 use crate::repositories::cloud_character_repository::CloudCharacterRepository;
-use crate::traits::repository::Repository;
+use crate::repositories::Repository;
 
 /// Reads all characters from SQLite, maps them to DTOs, and replaces
 /// the entire MongoDB collection with the result.

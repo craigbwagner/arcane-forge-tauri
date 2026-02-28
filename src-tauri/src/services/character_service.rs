@@ -5,7 +5,7 @@ use crate::dtos::character_dtos::FullCharacterData;
 use crate::errors::AppError;
 use crate::models::character::NewCharacter;
 use crate::repositories::character_repository::CharacterRepository;
-use crate::traits::repository::Repository;
+use crate::repositories::Repository;
 
 pub fn get_all(state: State<'_, AppState>) -> Result<Vec<FullCharacterData>, AppError> {
     let characters = CharacterRepository::get_all(&state.db)?;

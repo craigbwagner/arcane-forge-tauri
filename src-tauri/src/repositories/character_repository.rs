@@ -6,8 +6,9 @@ use crate::{
     errors::AppError,
     models::character::{Character, NewCharacter},
     schema::characters,
-    traits::repository::Repository,
 };
+
+use super::Repository;
 
 pub struct CharacterRepository;
 

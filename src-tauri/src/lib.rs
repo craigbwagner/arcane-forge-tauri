@@ -12,7 +12,6 @@ mod models;
 mod repositories;
 mod schema;
 mod services;
-mod traits;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() -> Result<(), color_eyre::Report> {
