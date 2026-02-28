@@ -11,6 +11,41 @@ use crate::{
 
 pub struct CharacterRepository;
 
+impl CharacterRepository {
+    pub fn delete_all(conn: &Arc<Mutex<SqliteConnection>>) -> Result<(), AppError> {
+        let mut conn = conn
+            .lock()
+            .map_err(|e| AppError::DatabaseOperationError(format!("Lock error: {}", e)))?;
+
+        diesel::delete(characters::table)
+            .execute(&mut *conn)
+            .map_err(|e| AppError::DatabaseOperationError(e.to_string()))?;
+
+        Ok(())
+    }
+
+    pub fn insert_many(
+        conn: &Arc<Mutex<SqliteConnection>>,
+        new_characters: Vec<NewCharacter>,
+    ) -> Result<Vec<Character>, AppError> {
+        let mut conn = conn
+            .lock()
+            .map_err(|e| AppError::DatabaseOperationError(format!("Lock error: {}", e)))?;
+
+        let mut results = Vec::with_capacity(new_characters.len());
+        for character in new_characters {
+            let inserted = diesel::insert_into(characters::table)
+                .values(character)
+                .returning(Character::as_returning())
+                .get_result(&mut *conn)
+                .map_err(|e| AppError::DatabaseOperationError(e.to_string()))?;
+            results.push(inserted);
+        }
+
+        Ok(results)
+    }
+}
+
 impl Repository<Character, NewCharacter> for CharacterRepository {
     fn get_all(conn: &Arc<Mutex<SqliteConnection>>) -> Result<Vec<Character>, AppError> {
         let mut conn = Self::get_connection(conn)?;
