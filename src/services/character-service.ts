@@ -36,6 +36,18 @@ const characterService = {
 			throw error;
 		}
 	},
+	async update(data: FullCharacterData): Promise<FullCharacterData> {
+		try {
+			let updatedCharacter = await invoke<FullCharacterData>(
+				"update_character",
+				{ data }
+			);
+			return updatedCharacter;
+		} catch (error) {
+			console.error(error);
+			throw error;
+		}
+	},
 	async delete(id: number): Promise<boolean> {
 		try {
 			let result = await invoke<boolean>("delete_character", { id });

@@ -12,6 +12,7 @@ interface CharacterState {
 	getCharacters(): Promise<void>;
 	getCurrentCharacter(id: number): Promise<void>;
 	createCharacter(): Promise<FullCharacterData | undefined>;
+	updateCharacter(data: FullCharacterData): Promise<FullCharacterData>;
 	deleteCharacter(id: number): Promise<boolean>;
 }
 
@@ -46,6 +47,18 @@ const useCharacterStore = create<CharacterState>((set) => ({
 
 		try {
 			return await characterService.create();
+		} catch (error) {
+			set({ error: getErrorMessage(error) });
+			throw error;
+		}
+	},
+	updateCharacter: async (data: FullCharacterData): Promise<FullCharacterData> => {
+		set({ error: null });
+
+		try {
+			const updated = await characterService.update(data);
+			set({ currentCharacter: updated });
+			return updated;
 		} catch (error) {
 			set({ error: getErrorMessage(error) });
 			throw error;
