@@ -71,7 +71,6 @@ dependencies = [
  "diesel",
  "diesel_migrations",
  "dotenvy",
- "package",
  "serde",
  "serde_json",
  "tauri",
@@ -2553,12 +2552,6 @@ name = "owo-colors"
 version = "4.2.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "48dd4f4a2c8405440fd0462561f0e5806bd0f77e86f51c761481bdd4018b545e"
-
-[[package]]
-name = "package"
-version = "0.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f576c01f4729e6e9fdd95c9fe0d9e6be1c66182b8d6b15b830feac95aec402d2"
 
 [[package]]
 name = "pango"
