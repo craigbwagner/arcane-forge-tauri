@@ -20,7 +20,7 @@ export default function CharacterSkills(props: SkillsProps) {
               <p>{skill.name}</p>
               <p>{skill.abilityName}</p>
               <p>Proficient: {skill.isProficient ? "true" : "false" }</p>
-              <p>Expertise: {skill.hasExpertise ? "false" : "true" }</p>
+              <p>Expertise: {skill.hasExpertise ? "true" : "false" }</p>
               <p>{skill.totalMod}</p>
             </li>
           ))}

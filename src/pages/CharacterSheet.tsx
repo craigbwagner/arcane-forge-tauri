@@ -20,8 +20,9 @@ export default function CharacterSheet() {
 	let navigate = useNavigate();
 
 	useEffect(() => {
-		getCurrentCharacter(+id!);
-	}, []);
+		if (!id) return;
+		getCurrentCharacter(+id);
+	}, [id]);
 
 	if (loading) return <div>Loading...</div>;
 	if (error) return <div>Error: {error}</div>;

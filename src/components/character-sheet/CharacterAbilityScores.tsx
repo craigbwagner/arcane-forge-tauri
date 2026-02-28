@@ -14,7 +14,7 @@ export default function CharacterAbilityScores(props: AbilityScoreProps) {
 			<Card.Body>
 				<div className='grid grid-cols-3'>
 					{abilityScores.map((ability) => (
-						<div className='text-center'>
+						<div key={ability.shortName} className='text-center'>
 							<p>{ability.name}</p>
 							<p>
 								{ability.totalMod > 0
