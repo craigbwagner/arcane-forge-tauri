@@ -8,8 +8,6 @@ pub enum AppError {
     DatabaseConnectionError(String),
     #[error("Database operation failed: {0}")]
     DatabaseOperationError(String),
-    #[error("Mapping operation failed: {0}")]
-    MappingError(String),
     #[error("Data serialization failed: {0}")]
     SerializationError(String),
     #[error("Entity not found: {0}")]

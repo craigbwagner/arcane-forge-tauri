@@ -5,9 +5,9 @@ use mongodb::Database;
 
 use crate::dtos::character_dtos::FullCharacterData;
 use crate::errors::AppError;
+use crate::models::character::NewCharacter;
 use crate::repositories::character_repository::CharacterRepository;
 use crate::repositories::cloud_character_repository::CloudCharacterRepository;
-use crate::services::mappings::character_mapper;
 use crate::traits::repository::Repository;
 
 /// Reads all characters from SQLite, maps them to DTOs, and replaces
@@ -22,7 +22,7 @@ pub async fn push_to_cloud(
 
     let dtos: Vec<FullCharacterData> = db_characters
         .iter()
-        .map(|c| character_mapper::db_to_dto(c))
+        .map(FullCharacterData::try_from)
         .collect::<Result<Vec<_>, _>>()?;
 
     let count = dtos.len();
@@ -43,7 +43,7 @@ pub async fn pull_from_cloud(
 
     let new_characters: Vec<_> = cloud_characters
         .iter()
-        .map(|dto| character_mapper::dto_to_new_character(dto))
+        .map(NewCharacter::try_from)
         .collect::<Result<Vec<_>, _>>()?;
 
     // SQLite write — each call acquires/releases the lock independently
@@ -53,6 +53,6 @@ pub async fn pull_from_cloud(
     // Map back to DTOs so calculated fields are recomputed
     inserted
         .iter()
-        .map(|c| character_mapper::db_to_dto(c))
+        .map(FullCharacterData::try_from)
         .collect()
 }

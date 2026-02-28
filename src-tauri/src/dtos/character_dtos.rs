@@ -2,6 +2,9 @@ use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 use ts_rs::TS;
 
+use crate::errors::AppError;
+use crate::models::character::Character;
+
 #[derive(Serialize, Deserialize, Debug, TS)]
 #[serde(rename_all = "camelCase")]
 #[ts(export, export_to = "../../src/types/character/")]
@@ -276,6 +279,46 @@ pub struct CharacterSpellDetails {
     pub range: String,
     pub duration: String,
     pub description: String,
+}
+
+impl TryFrom<&Character> for FullCharacterData {
+    type Error = AppError;
+
+    fn try_from(data: &Character) -> Result<Self, AppError> {
+        let basic_description: BasicDescription = serde_json::from_str(&data.basic_description)?;
+        let combat_stats: CombatStats = serde_json::from_str(&data.combat_stats)?;
+        let languages: Vec<String> = serde_json::from_str(&data.languages)?;
+        let mut ability_scores: [AbilityScore; 6] = serde_json::from_str(&data.ability_scores)?;
+        let mut skills: [Skill; 18] = serde_json::from_str(&data.skills)?;
+        let kill_list: Vec<String> = serde_json::from_str(&data.kill_list)?;
+        let proficiency_bonus = 2;
+
+        ability_scores.iter_mut().for_each(|ability| {
+            ability.update_calculated_fields(proficiency_bonus);
+        });
+
+        skills.iter_mut().for_each(|skill| {
+            skill.update_total_modifier(&ability_scores, proficiency_bonus);
+        });
+
+        let created_at = DateTime::parse_from_rfc3339(&data.created_at)?.with_timezone(&Utc);
+        let updated_at = DateTime::parse_from_rfc3339(&data.updated_at)?.with_timezone(&Utc);
+
+        Ok(FullCharacterData {
+            id: data.id,
+            name: data.name.clone(),
+            creator: data.creator.clone(),
+            proficiency_bonus,
+            basic_description,
+            combat_stats,
+            languages,
+            ability_scores,
+            skills,
+            kill_list,
+            created_at,
+            updated_at,
+        })
+    }
 }
 
 #[cfg(test)]
