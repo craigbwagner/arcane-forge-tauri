@@ -33,11 +33,11 @@ const abilitySchema = z.enum([
 ]);
 
 const basicDescriptionSchema = z.object({
-	race: z.string().min(1, "Race is required"),
+	race: z.string(),
 	sex: sexSchema,
 	size: sizeSchema,
 	age: z.number().int().min(0, "Age must be non-negative"),
-	height: z.string().min(1, "Height is required"),
+	height: z.string(),
 	weight: z.number().min(0, "Weight must be non-negative"),
 	alignment: alignmentSchema,
 });
@@ -98,8 +98,8 @@ const skillsTuple = z.tuple([
 
 export const characterSchema = z.object({
 	id: z.number().int(),
-	name: z.string().min(1, "Name is required"),
-	creator: z.string().min(1, "Creator is required"),
+	name: z.string(),
+	creator: z.string(),
 	// Server-calculated
 	proficiencyBonus: z.number(),
 	basicDescription: basicDescriptionSchema,
