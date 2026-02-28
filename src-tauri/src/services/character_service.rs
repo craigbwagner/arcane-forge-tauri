@@ -3,34 +3,32 @@ use tauri::State;
 use crate::app_state::AppState;
 use crate::dtos::character_dtos::FullCharacterData;
 use crate::errors::AppError;
-use crate::models::character::NewCharacter;
+use crate::models::character::{Character, NewCharacter};
 use crate::repositories::character_repository::CharacterRepository;
 use crate::repositories::Repository;
 
 pub fn get_all(state: State<'_, AppState>) -> Result<Vec<FullCharacterData>, AppError> {
     let characters = CharacterRepository::get_all(&state.db)?;
-    characters
-        .iter()
-        .map(FullCharacterData::try_from)
-        .collect()
+    characters.into_iter().map(FullCharacterData::try_from).collect()
 }
 
 pub fn get_by_id(state: State<'_, AppState>, id: i32) -> Result<FullCharacterData, AppError> {
     let character = CharacterRepository::get_by_id(&state.db, id)?;
-    FullCharacterData::try_from(&character)
+    FullCharacterData::try_from(character)
 }
 
 pub fn create(state: State<'_, AppState>) -> Result<FullCharacterData, AppError> {
     let new_character_data = NewCharacter::new_default()?;
     let new_character = CharacterRepository::insert(&state.db, new_character_data)?;
-    FullCharacterData::try_from(&new_character)
+    FullCharacterData::try_from(new_character)
 }
 
-pub fn update(
-    data: FullCharacterData,
-    state: State<'_, AppState>,
-) -> Result<FullCharacterData, AppError> {
-    todo!()
+pub fn update(data: FullCharacterData, state: State<'_, AppState>) -> Result<FullCharacterData, AppError> {
+    let id = data.id;
+    let character = Character::try_from(data)?;
+    CharacterRepository::update(&state.db, character)?;
+    let updated = CharacterRepository::get_by_id(&state.db, id)?;
+    FullCharacterData::try_from(updated)
 }
 
 pub fn delete(state: State<'_, AppState>, id: i32) -> Result<bool, AppError> {

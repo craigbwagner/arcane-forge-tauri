@@ -7,7 +7,7 @@ use crate::dtos::character_dtos::{
 };
 use crate::errors::AppError;
 
-#[derive(Serialize, Deserialize, Debug, Queryable, Selectable)]
+#[derive(Serialize, Deserialize, Debug, Queryable, Selectable, AsChangeset)]
 #[diesel(table_name = crate::schema::characters)]
 #[diesel(check_for_backend(diesel::sqlite::Sqlite))]
 pub struct Character {
@@ -58,13 +58,33 @@ impl NewCharacter {
     }
 }
 
-impl TryFrom<&FullCharacterData> for NewCharacter {
+impl TryFrom<FullCharacterData> for NewCharacter {
     type Error = AppError;
 
-    fn try_from(data: &FullCharacterData) -> Result<Self, AppError> {
+    fn try_from(data: FullCharacterData) -> Result<Self, AppError> {
         Ok(NewCharacter {
-            name: data.name.clone(),
-            creator: data.creator.clone(),
+            name: data.name,
+            creator: data.creator,
+            basic_description: serde_json::to_string(&data.basic_description)?,
+            combat_stats: serde_json::to_string(&data.combat_stats)?,
+            languages: serde_json::to_string(&data.languages)?,
+            ability_scores: serde_json::to_string(&data.ability_scores)?,
+            skills: serde_json::to_string(&data.skills)?,
+            kill_list: serde_json::to_string(&data.kill_list)?,
+            created_at: data.created_at.to_rfc3339(),
+            updated_at: data.updated_at.to_rfc3339(),
+        })
+    }
+}
+
+impl TryFrom<FullCharacterData> for Character {
+    type Error = AppError;
+
+    fn try_from(data: FullCharacterData) -> Result<Self, AppError> {
+        Ok(Character {
+            id: data.id,
+            name: data.name,
+            creator: data.creator,
             basic_description: serde_json::to_string(&data.basic_description)?,
             combat_stats: serde_json::to_string(&data.combat_stats)?,
             languages: serde_json::to_string(&data.languages)?,

@@ -21,7 +21,7 @@ pub async fn push_to_cloud(
     let db_characters = CharacterRepository::get_all(db)?;
 
     let dtos: Vec<FullCharacterData> = db_characters
-        .iter()
+        .into_iter()
         .map(FullCharacterData::try_from)
         .collect::<Result<Vec<_>, _>>()?;
 
@@ -42,7 +42,7 @@ pub async fn pull_from_cloud(
     let cloud_characters = CloudCharacterRepository::get_all(mongo_db).await?;
 
     let new_characters: Vec<_> = cloud_characters
-        .iter()
+        .into_iter()
         .map(NewCharacter::try_from)
         .collect::<Result<Vec<_>, _>>()?;
 
@@ -51,8 +51,5 @@ pub async fn pull_from_cloud(
     let inserted = CharacterRepository::insert_many(db, new_characters)?;
 
     // Map back to DTOs so calculated fields are recomputed
-    inserted
-        .iter()
-        .map(FullCharacterData::try_from)
-        .collect()
+    inserted.into_iter().map(FullCharacterData::try_from).collect()
 }

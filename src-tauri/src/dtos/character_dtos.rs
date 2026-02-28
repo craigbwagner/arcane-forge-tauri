@@ -281,10 +281,10 @@ pub struct CharacterSpellDetails {
     pub description: String,
 }
 
-impl TryFrom<&Character> for FullCharacterData {
+impl TryFrom<Character> for FullCharacterData {
     type Error = AppError;
 
-    fn try_from(data: &Character) -> Result<Self, AppError> {
+    fn try_from(data: Character) -> Result<Self, AppError> {
         let basic_description: BasicDescription = serde_json::from_str(&data.basic_description)?;
         let combat_stats: CombatStats = serde_json::from_str(&data.combat_stats)?;
         let languages: Vec<String> = serde_json::from_str(&data.languages)?;
@@ -306,8 +306,8 @@ impl TryFrom<&Character> for FullCharacterData {
 
         Ok(FullCharacterData {
             id: data.id,
-            name: data.name.clone(),
-            creator: data.creator.clone(),
+            name: data.name,
+            creator: data.creator,
             proficiency_bonus,
             basic_description,
             combat_stats,

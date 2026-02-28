@@ -39,7 +39,7 @@ impl CharacterRepository {
                 .values(character)
                 .returning(Character::as_returning())
                 .get_result(&mut *conn)
-                .map_err(|e| AppError::DatabaseOperationError(e.to_string()))?;
+                .map_err(|e| AppError::EntityCreationError(e.to_string()))?;
             results.push(inserted);
         }
 
@@ -67,7 +67,7 @@ impl Repository<Character, NewCharacter> for CharacterRepository {
             .find(character_id)
             .first(&mut *conn)
             .map_err(|_| {
-                AppError::DatabaseOperationError(
+                AppError::EntityNotFoundError(
                     "Could not find character with the provided ID in database.".to_string(),
                 )
             })
@@ -84,14 +84,23 @@ impl Repository<Character, NewCharacter> for CharacterRepository {
             .returning(Character::as_returning())
             .get_result(&mut *conn)
             .map_err(|_| {
-                AppError::DatabaseOperationError(
+                AppError::EntityCreationError(
                     "Could not insert new character into database.".to_string(),
                 )
             })
     }
 
-    fn update(conn: &Arc<Mutex<SqliteConnection>>, entity: Character) -> Result<(), AppError> {
-        todo!()
+    fn update(conn: &Arc<Mutex<SqliteConnection>>, character: Character) -> Result<(), AppError> {
+        let mut conn = Self::get_connection(conn)?;
+
+        diesel::update(characters::table.filter(characters::id.eq(character.id)))
+            .set(character)
+            .execute(&mut *conn)
+            .map_err(|_| {
+                AppError::EntitySaveError("Failed to save character in database.".to_string())
+            })?;
+
+        Ok(())
     }
 
     fn delete(conn: &Arc<Mutex<SqliteConnection>>, entry_id: i32) -> Result<(), AppError> {
@@ -100,7 +109,7 @@ impl Repository<Character, NewCharacter> for CharacterRepository {
         diesel::delete(characters::table.filter(characters::id.eq(entry_id)))
             .execute(&mut *conn)
             .map_err(|_| {
-                AppError::DatabaseOperationError(
+                AppError::EntityNotFoundError(
                     "Could not find and delete character in database.".to_string(),
                 )
             })?;
