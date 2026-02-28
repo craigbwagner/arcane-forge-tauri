@@ -6,6 +6,8 @@ import CharacterCombatStats from "../components/character-sheet/CharacterCombatS
 import CharacterAbilityScores from "../components/character-sheet/CharacterAbilityScores";
 import CharacterSaves from "../components/character-sheet/CharacterSaves";
 import CharacterSkills from "../components/character-sheet/CharacterSkills";
+import CharacterLanguages from "../components/character-sheet/CharacterLanguages";
+import CharacterKillList from "../components/character-sheet/CharacterKillList";
 import { Button } from "@chakra-ui/react";
 
 export default function CharacterSheet() {
@@ -44,15 +46,16 @@ export default function CharacterSheet() {
 
 	return (
 		<main>
-			<div className='flex w-full justify-end'>
+			<div className='flex w-full justify-end gap-2'>
 				<Button onClick={handleDeleteCharacterButton}>Delete Character</Button>
 				<Button onClick={handleEditCharacterButton}>Edit Character</Button>
 			</div>
 			<CharacterBasicDescription
 				basicDescription={currentCharacter.basicDescription}
 				name={currentCharacter.name}
+				creator={currentCharacter.creator}
 			/>
-			<div className='grid grid-cols-2'>
+			<div className='grid grid-cols-2 gap-4'>
 				<CharacterAbilityScores
 					abilityScores={currentCharacter.abilityScores}
 				/>
@@ -61,9 +64,13 @@ export default function CharacterSheet() {
 					proficiencyBonus={currentCharacter.proficiencyBonus}
 				/>
 			</div>
-			<div className='grid grid-cols-2'>
+			<div className='grid grid-cols-2 gap-4'>
 				<CharacterSaves abilityScores={currentCharacter.abilityScores} />
 				<CharacterSkills skills={currentCharacter.skills} />
+			</div>
+			<div className='grid grid-cols-2 gap-4'>
+				<CharacterLanguages languages={currentCharacter.languages} />
+				<CharacterKillList killList={currentCharacter.killList} />
 			</div>
 		</main>
 	);
