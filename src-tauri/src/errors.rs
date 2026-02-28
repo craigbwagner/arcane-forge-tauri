@@ -22,6 +22,12 @@ pub enum AppError {
     DateParseError(String),
     #[error("Validation error: {0}")]
     ValidationError(String),
+    #[error("MongoDB connection failed: {0}")]
+    MongoConnectionError(String),
+    #[error("MongoDB operation failed: {0}")]
+    MongoOperationError(String),
+    #[error("Sync not configured: {0}")]
+    SyncNotConfiguredError(String),
 }
 
 impl From<serde_json::Error> for AppError {
@@ -33,5 +39,11 @@ impl From<serde_json::Error> for AppError {
 impl From<chrono::ParseError> for AppError {
     fn from(e: chrono::ParseError) -> Self {
         AppError::DateParseError(e.to_string())
+    }
+}
+
+impl From<mongodb::error::Error> for AppError {
+    fn from(e: mongodb::error::Error) -> Self {
+        AppError::MongoOperationError(e.to_string())
     }
 }

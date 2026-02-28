@@ -1,4 +1,7 @@
-use crate::{app_state::AppState, commands::character_commands};
+use crate::{
+    app_state::AppState,
+    commands::{character_commands, sync_commands},
+};
 
 mod app_state;
 mod commands;
@@ -16,8 +19,12 @@ pub fn run() -> Result<(), color_eyre::Report> {
     color_eyre::install()?;
 
     let database = db::initialize()?;
+    let mongo = db::mongo::initialize()?;
 
-    let state = AppState { db: database };
+    let state = AppState {
+        db: database,
+        mongo,
+    };
 
     tauri::Builder::default()
         .manage(state)
@@ -26,7 +33,10 @@ pub fn run() -> Result<(), color_eyre::Report> {
             character_commands::get_all_characters,
             character_commands::get_character_by_id,
             character_commands::create_character,
-            character_commands::delete_character
+            character_commands::delete_character,
+            sync_commands::push_to_cloud,
+            sync_commands::pull_from_cloud,
+            sync_commands::check_sync_status,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
