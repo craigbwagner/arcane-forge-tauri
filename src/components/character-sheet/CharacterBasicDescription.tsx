@@ -16,8 +16,8 @@ export default function CharacterBasicDescription(
 		<section>
 			<Card.Root>
 				<Card.Header className='text-center'>
-					<h1>{name}</h1>
-					<p className='text-sm opacity-70'>Created by {creator}</p>
+					<h1>{name || "Unnamed Character"}</h1>
+					{creator && <p className='text-sm opacity-70'>Created by {creator}</p>}
 				</Card.Header>
 				<Card.Body>
 					<div className='grid grid-cols-3 gap-4'>

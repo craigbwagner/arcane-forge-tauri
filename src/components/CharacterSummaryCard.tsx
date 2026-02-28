@@ -5,7 +5,7 @@ export default function CharacterSummaryCard({character}: { character:FullCharac
   return (
     <Card.Root>
       <Card.Header>
-        <Link href={`/character/${character.id}`}><h1>{character.name}</h1></Link>
+        <Link href={`/character/${character.id}`}><h1>{character.name || "Unnamed Character"}</h1></Link>
       </Card.Header>
       <Card.Body>
         <p>{character.basicDescription.race}</p>
